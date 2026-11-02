@@ -5,25 +5,25 @@
 <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#F3ECDC;
+    --bg:#FFF1F5;
     --surface:#FFFFFF;
-    --surface-alt:#ECE1C8;
-    --ink:#1E2A44;
-    --ink-soft:#5C6B86;
-    --border:#D9C9A0;
-    --border-soft:#EBE0C4;
-    --accent:#E8622C;
-    --accent-strong:#C94A1E;
+    --surface-alt:#FFE1EA;
+    --ink:#4A2233;
+    --ink-soft:#8A5670;
+    --border:#FBC7DA;
+    --border-soft:#FDE0EB;
+    --accent:#FF4F81;
+    --accent-strong:#E23A6B;
     --accent-ink:#FFFFFF;
-    --accent-soft:#FAD9C2;
-    --success:#3FA66E;
-    --success-soft:#DEF0E3;
-    --success-ink:#1C4330;
-    --danger:#C0392B;
-    --danger-soft:#F7DAD3;
+    --accent-soft:#FFE0EA;
+    --success:#2FA76B;
+    --success-soft:#E1F5E9;
+    --success-ink:#12401F;
+    --danger:#E0403F;
+    --danger-soft:#FBDEDD;
     --danger-ink:#5C1512;
-    --gold:#B5742A;
-    --shadow: 0 1px 2px rgba(30,42,68,.08), 0 10px 26px rgba(30,42,68,.12);
+    --gold:#C2751E;
+    --shadow: 0 1px 2px rgba(178,40,90,.06), 0 10px 26px rgba(178,40,90,.10);
   }
 
   *{box-sizing:border-box;}
@@ -968,7 +968,7 @@ function prefersReducedMotion(){
 }
 function launchConfetti(){
   if(prefersReducedMotion()) return;
-  const colors = ['#E8622C','#3FA66E','#1E2A44','#F3ECDC','#C94A1E','#FFFFFF'];
+  const colors = ['#FF7AA8','#FFB6C9','#FFD166','#FF9FB2','#C86B85','#FFFFFF'];
   const layer = document.createElement('div');
   layer.className = 'confetti-layer';
   document.body.appendChild(layer);
