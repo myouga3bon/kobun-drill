@@ -1,0 +1,1794 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>古文単語ドリル</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F3ECDC;
+    --surface:#FFFFFF;
+    --surface-alt:#ECE1C8;
+    --ink:#1E2A44;
+    --ink-soft:#5C6B86;
+    --border:#D9C9A0;
+    --border-soft:#EBE0C4;
+    --accent:#E8622C;
+    --accent-strong:#C94A1E;
+    --accent-ink:#FFFFFF;
+    --accent-soft:#FAD9C2;
+    --success:#3FA66E;
+    --success-soft:#DEF0E3;
+    --success-ink:#1C4330;
+    --danger:#C0392B;
+    --danger-soft:#F7DAD3;
+    --danger-ink:#5C1512;
+    --gold:#B5742A;
+    --shadow: 0 1px 2px rgba(30,42,68,.08), 0 10px 26px rgba(30,42,68,.12);
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Zen Kaku Gothic New', 'Hiragino Sans', 'Yu Gothic', sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .shell{
+    max-width:640px;
+    margin:0 auto;
+    padding:20px 16px 40px;
+  }
+  header.app-header{
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+    margin-bottom:12px;
+  }
+  .eyebrow{
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:.14em;
+    color:var(--gold);
+    text-transform:uppercase;
+  }
+  h1.app-title{
+    font-family:'Shippori Mincho', serif;
+    font-weight:800;
+    font-size:clamp(26px,6vw,32px);
+    margin:0;
+    letter-spacing:.02em;
+    text-wrap:balance;
+    color:var(--accent-strong);
+  }
+  .app-sub{
+    margin:0;
+    font-size:13px;
+    color:var(--ink-soft);
+  }
+  .brush-divider{
+    display:block;
+    width:100%;
+    height:8px;
+    margin:8px 0 14px;
+    color:var(--accent);
+    opacity:.6;
+  }
+
+  .card{
+    background:var(--surface);
+    border:1px solid var(--border-soft);
+    border-radius:18px;
+    padding:18px;
+    box-shadow:var(--shadow);
+  }
+  .card + .card{ margin-top:14px; }
+
+  fieldset{ border:none; margin:0; padding:0; min-width:0; }
+  .field-block + .field-block{ margin-top:22px; }
+  legend, .field-label{
+    font-size:12.5px;
+    font-weight:700;
+    letter-spacing:.06em;
+    color:var(--ink-soft);
+    padding:0 0 10px;
+    display:block;
+  }
+
+  .pill-group{
+    display:flex;
+    flex-wrap:nowrap;
+    gap:8px;
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:thin;
+    padding-bottom:4px;
+    margin:0 -2px;
+    padding-left:2px;
+    padding-right:2px;
+  }
+  .pill-group input{
+    position:absolute;
+    opacity:0;
+    width:1px;height:1px;
+    pointer-events:none;
+  }
+  .pill-group label{
+    flex:0 0 auto;
+    white-space:nowrap;
+    padding:8px 11px;
+    border:1px solid var(--border);
+    border-radius:999px;
+    cursor:pointer;
+    font-size:13px;
+    font-weight:500;
+    color:var(--ink-soft);
+    background:var(--surface-alt);
+    transition:background .15s ease, color .15s ease, border-color .15s ease;
+    user-select:none;
+  }
+  .pill-group input:checked + label{
+    background:var(--accent);
+    color:var(--accent-ink);
+    border-color:var(--accent);
+    font-weight:700;
+  }
+  .pill-group input:focus-visible + label{
+    outline:2px solid var(--accent-strong);
+    outline-offset:2px;
+  }
+
+  .custom-range-row{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin-top:12px;
+    flex-wrap:nowrap;
+  }
+  .custom-range-row .custom-range-label{
+    font-size:13px;
+    color:var(--ink-soft);
+    font-weight:600;
+    flex:0 0 auto;
+  }
+  .custom-range-row select{
+    flex:1 1 auto;
+    min-width:0;
+    width:auto;
+  }
+  .custom-range-row .custom-range-sep{
+    flex:0 0 auto;
+    color:var(--ink-soft);
+  }
+
+  select{
+    width:100%;
+    font:inherit;
+    font-size:15px;
+    color:var(--ink);
+    background:var(--surface-alt);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:10px 12px;
+    appearance:none;
+    background-image:linear-gradient(45deg,transparent 50%,var(--ink-soft) 50%),linear-gradient(135deg,var(--ink-soft) 50%,transparent 50%);
+    background-position:calc(100% - 20px) center, calc(100% - 14px) center;
+    background-size:6px 6px, 6px 6px;
+    background-repeat:no-repeat;
+  }
+  select:disabled{ opacity:.6; }
+  select:focus-visible{ outline:2px solid var(--accent-strong); outline-offset:2px; }
+
+  .summary-line{
+    margin:12px 0 0;
+    font-size:13.5px;
+    color:var(--ink-soft);
+  }
+  .summary-line strong{ color:var(--ink); font-weight:700; }
+  .cap-note{
+    margin:10px 0 0;
+    font-size:13px;
+    color:var(--gold);
+    background:var(--surface-alt);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:9px 12px;
+  }
+  .cap-note[hidden]{ display:none; }
+  .mode-hint{
+    margin:10px 0 0;
+    font-size:13px;
+    color:var(--ink-soft);
+  }
+
+  .btn{
+    font:inherit;
+    font-weight:700;
+    font-size:14.5px;
+    border-radius:12px;
+    border:1px solid transparent;
+    padding:12px 18px;
+    cursor:pointer;
+    transition:transform .1s ease, filter .15s ease, background .15s ease;
+  }
+  .btn:active{ transform:translateY(1px); }
+  .btn:focus-visible{ outline:2px solid var(--accent-strong); outline-offset:2px; }
+  .btn-primary{
+    background:var(--accent);
+    color:var(--accent-ink);
+    width:100%;
+    margin-top:16px;
+  }
+  .btn-primary:hover{ filter:brightness(1.06); }
+  .btn-secondary{
+    background:var(--surface-alt);
+    color:var(--ink);
+    border-color:var(--border);
+  }
+  .btn-secondary:hover{ filter:brightness(1.02); }
+  .btn-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-top:22px;
+  }
+  .btn-row .btn{ flex:1 1 200px; }
+
+  /* Quiz screen */
+  .quiz-topline{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    font-size:12.5px;
+    color:var(--ink-soft);
+    margin-bottom:6px;
+  }
+  .quiz-stats{
+    font-variant-numeric:tabular-nums;
+    display:flex;
+    gap:12px;
+  }
+  .quiz-stats .ok{ color:var(--success); font-weight:700; }
+  .quiz-stats .ng{ color:var(--danger); font-weight:700; }
+  .progress-track{
+    height:5px;
+    border-radius:999px;
+    background:var(--surface-alt);
+    overflow:hidden;
+    margin-bottom:8px;
+  }
+  .progress-fill{
+    height:100%;
+    background:var(--accent);
+    border-radius:999px;
+    transition:width .25s ease;
+  }
+  .timer-wrap{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin-bottom:8px;
+  }
+  .timer-wrap[hidden]{ display:none; }
+  .timer-track{
+    flex:1;
+    height:8px;
+    border-radius:999px;
+    background:var(--surface-alt);
+    overflow:hidden;
+  }
+  .timer-fill{
+    height:100%;
+    width:100%;
+    background:var(--danger);
+    border-radius:999px;
+  }
+  .timer-num{
+    font-family:'Shippori Mincho', serif;
+    font-weight:800;
+    font-size:20px;
+    color:var(--danger);
+    min-width:22px;
+    text-align:center;
+    font-variant-numeric:tabular-nums;
+  }
+  .word-panel{
+    text-align:center;
+    padding:8px 4px 12px;
+    border-bottom:1px dashed var(--border);
+    margin-bottom:12px;
+  }
+  .word-no{
+    display:inline-block;
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:.06em;
+    color:var(--accent-strong);
+    background:var(--accent-soft);
+    border-radius:999px;
+    padding:3px 10px;
+    margin-bottom:6px;
+    font-variant-numeric:tabular-nums;
+  }
+  .word-prompt{
+    font-size:12px;
+    color:var(--ink-soft);
+    margin:0 0 4px;
+  }
+  .word-text{
+    font-family:'Shippori Mincho', serif;
+    font-weight:700;
+    font-size:clamp(22px,6.5vw,32px);
+    line-height:1.25;
+    margin:0;
+    text-wrap:balance;
+  }
+  .options{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    grid-template-rows:repeat(3, auto);
+    grid-auto-flow:column;
+    gap:7px;
+  }
+  @media (max-width:360px){
+    .options{ grid-template-columns:1fr; grid-auto-flow:row; }
+  }
+  .choice-btn{
+    display:flex;
+    align-items:flex-start;
+    gap:7px;
+    width:100%;
+    text-align:left;
+    font:inherit;
+    font-size:13px;
+    line-height:1.35;
+    padding:9px 10px;
+    border-radius:10px;
+    border:1px solid var(--border);
+    background:var(--surface-alt);
+    color:var(--ink);
+    cursor:pointer;
+    transition:background .15s ease, border-color .15s ease, transform .1s ease;
+  }
+  .choice-btn:hover:not(:disabled){ border-color:var(--accent); }
+  .choice-btn:focus-visible{ outline:2px solid var(--accent-strong); outline-offset:2px; }
+  .choice-btn:active:not(:disabled){ transform:translateY(1px); }
+  .choice-btn:disabled{ cursor:default; }
+  .choice-num{
+    font-family:'Shippori Mincho', serif;
+    font-weight:700;
+    color:var(--accent-strong);
+    flex:0 0 auto;
+  }
+  .choice-btn.is-correct{
+    background:var(--success-soft);
+    border-color:var(--success);
+    color:var(--success-ink);
+  }
+  .choice-btn.is-correct .choice-num{ color:var(--success); }
+  .choice-btn.is-wrong{
+    background:var(--danger-soft);
+    border-color:var(--danger);
+    color:var(--danger-ink);
+  }
+  .choice-btn.is-wrong .choice-num{ color:var(--danger); }
+
+  .answer-callout{
+    display:flex;
+    align-items:flex-start;
+    gap:8px;
+    margin-top:10px;
+    padding:9px 12px;
+    border-radius:10px;
+    background:var(--success-soft);
+    border:1px solid var(--success);
+    color:var(--success-ink);
+    font-size:13px;
+    line-height:1.5;
+  }
+  .answer-callout[hidden]{ display:none; }
+  .callout-label{
+    font-weight:800;
+    flex:0 0 auto;
+    white-space:nowrap;
+  }
+  .callout-num{
+    font-family:'Shippori Mincho', serif;
+    font-weight:800;
+    flex:0 0 auto;
+  }
+  .callout-text{ font-weight:600; }
+
+  #nextBtn{ width:100%; margin-top:10px; }
+
+  /* Result screen */
+  .result-top{
+    display:flex;
+    align-items:center;
+    gap:22px;
+    flex-wrap:wrap;
+  }
+  .score-block{ text-align:left; }
+  .score-ring{
+    font-family:'Shippori Mincho', serif;
+    font-weight:800;
+    font-size:48px;
+    color:var(--accent-strong);
+    font-variant-numeric:tabular-nums;
+    line-height:1;
+  }
+  .score-ring .score-unit{ font-size:20px; font-weight:700; margin-left:2px; }
+  .score-caption{ font-size:12px; color:var(--ink-soft); margin-top:2px; }
+  .result-detail{ font-size:14px; color:var(--ink-soft); line-height:1.7; }
+  .result-detail strong{ color:var(--ink); font-variant-numeric:tabular-nums; }
+
+  .mistake-heading{
+    font-size:14px;
+    font-weight:700;
+    color:var(--ink);
+    margin:26px 0 12px;
+  }
+  .all-clear{
+    margin:22px 0 0;
+    padding:20px 16px;
+    border-radius:14px;
+    background:linear-gradient(135deg,var(--success-soft),var(--accent-soft));
+    color:var(--success-ink);
+    font-weight:700;
+    text-align:center;
+    font-size:16px;
+    animation:perfect-pop .5s ease;
+  }
+  @keyframes perfect-pop{
+    0%{ transform:scale(.9); opacity:0; }
+    60%{ transform:scale(1.03); opacity:1; }
+    100%{ transform:scale(1); }
+  }
+  .mistake-table-wrap{ overflow-x:auto; }
+  table.mistake-table{
+    width:100%;
+    border-collapse:collapse;
+    font-size:14px;
+  }
+  table.mistake-table th, table.mistake-table td{
+    text-align:left;
+    padding:10px 10px;
+    border-bottom:1px solid var(--border-soft);
+    vertical-align:top;
+  }
+  table.mistake-table th{
+    color:var(--ink-soft);
+    font-weight:700;
+    font-size:12px;
+    letter-spacing:.04em;
+  }
+  table.mistake-table td.num{ font-variant-numeric:tabular-nums; color:var(--ink-soft); width:36px; }
+  table.mistake-table td.word{ font-family:'Shippori Mincho', serif; font-weight:700; white-space:normal; min-width:88px; }
+  table.mistake-table td.count{ text-align:right; color:var(--danger); font-weight:700; font-variant-numeric:tabular-nums; width:52px; white-space:nowrap; }
+
+  .example-list{ display:flex; flex-direction:column; gap:12px; }
+  .example-item{
+    padding:12px 14px;
+    border-radius:12px;
+    background:var(--surface-alt);
+    border:1px solid var(--border-soft);
+  }
+  .example-word{
+    font-family:'Shippori Mincho', serif;
+    font-weight:700;
+    font-size:14px;
+    color:var(--accent-strong);
+    margin:0 0 8px;
+  }
+  .example-entry{
+    display:flex;
+    flex-direction:column;
+    gap:3px;
+  }
+  .example-entry + .example-entry{
+    margin-top:10px;
+    padding-top:10px;
+    border-top:1px dashed var(--border);
+  }
+  .example-meaning{
+    display:inline-block;
+    align-self:flex-start;
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:.02em;
+    color:var(--accent-ink);
+    background:var(--accent);
+    border-radius:999px;
+    padding:2px 9px;
+    margin-bottom:2px;
+  }
+  .example-sentence{
+    margin:0;
+    font-size:13.5px;
+    line-height:1.6;
+    color:var(--ink);
+  }
+  .example-translation{
+    margin:0;
+    font-size:12.5px;
+    line-height:1.55;
+    color:var(--ink-soft);
+  }
+  .example-translation::before{ content:"訳: "; font-weight:700; }
+  .example-source{
+    display:inline-block;
+    margin-top:1px;
+    font-size:11.5px;
+    color:var(--ink-soft);
+    white-space:normal;
+  }
+
+  /* Confetti */
+  .confetti-layer{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    overflow:hidden;
+    z-index:50;
+  }
+  .confetti-piece{
+    position:absolute;
+    top:-12px;
+    width:8px;
+    height:14px;
+    opacity:.9;
+    border-radius:2px;
+    animation:confetti-fall 2.2s ease-in forwards;
+  }
+  @keyframes confetti-fall{
+    to{ transform:translateY(112vh) rotate(360deg); opacity:.85; }
+  }
+
+  .report-link-row{
+    display:flex;
+    justify-content:flex-end;
+    gap:8px;
+    margin-bottom:14px;
+  }
+  .btn-report{
+    font:inherit;
+    font-size:12.5px;
+    font-weight:700;
+    padding:7px 14px;
+    border-radius:999px;
+    border:1px solid var(--accent);
+    background:var(--accent-soft);
+    color:var(--accent-strong);
+    cursor:pointer;
+    transition:background .15s ease, color .15s ease;
+  }
+  .btn-report:hover{ background:var(--accent); color:var(--accent-ink); }
+  .btn-report:focus-visible{ outline:2px solid var(--accent-strong); outline-offset:2px; }
+
+  .report-title{
+    font-family:'Shippori Mincho', serif;
+    font-weight:800;
+    font-size:20px;
+    margin:0 0 2px;
+    color:var(--accent-strong);
+  }
+  .report-date{
+    font-family:'Shippori Mincho', serif;
+    font-weight:800;
+    font-size:clamp(26px,8vw,36px);
+    line-height:1.2;
+    color:var(--accent-strong);
+    margin:2px 0 12px;
+    letter-spacing:.01em;
+  }
+  .report-hint{
+    font-size:12.5px;
+    color:var(--ink-soft);
+    margin:8px 0 0;
+    padding:8px 12px;
+    background:var(--surface-alt);
+    border-radius:10px;
+  }
+  .report-summary-grid{
+    display:flex;
+    gap:8px;
+    margin:16px 0 4px;
+  }
+  .report-stat{
+    flex:1;
+    background:var(--surface-alt);
+    border-radius:12px;
+    padding:12px 6px;
+    text-align:center;
+  }
+  .report-stat-num{
+    display:block;
+    font-family:'Shippori Mincho', serif;
+    font-weight:800;
+    font-size:20px;
+    color:var(--accent-strong);
+    font-variant-numeric:tabular-nums;
+  }
+  .report-stat-label{
+    display:block;
+    font-size:10.5px;
+    color:var(--ink-soft);
+    margin-top:2px;
+  }
+  .report-table{
+    width:100%;
+    border-collapse:collapse;
+    font-size:13px;
+    margin-top:10px;
+  }
+  .report-table th, .report-table td{
+    text-align:left;
+    padding:8px 6px;
+    border-bottom:1px solid var(--border-soft);
+  }
+  .report-table th{ color:var(--ink-soft); font-size:11px; font-weight:700; }
+  .report-score{ font-weight:800; color:var(--accent-strong); font-variant-numeric:tabular-nums; white-space:nowrap; }
+  .report-empty{
+    padding:22px 10px;
+    text-align:center;
+    color:var(--ink-soft);
+    font-size:14px;
+  }
+
+  [hidden]{ display:none !important; }
+
+  @media (prefers-reduced-motion: reduce){
+    *, *::before, *::after{
+      transition-duration:.001ms !important;
+      animation-duration:.001ms !important;
+    }
+  }
+
+  @media (max-width:420px){
+    .card{ padding:20px; }
+    .shell{ padding:24px 14px 56px; }
+    table.mistake-table{ font-size:13px; }
+    table.mistake-table th, table.mistake-table td{ padding:8px 6px; }
+  }
+</style>
+
+<div class="shell">
+  <header class="app-header">
+    <span class="eyebrow">桐原書店『重要古文単語315』準拠</span>
+    <h1 class="app-title">古文単語ドリル</h1>
+    <p class="app-sub">範囲・出題数・解答モードを選んで、六択でテンポよく復習できます。</p>
+  </header>
+
+  <svg class="brush-divider" viewBox="0 0 600 10" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0,5 L600,5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+  </svg>
+
+  <!-- SETUP SCREEN -->
+  <section id="screen-setup">
+    <div class="card">
+      <div class="report-link-row">
+        <button type="button" class="btn-report" id="weakTrainBtn">苦手トレーニング</button>
+        <button type="button" class="btn-report" id="reportBtn">報告用</button>
+      </div>
+      <div class="field-block">
+        <fieldset>
+          <legend>出題範囲を選ぶ</legend>
+          <div class="pill-group" id="chunkGroup">
+            <input type="radio" name="chunk" id="chunk20" value="20" checked>
+            <label for="chunk20">20語</label>
+            <input type="radio" name="chunk" id="chunk50" value="50">
+            <label for="chunk50">50語</label>
+            <input type="radio" name="chunk" id="chunk100" value="100">
+            <label for="chunk100">100語</label>
+            <input type="radio" name="chunk" id="chunkAll" value="all">
+            <label for="chunkAll">オール</label>
+            <input type="radio" name="chunk" id="chunkCustom" value="custom">
+            <label for="chunkCustom">カスタム</label>
+          </div>
+        </fieldset>
+        <select id="rangeSelect" aria-label="出題範囲の具体的な区間" style="margin-top:12px;"></select>
+        <div class="custom-range-row" id="customRangeRow" hidden>
+          <label class="custom-range-label" for="customStart">開始</label>
+          <select id="customStart" aria-label="開始番号"></select>
+          <span class="custom-range-sep">〜</span>
+          <label class="custom-range-label" for="customEnd">終了</label>
+          <select id="customEnd" aria-label="終了番号"></select>
+        </div>
+        <p class="summary-line" id="summaryText"></p>
+      </div>
+
+      <div class="field-block">
+        <fieldset>
+          <legend>出題数を選ぶ</legend>
+          <div class="pill-group" id="countGroup">
+            <input type="radio" name="count" id="count10" value="10">
+            <label for="count10">10問</label>
+            <input type="radio" name="count" id="count20" value="20" checked>
+            <label for="count20">20問</label>
+            <input type="radio" name="count" id="count30" value="30">
+            <label for="count30">30問</label>
+            <input type="radio" name="count" id="count40" value="40">
+            <label for="count40">40問</label>
+          </div>
+        </fieldset>
+        <p class="cap-note" id="capNote" hidden></p>
+      </div>
+
+      <div class="field-block">
+        <fieldset>
+          <legend>解答モードを選ぶ</legend>
+          <div class="pill-group" id="modeGroup">
+            <input type="radio" name="mode" id="modeNormal" value="normal" checked>
+            <label for="modeNormal">マイペース</label>
+            <input type="radio" name="mode" id="modeTimed7" value="timed7">
+            <label for="modeTimed7">7秒</label>
+            <input type="radio" name="mode" id="modeTimed5" value="timed5">
+            <label for="modeTimed5">5秒</label>
+            <input type="radio" name="mode" id="modeTimed3" value="timed3">
+            <label for="modeTimed3">3秒</label>
+          </div>
+        </fieldset>
+        <p class="mode-hint">7秒／5秒／3秒判断モードは、1問ごとに制限時間内に六択から選ぶ瞬発力トレーニングです。時間切れは不正解として扱われます。</p>
+      </div>
+
+      <button type="button" class="btn btn-primary" id="startBtn">この範囲でテストを始める</button>
+    </div>
+  </section>
+
+  <!-- QUIZ SCREEN -->
+  <section id="screen-quiz" hidden>
+    <div class="card">
+      <div class="quiz-topline">
+        <span id="qNumber">第1問</span>
+        <span class="quiz-stats"><span class="ok" id="okCount">正解 0</span><span class="ng" id="ngCount">不正解 0</span></span>
+      </div>
+      <div class="progress-track"><div class="progress-fill" id="progressBar" style="width:0%"></div></div>
+      <div class="timer-wrap" id="timerWrap" hidden>
+        <div class="timer-track"><div class="timer-fill" id="timerFill"></div></div>
+        <span class="timer-num" id="timerNum">3</span>
+      </div>
+
+      <div class="word-panel">
+        <span class="word-no" id="wordNo">No.1</span>
+        <p class="word-prompt">この古語の現代語訳を選んでください</p>
+        <p class="word-text" id="wordText">見る</p>
+      </div>
+
+      <div class="options" id="optionsContainer"></div>
+      <div class="answer-callout" id="answerCallout" hidden>
+        <span class="callout-label">正解:</span>
+        <span class="callout-num" id="calloutNum">①</span>
+        <span class="callout-text" id="calloutText"></span>
+      </div>
+      <button type="button" class="btn btn-primary" id="nextBtn" hidden>次の問題へ</button>
+    </div>
+  </section>
+
+  <!-- RESULT SCREEN -->
+  <section id="screen-result" hidden>
+    <div class="card">
+      <div class="result-top">
+        <div class="score-block">
+          <div class="score-ring"><span id="scorePct">0</span><span class="score-unit">点</span></div>
+          <div class="score-caption">100点満点中</div>
+        </div>
+        <div class="result-detail" id="resultDetail"></div>
+      </div>
+
+      <div id="mistakeArea"></div>
+
+      <div class="btn-row">
+        <button type="button" class="btn btn-secondary" id="retryBtn">同じ範囲でもう一度</button>
+        <button type="button" class="btn btn-secondary" id="backBtn">設定に戻り範囲を変える</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- REPORT SCREEN -->
+  <section id="screen-report" hidden>
+    <div class="card">
+      <h2 class="report-title">今日の学習記録</h2>
+      <p class="report-date" id="reportDateLabel"></p>
+      <p class="report-hint">この画面をスクリーンショットして、LINEなどで送ってください。</p>
+      <div id="reportSummary"></div>
+      <div id="reportList"></div>
+      <button type="button" class="btn btn-secondary" id="reportBackBtn" style="margin-top:18px;">設定に戻る</button>
+    </div>
+  </section>
+
+  <!-- WEAK TRAINING SCREEN -->
+  <section id="screen-weak" hidden>
+    <div class="card">
+      <h2 class="report-title">苦手トレーニング</h2>
+      <p class="app-sub" style="margin:0 0 14px;">これまで間違えた単語だけを集めて、くり返し練習できます。間違えずに正解できたセットが累計5回になると、苦手リストから自動的に外れます。</p>
+      <div id="weakArea"></div>
+      <div class="field-block" id="weakSetSizeRow" hidden>
+        <fieldset>
+          <legend>1セットの問題数</legend>
+          <div class="pill-group" id="weakSetSizeGroup">
+            <input type="radio" name="weakSetSize" id="weakSize30" value="30" checked>
+            <label for="weakSize30">30問</label>
+            <input type="radio" name="weakSetSize" id="weakSizeAll" value="all">
+            <label for="weakSizeAll">オール</label>
+          </div>
+        </fieldset>
+      </div>
+      <button type="button" class="btn btn-primary" id="weakStartBtn" hidden>この苦手単語でトレーニング開始</button>
+      <div class="btn-row">
+        <button type="button" class="btn btn-secondary" id="weakBackBtn">設定に戻る</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+const WORDS = [{"no":1,"w":"見る","m":"思う、関係を結ぶ、面倒を見る"},{"no":2,"w":"見す","m":"結婚させる"},{"no":3,"w":"見ゆ","m":"見える、思われる、見せる、結婚する"},{"no":4,"w":"かいまみる（垣間見る）","m":"のぞき見る"},{"no":5,"w":"よばふ（呼ばふ）","m":"呼び続ける、求婚する"},{"no":6,"w":"好く","m":"風流を好む"},{"no":7,"w":"わたる（渡る）","m":"通る、いらっしゃる、〜続ける、一面に"},{"no":8,"w":"ありく（歩く）","m":"出歩く、〜しまわる、〜続ける"},{"no":9,"w":"おこなふ（行う）","m":"仏道修行をする"},{"no":10,"w":"なやむ（悩む）","m":"病気になる"},{"no":11,"w":"おこたる（怠る）","m":"病気が治る"},{"no":12,"w":"おくる（後る、遅る）","m":"先立たれる"},{"no":13,"w":"ながむ（眺む、詠む）","m":"物思いに沈む、口ずさむ"},{"no":14,"w":"ときめく（時めく）","m":"寵愛を受ける、栄える"},{"no":15,"w":"かしづく","m":"大切に育てる、大切に世話をする"},{"no":16,"w":"めづ（愛づ）","m":"愛する、感嘆する"},{"no":17,"w":"おどろく（驚く）","m":"目を覚ます、気づく"},{"no":18,"w":"こうず（困ず）","m":"疲れる"},{"no":19,"w":"おぼゆ（覚ゆ）","m":"思われる、思い出される、似る"},{"no":20,"w":"聞こゆ","m":"聞こえる、評判になる、分かる"},{"no":21,"w":"まもる、まぼる（守る）","m":"見つめる"},{"no":22,"w":"たのむ（頼む）","m":"あてにする、あてにされる"},{"no":23,"w":"かづく（被く）","m":"かぶる、いただく、与える"},{"no":24,"w":"ののしる","m":"大声で騒ぐ、評判になる、羽振りをきかす"},{"no":25,"w":"やる（遣る）","m":"送る、〜きれない"},{"no":26,"w":"いらふ（答ふ）","m":"答える"},{"no":27,"w":"あきらむ（明らむ）","m":"明らかにする"},{"no":28,"w":"にほふ（匂ふ）","m":"美しく映える"},{"no":29,"w":"ねんず（念ず）","m":"がまんする"},{"no":30,"w":"まうく（設く）","m":"用意する"},{"no":31,"w":"ゐる（居る、率る）","m":"座る、〜ている、連れる"},{"no":32,"w":"具す","m":"伴う、連れる、添える"},{"no":33,"w":"経","m":"たつ、通る"},{"no":34,"w":"さる（避る、去る）","m":"避ける、なる"},{"no":35,"w":"ものす（物す）","m":"する、いらっしゃる"},{"no":36,"w":"ならふ（慣らふ、馴らふ）","m":"慣れる、なじむ"},{"no":37,"w":"しのぶ（忍ぶ、偲ぶ）","m":"がまんする、人目につかないようにする、思い出す"},{"no":38,"w":"わぶ（侘ぶ）","m":"困る、〜かねる"},{"no":39,"w":"をかし","m":"すばらしい、滑稽だ"},{"no":40,"w":"よろし","m":"悪くはない、普通だ"},{"no":41,"w":"ありがたし","m":"めったにない、すばらしい"},{"no":42,"w":"つきづきし（付き付きし）","m":"似つかわしい"},{"no":43,"w":"なまめかし","m":"上品だ、若々しい"},{"no":44,"w":"めでたし","m":"すばらしい"},{"no":45,"w":"うるはし","m":"きちんとしている、美しい"},{"no":46,"w":"やむごとなし","m":"高貴だ、並々でない"},{"no":47,"w":"おとなし（大人し）","m":"思慮分別がある、主だっている"},{"no":48,"w":"ゆかし","m":"見たい、聞きたい、知りたい、心ひかれる"},{"no":49,"w":"なつかし","m":"親しみ深い"},{"no":50,"w":"はづかし（恥ずかし）","m":"立派だ"},{"no":51,"w":"こころにくし","m":"奥ゆかしい"},{"no":52,"w":"うつくし（美し）","m":"かわいい"},{"no":53,"w":"かなし","m":"いとしい"},{"no":54,"w":"らうたし","m":"かわいい"},{"no":55,"w":"めやすし（目安し）","m":"感じがよい"},{"no":56,"w":"あやし（怪し、賤し）","m":"不思議だ、身分が低い、粗末だ"},{"no":57,"w":"さうざうし","m":"物足りない"},{"no":58,"w":"つれなし","m":"平然としている、冷淡だ"},{"no":59,"w":"なめし","m":"無礼だ"},{"no":60,"w":"おどろおどろし","m":"大げさだ、気味が悪い"},{"no":61,"w":"憂し","m":"つらい、いやだ"},{"no":62,"w":"むつかし","m":"うっとうしい、気味が悪い"},{"no":63,"w":"すさまじ","m":"興ざめだ、殺風景だ"},{"no":64,"w":"びんなし（便無し）","m":"不都合だ、気の毒だ"},{"no":65,"w":"いとほし","m":"気の毒だ"},{"no":66,"w":"いはけなし","m":"子どもっぽい"},{"no":67,"w":"つらし","m":"薄情だ"},{"no":68,"w":"ところせし（所狭し）","m":"窮屈だ"},{"no":69,"w":"うしろめたし","m":"気がかりだ"},{"no":70,"w":"かたはらいたし","m":"きまり悪い、苦々しい、気の毒だ"},{"no":71,"w":"わりなし","m":"ひどい、どうしようもない、苦しい"},{"no":72,"w":"本意なし","m":"残念だ"},{"no":73,"w":"あさまし","m":"驚くほどだ、あきれるほどだ、情けない"},{"no":74,"w":"めざまし","m":"きにくわない、すばらしい"},{"no":75,"w":"いみじ","m":"すばらしい、ひどい、とても"},{"no":76,"w":"ゆゆし","m":"不吉だ、すばらしい、はなはだしく"},{"no":77,"w":"やさし","m":"優美だ、上品だ、殊勝だ"},{"no":78,"w":"しるし（著し）","m":"はっきりと分かる、〜のとおりに"},{"no":79,"w":"とし（疾し）","m":"早い"},{"no":80,"w":"ゆくりなし","m":"突然だ"},{"no":81,"w":"おぼつかなし","m":"はっきりしない、気がかりだ、待ち遠しい"},{"no":82,"w":"心もとなし","m":"かすかだ、不安だ、じれったい"},{"no":83,"w":"あはれなり","m":"しみじみと心に深く感じられる"},{"no":84,"w":"つれづれなり（徒然なり）","m":"退屈である、ものさびしい"},{"no":85,"w":"すずろなり、そぞろなり（漫ろなり）","m":"わけもない、思いがけない、むやみやたらだ"},{"no":86,"w":"まめなり、まめやかなり","m":"まじめである、実用的である"},{"no":87,"w":"あだなり（徒なり）","m":"はかない、浮気だ"},{"no":88,"w":"いたづらなり（徒らなり）","m":"役に立たない、むなしい"},{"no":89,"w":"優なり","m":"優れている、優雅である"},{"no":90,"w":"あてなり（貴なり）","m":"高貴である、上品である"},{"no":91,"w":"あからさまなり","m":"ほんのちょっと"},{"no":92,"w":"みそかなり（密かなり）","m":"ひそかに"},{"no":93,"w":"おろかなり（疎かなり）","m":"いい加減だ、並ひととおりだ、言い尽くせない"},{"no":94,"w":"をこなり","m":"愚かだ、ばかばかしい"},{"no":95,"w":"むげなり（無下ない）","m":"ひどい、ひどく"},{"no":96,"w":"なかなかなり","m":"中途半端だ、かえってないほうがましだ"},{"no":97,"w":"手","m":"字、演奏法"},{"no":98,"w":"文、書","m":"手紙、漢詩"},{"no":99,"w":"消息","m":"手紙、訪問の申し入れ"},{"no":100,"w":"あそび（遊び）","m":"管弦の遊び"},{"no":101,"w":"うへ（上）","m":"帝、奥様"},{"no":102,"w":"おほやけ（公）","m":"朝廷、帝"},{"no":103,"w":"うち","m":"宮中、帝"},{"no":104,"w":"御前","m":"お側"},{"no":105,"w":"みゆき","m":"お出まし"},{"no":106,"w":"たより","m":"よりどころ、つて、よい機会"},{"no":107,"w":"物語","m":"世間話"},{"no":108,"w":"ためし","m":"先例"},{"no":109,"w":"いそぎ","m":"準備"},{"no":110,"w":"用意","m":"気配り"},{"no":111,"w":"かたち","m":"容貌"},{"no":112,"w":"かげ","m":"光、姿"},{"no":113,"w":"けしき","m":"様子、機嫌、意向"},{"no":114,"w":"こころざし","m":"愛情、お礼の贈り物"},{"no":115,"w":"本意","m":"かねてからの願い"},{"no":116,"w":"こと","m":"言葉、和歌"},{"no":117,"w":"わざ","m":"こと、葬儀"},{"no":118,"w":"よろづ","m":"さまざま、何ごとにつけても"},{"no":119,"w":"ことわり","m":"道理"},{"no":120,"w":"ひがごと","m":"間違い"},{"no":121,"w":"そらごと","m":"嘘"},{"no":122,"w":"しるし","m":"効き目、ご利益、きざし"},{"no":123,"w":"料","m":"ため"},{"no":124,"w":"禄","m":"ほうび"},{"no":125,"w":"としごろ","m":"長年"},{"no":126,"w":"つとめて","m":"早朝、翌朝"},{"no":127,"w":"世","m":"男女の仲"},{"no":128,"w":"いかで","m":"どうして、なんとかして"},{"no":129,"w":"いかが","m":"どうして、どんなにか"},{"no":130,"w":"など","m":"どうして"},{"no":131,"w":"いつしか","m":"いつの間にか、早く"},{"no":132,"w":"おのづから","m":"たまたま、もしかして"},{"no":133,"w":"なほ","m":"なんとしてもやはり"},{"no":134,"w":"いとど","m":"ますます"},{"no":135,"w":"げに","m":"本当に"},{"no":136,"w":"かく","m":"このように"},{"no":137,"w":"さ","m":"そのように"},{"no":138,"w":"しか","m":"そのように"},{"no":139,"w":"と","m":"あのように"},{"no":140,"w":"やがて","m":"そのまま、すぐに"},{"no":141,"w":"すなはち","m":"すぐに"},{"no":142,"w":"やうやう","m":"しだいに"},{"no":143,"w":"やをら","m":"そっと"},{"no":144,"w":"なかなか","m":"かえって"},{"no":145,"w":"さすがに","m":"そうはいってもやはり、なんといってもやはり"},{"no":146,"w":"かたみに","m":"互いに"},{"no":147,"w":"うたて","m":"いやな感じに、異様に怪しく"},{"no":148,"w":"なべて","m":"一般に、並ひととおり"},{"no":149,"w":"わざと","m":"わざわざ、特に、正式な"},{"no":150,"w":"あまた","m":"たくさん"},{"no":151,"w":"ここら","m":"たくさん、たいそう"},{"no":152,"w":"え","m":"ことができない"},{"no":153,"w":"な〜そ","m":"〜するな、〜してはならない"},{"no":154,"w":"おほかた","m":"まったく"},{"no":155,"w":"さらに","m":"まったく"},{"no":156,"w":"世に","m":"まったく、実に"},{"no":157,"w":"たえて","m":"まったく"},{"no":158,"w":"つゆ","m":"少しも"},{"no":159,"w":"ゆめ","m":"決して"},{"no":160,"w":"つやつや","m":"まったく"},{"no":161,"w":"をさをさ","m":"ほとんど"},{"no":162,"w":"よも","m":"まさか"},{"no":163,"w":"あなかしこ","m":"決して"},{"no":164,"w":"ためらふ","m":"気持ちを静める"},{"no":165,"w":"やすらふ","m":"ためらう"},{"no":166,"w":"かたらふ","m":"語り合う"},{"no":167,"w":"住む","m":"通う"},{"no":168,"w":"やむ","m":"終わる"},{"no":169,"w":"うつろふ","m":"色あせる"},{"no":170,"w":"見出だす","m":"外を見る"},{"no":171,"w":"もてなす","m":"振る舞う"},{"no":172,"w":"あつかふ","m":"面倒を見る"},{"no":173,"w":"あくがる","m":"さまよいでる"},{"no":174,"w":"あふ","m":"結婚する"},{"no":175,"w":"しほたる","m":"涙を流す"},{"no":176,"w":"かきくらす","m":"空を暗くする"},{"no":177,"w":"まどふ","m":"迷う"},{"no":178,"w":"たばかる","m":"工夫する"},{"no":179,"w":"すさぶ","m":"興じる"},{"no":180,"w":"すまふ","m":"抵抗する"},{"no":181,"w":"まねぶ","m":"まねる"},{"no":182,"w":"ねぶ","m":"年をとる"},{"no":183,"w":"おきつ","m":"決めておく"},{"no":184,"w":"うれふ","m":"訴える"},{"no":185,"w":"むすぶ","m":"できる"},{"no":186,"w":"とぶらふ","m":"弔う"},{"no":187,"w":"やつす","m":"質素にする"},{"no":188,"w":"さはる","m":"差し支える"},{"no":189,"w":"かしこまる","m":"恐縮する"},{"no":190,"w":"かこつ","m":"嘆く"},{"no":191,"w":"わく","m":"理解する"},{"no":192,"w":"つつむ","m":"遠慮する"},{"no":193,"w":"あらまほし","m":"望ましい"},{"no":194,"w":"らうらうじ","m":"巧みだ"},{"no":195,"w":"うるせし","m":"賢い"},{"no":196,"w":"はかばかし","m":"しっかりしている"},{"no":197,"w":"をさをさし","m":"しっかりしている"},{"no":198,"w":"さうなし","m":"比べるものがない"},{"no":199,"w":"くまなし","m":"陰がない"},{"no":200,"w":"ずちなし","m":"どうしようもない"},{"no":201,"w":"まさなし","m":"よくない"},{"no":202,"w":"あいなし","m":"つまらない"},{"no":203,"w":"はかなし","m":"頼りない"},{"no":204,"w":"こころづきなし","m":"きにくわない"},{"no":205,"w":"あへなし","m":"落胆している"},{"no":206,"w":"よしなし","m":"つまらない"},{"no":207,"w":"おほけなし","m":"身のほど知らずだ"},{"no":208,"w":"さがなし","m":"意地が悪い"},{"no":209,"w":"はしたなし","m":"きまり悪い"},{"no":210,"w":"しどけなし","m":"怠慢だ"},{"no":211,"w":"いぎたなし","m":"寝坊だ"},{"no":212,"w":"ひとわろし","m":"みっともない"},{"no":213,"w":"いぶせし","m":"うっとうしい"},{"no":214,"w":"くちをし","m":"残念だ"},{"no":215,"w":"あたらし","m":"もったいない"},{"no":216,"w":"ねたし","m":"くやしい"},{"no":217,"w":"こちたし","m":"うるさい"},{"no":218,"w":"けし","m":"異様だ"},{"no":219,"w":"わびし","m":"苦しい"},{"no":220,"w":"こころぐるし","m":"気の毒だ"},{"no":221,"w":"まだし","m":"まだ早い"},{"no":222,"w":"さかし","m":"優れている"},{"no":223,"w":"まばゆし","m":"まぶしい"},{"no":224,"w":"かたじけなし","m":"おそれ多い"},{"no":225,"w":"かしこし","m":"おそれ多い"},{"no":226,"w":"しげし","m":"多い"},{"no":227,"w":"すごし","m":"気味が悪い"},{"no":228,"w":"いたし","m":"すばらしい"},{"no":229,"w":"おぼろけなり","m":"並ひととおりだ"},{"no":230,"w":"なのめなり","m":"並ひととおりだ"},{"no":231,"w":"清らなり","m":"清らかで美しい"},{"no":232,"w":"まほなり","m":"完全である"},{"no":233,"w":"あらはなり","m":"まる見えである"},{"no":234,"w":"あながちなり","m":"強引だ"},{"no":235,"w":"せちなり","m":"切実である"},{"no":236,"w":"とみなり","m":"急だ"},{"no":237,"w":"うちつけなり","m":"にわかだ"},{"no":238,"w":"さらなり","m":"言うまでもない"},{"no":239,"w":"ねんごろなり","m":"心を込めている"},{"no":240,"w":"おいらかなり","m":"おっとりしている"},{"no":241,"w":"あやにくなり","m":"意地が悪い"},{"no":242,"w":"おぼえ","m":"評判"},{"no":243,"w":"ひま","m":"すき間"},{"no":244,"w":"いとま","m":"ひま"},{"no":245,"w":"才","m":"才能"},{"no":246,"w":"よろこび","m":"お礼"},{"no":247,"w":"こころばへ","m":"気だて"},{"no":248,"w":"こころづくし","m":"物思いをすること"},{"no":249,"w":"そこ","m":"あなた"},{"no":250,"w":"ここ","m":"このわたし"},{"no":251,"w":"かれ","m":"あの人"},{"no":252,"w":"それ","m":"その人"},{"no":253,"w":"これ","m":"このわたし"},{"no":254,"w":"あなた","m":"向こう"},{"no":255,"w":"そなた","m":"あなた"},{"no":256,"w":"こなた","m":"このわたし"},{"no":257,"w":"そのかみ","m":"その当時"},{"no":258,"w":"せうと","m":"兄"},{"no":259,"w":"おとうと","m":"妹"},{"no":260,"w":"いも","m":"いとしいあなた"},{"no":261,"w":"つま","m":"夫"},{"no":262,"w":"はらから","m":"兄弟"},{"no":263,"w":"かたへ","m":"半分、傍ら、仲間"},{"no":264,"w":"ほど","m":"ころ、広さ、身分、様子"},{"no":265,"w":"かぎり","m":"限界、極致、臨終、すべて"},{"no":266,"w":"きは","m":"身分"},{"no":267,"w":"ついで","m":"序列、機会"},{"no":268,"w":"沙汰","m":"評議、裁き、命令、噂"},{"no":269,"w":"とが","m":"欠点、罪"},{"no":270,"w":"け","m":"ため"},{"no":271,"w":"よし","m":"風情、由緒、手立て、こと"},{"no":272,"w":"やう","m":"様子、理由、方法、〜ことには"},{"no":273,"w":"ちぎり","m":"約束、宿縁"},{"no":274,"w":"ほだし","m":"障害となるもの"},{"no":275,"w":"あやめ","m":"道理"},{"no":276,"w":"うつつ","m":"現実、正気"},{"no":277,"w":"あるじ","m":"もてなし"},{"no":278,"w":"ふるさと","m":"なじみの土地、わが家"},{"no":279,"w":"さて","m":"そのまま、そのほか"},{"no":280,"w":"さながら","m":"そのまま、すべて"},{"no":281,"w":"いま","m":"すぐに、もう"},{"no":282,"w":"せめて","m":"強いて、ひどく"},{"no":283,"w":"むべ・うべ","m":"なるほど"},{"no":284,"w":"かつ","m":"一方では、すぐに"},{"no":285,"w":"ひねもす","m":"一日中"},{"no":286,"w":"かまへて","m":"決して、なんとかして"},{"no":287,"w":"あへて","m":"まったく"},{"no":288,"w":"かけて（も）","m":"まったく、決して"},{"no":289,"w":"さだめて","m":"きっと"},{"no":290,"w":"のたまふ、のたまはす","m":"おっしゃる"},{"no":291,"w":"仰す","m":"おっしゃる"},{"no":292,"w":"聞こゆ、聞こえさす","m":"申し上げる、（お）〜申し上げる"},{"no":293,"w":"申す","m":"申し上げる、（お）〜申し上げる"},{"no":294,"w":"奏す","m":"申し上げる"},{"no":295,"w":"啓す","m":"申し上げる"},{"no":296,"w":"承る","m":"お受けする、お聞きする"},{"no":297,"w":"給ふ","m":"お与えになる、下さる、〜なさる、お〜になる、〜（ており）ます"},{"no":298,"w":"たまはす","m":"お与えになる"},{"no":299,"w":"たまはる","m":"いただく"},{"no":300,"w":"召す","m":"お呼びになる、お取り寄せになる、お召しになる、お乗りになる"},{"no":301,"w":"思す、思し召す","m":"お思いになる"},{"no":302,"w":"おほとのごもる","m":"おやすみになる"},{"no":303,"w":"さぶらふ、さうらふ","m":"お仕え申し上げる、あります、〜（でござい）ます"},{"no":304,"w":"はべり","m":"お仕え申し上げる、あります、〜（でござい）ます"},{"no":305,"w":"奉る","m":"差し上げる、（お）〜申し上げる、お召しになる、召し上がる、お乗りになる"},{"no":306,"w":"参らす","m":"差し上げる、（お）〜申し上げる"},{"no":307,"w":"まゐる、まうづ","m":"参上する、差し上げる、召し上がる"},{"no":308,"w":"まかる、まかづ","m":"退出する"},{"no":309,"w":"あそばす","m":"なさる"},{"no":310,"w":"つか（う）まつる","m":"お仕え申し上げる、し申し上げる"},{"no":311,"w":"聞こし召す","m":"お聞きになる、召し上がる"},{"no":312,"w":"しろしめす","m":"知っていらっしゃる、お治めになる"},{"no":313,"w":"おはす、おはします","m":"いらっしゃる、〜（て）いらっしゃる"},{"no":314,"w":"います、ます、増します、いますかり","m":"いらっしゃる、〜（て）いらっしゃる"},{"no":315,"w":"御覧ず","m":"御覧になる"}];
+
+const $ = id => document.getElementById(id);
+const NUM_CHOICES = 6;
+const CIRCLED = ['①','②','③','④','⑤','⑥'];
+const TIME_LIMITS = {timed3:3000, timed5:5000, timed7:7000};
+function modeLabel(m){
+  if(m==='timed3') return '3秒';
+  if(m==='timed5') return '5秒';
+  if(m==='timed7') return '7秒';
+  return 'マイペース';
+}
+
+/* ---------- part-of-speech categories (for confusable distractors) ---------- */
+const CATEGORY_RANGES = [
+  {cat:'verb',  ranges:[[1,38],[164,192]]},
+  {cat:'adj',   ranges:[[39,96],[193,241]]},
+  {cat:'noun',  ranges:[[97,127],[242,278]]},
+  {cat:'adv',   ranges:[[128,163],[279,289]]},
+  {cat:'keigo', ranges:[[290,315]]},
+];
+function getCategory(no){
+  for(const c of CATEGORY_RANGES){
+    for(const [s,e] of c.ranges){ if(no>=s && no<=e) return c.cat; }
+  }
+  return 'other';
+}
+const WORDS_BY_CATEGORY = {};
+WORDS.forEach(w=>{
+  const c = getCategory(w.no);
+  (WORDS_BY_CATEGORY[c] = WORDS_BY_CATEGORY[c] || []).push(w);
+});
+function bigrams(s){
+  const set = new Set();
+  for(let i=0;i<s.length-1;i++){ set.add(s.substr(i,2)); }
+  return set;
+}
+function meaningSimilarity(a,b){
+  const A = bigrams(a), B = bigrams(b);
+  let n = 0;
+  A.forEach(x=>{ if(B.has(x)) n++; });
+  return n;
+}
+
+/* ---------- example sentences for missed words (researched, cited sources) ---------- */
+const EXAMPLES = {"1":[{"meaning":"思う","text":"めでたしとみる人の、心劣りせらるる本性見えむこそ、口惜しかるべけれ","translation":"すばらしいと思う人に、がっかりさせられるような本性が見えてしまうことこそ、残念であるにちがいない。","source":"徒然草・第一段"},{"meaning":"関係を結ぶ","text":"わが知る人にてある人の、はやうみし女のこと、ほめ言ひ出でなどするも","translation":"自分が今つきあっている相手が、以前関係を持っていた女のことを褒めて話し出したりするのも（憎らしい）。","source":"枕草子（にくきもの）"},{"meaning":"面倒を見る","text":"かの御かはりにみ奉らむ","translation":"亡くなったあの方の代わりとして、私がお世話申し上げましょう。","source":"源氏物語・玉鬘"}],"2":[{"meaning":"結婚させる","text":"宮仕へに次ぎては、親王たちにこそはみせ奉らめ","translation":"宮仕えをさせることの次には、親王方に嫁がせ申し上げよう。","source":"源氏物語・若菜下"}],"3":[{"meaning":"見える","text":"大将にみえ給ふな","translation":"大将（夕霧）に姿を見られなさいますな。","source":"源氏物語・若菜上"},{"meaning":"思われる","text":"十ばかりにやあらむとみえて、白き衣","translation":"十歳くらいであろうかと思われる様子で、白い着物を着ている。","source":"源氏物語・若紫"},{"meaning":"見せる","text":"さて、出でて行くとみえて、前栽の中に隠れて","translation":"そして、出て行くように見せかけて、庭先の植え込みの中に隠れて。","source":"大和物語・第百四十九段"},{"meaning":"結婚する","text":"いかならむ人にもみえて、身をも助け","translation":"どのような人とでも結婚して、我が身を助け。","source":"平家物語・巻七「維盛都落」"}],"4":[{"meaning":"のぞき見る","text":"その里に、いとなまめいたる女はらから住みけり。この男かいまみてけり","translation":"その里に、たいそう美しい姉妹が住んでいた。この男はこっそりのぞき見してしまった。","source":"伊勢物語・第一段"}],"5":[{"meaning":"呼び続ける","text":"後ろよりよばひて、馬を馳せて来る者あり","translation":"後ろから呼び続けながら、馬を走らせてやって来る者がいる。","source":"宇治拾遺物語・九ノ一"},{"meaning":"求婚する","text":"昔、男ありけり。女のえ得まじかりけるを、年を経てよばひわたりけるを","translation":"昔、男がいた。とても妻にできそうもない女性を、何年もの間求婚し続けていたが。","source":"伊勢物語・第六段"}],"6":[{"meaning":"風流を好む","text":"昔の若人は、さるすける物思ひをなむしける","translation":"昔の若者は、そうした風流を好む恋の思いをしたものだった。","source":"伊勢物語・第四十段"}],"7":[{"meaning":"通る","text":"ちご遊ばする所のまへわたる","translation":"幼児を遊ばせている所の前を通り過ぎる。","source":"枕草子（心ときめきするもの）"},{"meaning":"いらっしゃる","text":"宮たちのあまたわたらせ給ひ候ふなる","translation":"宮様方が大勢いらっしゃるということでございます。","source":"平家物語・巻四「若宮出家」"},{"meaning":"〜続ける","text":"年を経てよばひわたりけるを","translation":"何年もの間、求婚し続けていたが。","source":"伊勢物語・第六段"},{"meaning":"一面に","text":"このいましめ、万事にわたるべし","translation":"この戒めは、あらゆることに広く当てはまるはずだ。","source":"徒然草・第九十二段"}],"8":[{"meaning":"出歩く","text":"五月ばかりなどに山里にありく、いとをかし","translation":"五月ごろなどに山里へ出歩くのは、たいそう趣がある。","source":"枕草子（五月ばかり）"},{"meaning":"〜しまわる","text":"衣の下にをどりありきてもたぐるやうにする","translation":"着物の下で跳ねまわって、盛り上がらせるようにする。","source":"枕草子（にくきもの）"},{"meaning":"〜続ける","text":"後ろ見ありき給ふめる","translation":"ずっと世話をし続けていらっしゃるようだ。","source":"源氏物語・東屋"}],"9":[{"meaning":"仏道修行をする","text":"この聖のおこなふ山の中に飛び行きて","translation":"この聖が仏道修行をしている山の中へ飛んで行って。","source":"宇治拾遺物語・巻八ノ三"}],"10":[{"meaning":"病気になる","text":"をかしがりらうたがるほどに、姉のなやむことあるに","translation":"おもしろがってかわいがっているうちに、姉が病気になることがあって。","source":"更級日記（大納言殿の姫君）"}],"11":[{"meaning":"病気が治る","text":"なやみわたるがおこたりぬるもうれし","translation":"ずっと患っていた病気が治ったのも嬉しい。","source":"枕草子（うれしきもの）"}],"12":[{"meaning":"先立たれる","text":"故姫君は、十ばかりにて殿におくれ給ひしほど","translation":"亡くなった姫君は、十歳ほどで殿に先立たれなさった（父君を亡くされた）ころ。","source":"源氏物語・若紫"}],"13":[{"meaning":"物思いに沈む","text":"暮れがたき夏の日ぐらしながむれば","translation":"なかなか暮れない夏の一日、もの思いに沈みながらぼんやりと過ごしていると。","source":"伊勢物語・第四十五段"},{"meaning":"口ずさむ","text":"『唐衣着つつなれにし』とながめけん三河の国八橋にもなりぬれば","translation":"『唐衣着つつなれにし……』と（在原業平が）口ずさんだという、三河の国の八橋という所に来てみると。","source":"平家物語・巻十"}],"14":[{"meaning":"寵愛を受ける","text":"いとやむごとなき際にはあらぬが、すぐれてときめき給ふありけり","translation":"たいして高貴な身分ではない方で、格別に帝の寵愛を受けていらっしゃる方があった。","source":"源氏物語・桐壺"},{"meaning":"栄える","text":"師走のつごもりのみときめきて","translation":"十二月の末だけもてはやされ栄えて。","source":"枕草子（花の木ならぬは）"}],"15":[{"meaning":"大切に育てる","text":"親たちかしづきたまふことかぎりなし","translation":"両親がこの上なく大切に育てていらっしゃる。","source":"堤中納言物語「虫めづる姫君」"},{"meaning":"大切に世話をする","text":"我は命を譲りてかしづきて","translation":"自分は命を投げ出してでもこの人を大切に世話をして。","source":"源氏物語・東屋"}],"16":[{"meaning":"愛する","text":"いかでこのかぐや姫を得てしがな、見てしがなと、おとに聞きめでてまどふ","translation":"何とかしてこのかぐや姫を手に入れたい、一目見たいと、うわさに聞いて心惹かれ夢中になる。","source":"竹取物語（貴公子たちの求婚）"},{"meaning":"感嘆する","text":"光る君といふ名は、高麗人のめできこえて、付け奉りける","translation":"光る君という名は、高麗の人が感嘆申し上げて、お付け申し上げたのであった。","source":"源氏物語・桐壺"}],"17":[{"meaning":"目を覚ます","text":"わづらふ姉おどろきて","translation":"病気で寝ていた姉が目を覚まして。","source":"更級日記（大納言殿の姫君）"},{"meaning":"気づく","text":"秋来ぬと目にはさやかに見えねども風の音にぞおどろかれぬる","translation":"秋が来たと目にははっきり見えないけれど、風の音によって、はっと気づかされることだ。","source":"古今和歌集・秋歌上"}],"18":[{"meaning":"疲れる","text":"日々に責められ、こうじて","translation":"毎日責め立てられて、疲れ果てて。","source":"源氏物語・若菜下"}],"19":[{"meaning":"思われる","text":"心あらん友もがなと、都恋しうおぼゆれ","translation":"情趣を解する友がいたらなあと、都が恋しく思われる。","source":"徒然草・第百三十七段"},{"meaning":"思い出される","text":"昔おぼゆる花橘、撫子、薔薇くたになどやうの花くさぐさを植ゑて","translation":"昔のことが思い出される橘の花や、撫子、薔薇などのさまざまな花や草を植えて。","source":"源氏物語・若紫"},{"meaning":"似る","text":"少しおぼえたるところあれば、子なめりと見給ふ","translation":"少し似ているところがあるので、（尼君の）子であるらしいとご覧になる。","source":"源氏物語・若紫"}],"20":[{"meaning":"聞こえる","text":"笛の音のただ秋風ときこゆるになどをぎの葉のそよと答へぬ","translation":"笛の音がまるで秋風のように聞こえるのに、どうして荻の葉はそよとも答えないのだろうか。","source":"更級日記"},{"meaning":"評判になる","text":"滋籐の弓持って、きこゆる木曾の鬼葦毛といふ馬の、きはめて太うたくましいに","translation":"滋籐の弓を持って、評判の高い木曾の鬼葦毛という馬に乗り、その馬はたいそう太くたくましいが。","source":"平家物語・巻九「木曾最期」"},{"meaning":"分かる","text":"きこえぬことども言ひつつよろめきたる","translation":"わけの分からないことを口にしながら、ふらふらとよろめいている。","source":"徒然草・第百七十五段"}],"21":[{"meaning":"見つめる","text":"花の本には、ねぢ寄り立ち寄り、あからめもせずまもりて","translation":"桜の木の下には、体をねじるようにして近寄り、よそ見もせずにじっと見つめて。","source":"徒然草・第百三十七段"}],"22":[{"meaning":"あてにする","text":"のちの矢をたのみて、初めの矢になほざりの心あり","translation":"後の矢をあてにして、最初の矢にはいい加減な気持ちがある。","source":"徒然草・第九十二段"},{"meaning":"あてにされる","text":"待つ人は障りありて、たのめぬ人は来たり","translation":"待っている人には差し支えがあって来られず、当てにさせていなかった人がふいにやって来る。","source":"徒然草・第百八十九段"}],"23":[{"meaning":"かぶる","text":"傍らなる足鼎を取りて、頭にかづきたれば","translation":"そばにあった三本足の鼎を取って、頭にかぶったところ。","source":"徒然草・第五十三段"},{"meaning":"いただく","text":"大将も物かづき忠岑も禄賜りなどしけり","translation":"大将も褒美の品をいただき、忠岑も禄をいただいたりした。","source":"大和物語・第百二十五段"},{"meaning":"与える","text":"『願ひを叶ふることのうれしさ』とのたまひて、御衣脱ぎてかづけ給ひつ","translation":"『願いをかなえてくれたことの嬉しさよ』とおっしゃって、着ていた衣を脱いでお与えになった。","source":"竹取物語（燕の子安貝）"}],"24":[{"meaning":"大声で騒ぐ","text":"何事にかあらん、ことごとしくののしりて","translation":"何事であろうか、大げさに大声で騒ぎ立てて。","source":"徒然草・第十九段"},{"meaning":"評判になる","text":"この世にののしり給ふ光源氏、かかるついでに見奉り給はむや","translation":"世間で評判になっていらっしゃる光源氏を、こうした機会に拝見なさいませんか。","source":"源氏物語・若紫"},{"meaning":"羽振りをきかす","text":"左の大臣の北の方にてののしり給ひける時に","translation":"左大臣の奥方として羽振りをきかせていらっしゃった時に。","source":"大和物語・第百二十四段"}],"25":[{"meaning":"送る","text":"をとこの着たりける狩衣の裾を切りて、歌を書きてやる","translation":"男が着ていた狩衣の裾を切り取って、そこに歌を書いて送る。","source":"伊勢物語・第一段"},{"meaning":"〜きれない","text":"言ひもやらず、むせかへり給ふほどに","translation":"最後まで言い切ることもできず、むせび泣きなさっているうちに。","source":"源氏物語・桐壺"}],"26":[{"meaning":"答える","text":"いま一声呼ばれていらへんと、念じて寝たるほどに","translation":"もう一度声をかけられてから返事をしようと、我慢して寝たふりをしていたところ。","source":"宇治拾遺物語・巻一ノ十二"}],"27":[{"meaning":"明らかにする","text":"ここもとの浅きことは、何事なりともあきらめ申さん","translation":"この程度の浅いことでしたら、どんなことでも明らかにして申し上げましょう。","source":"徒然草・第百三十五段"}],"28":[{"meaning":"美しく映える","text":"春の苑紅にほふ桃の花下照る道に出で立つ乙女","translation":"春の庭に紅色が美しく映える桃の花よ、その花の色に照り映える道に出て立つ娘よ。","source":"万葉集・四一三九番"}],"29":[{"meaning":"がまんする","text":"そなたに向きてなむねんじ暮らし給ひける","translation":"そちらの方角を向いて、じっと我慢しながら日々を過ごしていらっしゃった。","source":"枕草子（清涼殿の丑寅のすみ）"}],"30":[{"meaning":"用意する","text":"草の御蓆も、この坊にこそまうけ侍るべけれ","translation":"敷物の莚も、この僧坊できっと用意しておくべきでしょう。","source":"源氏物語・若紫"}],"31":[{"meaning":"座る","text":"その沢のほとりの木の陰に下りゐて","translation":"その沢のほとりの木陰に、馬から下りて座って。","source":"伊勢物語・第九段"},{"meaning":"〜ている","text":"物の隠れよりしばし見ゐたるに","translation":"物陰からしばらくの間、じっと見ていると。","source":"徒然草・第三十二段"},{"meaning":"連れる","text":"見ればゐて来し女もなし","translation":"見ると、連れて来たはずの女もいない。","source":"伊勢物語・第六段"}],"32":[{"meaning":"伴う","text":"この在次君の、ひと所にぐして知りたりける人","translation":"この在次君と、同じ場所で一緒にいて知り合いだった人。","source":"大和物語・第百四十四段"},{"meaning":"連れる","text":"木曾殿の最後のいくさに、女をぐせられたりけりなんど言はれん","translation":"木曾殿は最後の戦いに女を連れていらっしゃったなどと言われるだろう。","source":"平家物語・巻九「木曾最期」"},{"meaning":"添える","text":"かの奉る不死の薬に、また、壺ぐして","translation":"あの差し上げる不死の薬に、さらに壺を添えて。","source":"竹取物語（ふじの山）"}],"33":[{"meaning":"たつ","text":"日ごろへて、宮に帰り給うけり","translation":"数日たってから、宮邸にお帰りになった。","source":"伊勢物語・第八十三段"},{"meaning":"通る","text":"黒崎の松原をへて行く","translation":"黒崎の松原を通って行く。","source":"土佐日記"}],"34":[{"meaning":"避ける","text":"えさらぬ事のみいとどかさなりて","translation":"どうしても避けられない用事ばかりがますます重なって。","source":"徒然草・第五十九段"},{"meaning":"なる","text":"夕されば門田の稲葉おとづれて","translation":"夕方になると、門前の田の稲の葉に風の音がおとずれて。","source":"金葉和歌集・秋（大納言経信）"}],"35":[{"meaning":"する","text":"『いと忍びてものせむ』とのたまひて","translation":"『たいそう人目を忍んでそっと出かけよう』とおっしゃって。","source":"源氏物語・若紫"},{"meaning":"いらっしゃる","text":"年ごろ経るに、御子のものし給はで","translation":"何年も経つのに、お子様がお生まれにならないで。","source":"源氏物語・橋姫"}],"36":[{"meaning":"慣れる","text":"霞のたたずまひもをかしう見ゆれば、かかる有様もならひ給はず","translation":"霞のかかった様子も趣深く見えるので、（光源氏は）このような（山里の）暮らしぶりにはまだ慣れていらっしゃらない。","source":"源氏物語・若紫"},{"meaning":"なじむ","text":"春霞立つを見捨てて行く雁は花なき里に住みやならへる","translation":"春霞が立つのを見捨てるように北へ帰っていく雁は、花の咲かない里に住みなれてしまったのだろうか。","source":"古今和歌集・春上"}],"37":[{"meaning":"がまんする","text":"しのぶれど色に出でにけり我が恋はものや思ふと人の問ふまで","translation":"心の中でこらえ隠していたけれど、顔色に出てしまった、私の恋心は。『何か物思いをしているのか』と人に尋ねられるほどに。","source":"拾遺和歌集・恋一（百人一首四十番・平兼盛）"},{"meaning":"人目につかないようにする","text":"しのぶるやうこそはと、あながちにも問ひ出で給はず","translation":"何か人に知られたくない事情があって隠しているのだろうと（源氏は）思って、無理に問いただしなさろうとはしない。","source":"源氏物語・夕顔"},{"meaning":"思い出す","text":"亡き人をしのぶる宵の村雨に濡れてやきつる山ほととぎす","translation":"亡くなった人（紫の上）を懐かしく思い出しているこの宵のにわか雨に濡れて、山ほととぎすは鳴きながらやって来たのだろうか。","source":"源氏物語・幻"}],"38":[{"meaning":"困る","text":"限りなく遠くも来にけるものかなと、わびあへるに","translation":"「果てしなく遠くまで来てしまったものだなあ」と、一行の者たちが困り果てて嘆き合っていると。","source":"伊勢物語・第九段"},{"meaning":"〜かねる","text":"京にありわびて東に行きけるに","translation":"都にいるのがつらくて耐えられなくなり、東国へ下って行った時に。","source":"伊勢物語・第七段"}],"39":[{"meaning":"すばらしい","text":"まいて雁などの連ねたるが、いと小さく見ゆるは、いとをかし","translation":"まして雁などが列を作って飛んでいるのが、とても小さく見えるのは、実にすばらしい。","source":"枕草子・春はあけぼの"}],"40":[{"meaning":"悪くはない","text":"湯浴みなどせむとて、あたりのよろしき所におりて行く","translation":"湯浴みなどをしようというので、近くの悪くはない（まずまずの）場所に降りて行く。","source":"土佐日記"},{"meaning":"普通だ","text":"笠うち着、足ひき包み、よろしき姿したる者、ひたすらに家ごとに、乞ひありく","translation":"笠をかぶり、足を布で包んで、まあ人並みの（ごく普通の）身なりをした者が、ひたすら家ごとに物乞いをして歩く。","source":"方丈記"}],"41":[{"meaning":"めったにない","text":"ありがたきもの。舅にほめらるる婿。また、姑に思はるる嫁の君","translation":"めったにないもの。舅にほめられる婿。また、姑にかわいがられる嫁。","source":"枕草子・ありがたきもの"},{"meaning":"すばらしい","text":"世の中は、ありがたくむつかしげなるものかな","translation":"この世の中は、めったにないほどすばらしくもあり、また厄介なものであることよ。","source":"源氏物語・東屋"}],"42":[{"meaning":"似つかわしい","text":"いと寒きに、火など急ぎおこして、炭もて渡るも、いとつきづきし","translation":"たいそう寒い時に、火などを急いでおこして、炭を持って運んで行く様子も、（冬の朝には）実によく似合っている。","source":"枕草子・春はあけぼの"}],"43":[{"meaning":"上品だ","text":"なまめかしく、人の親げなくおはしますを","translation":"（尼君は）上品で優美な様子で、とても人の親らしくは見えなさらないのを（見て）。","source":"源氏物語・若紫"},{"meaning":"若々しい","text":"なまめかしきもの。ほそやかに清げなる君達の直衣姿","translation":"若々しく美しいもの。ほっそりとして清潔感のある若君たちの直衣姿。","source":"枕草子（なまめかしきもの）"}],"44":[{"meaning":"すばらしい","text":"藤の花は、しなひ長く、色濃く咲きたる、いとめでたし","translation":"藤の花は、房が長く垂れて、色濃く咲いているのが、実にすばらしい。","source":"枕草子・木の花は"}],"45":[{"meaning":"きちんとしている","text":"同じ小柴なれど、うるはしうしわたして","translation":"同じ小柴垣であるが、それをきちんと整った様子に張りめぐらして。","source":"源氏物語・若紫"},{"meaning":"美しい","text":"倭は国のまほろばたたなづく青垣山ごもれる倭しうるはし","translation":"大和は国々の中で最もすぐれた国だ。幾重にも重なる青い垣のような山々に囲まれた大和は美しい。","source":"古事記・景行天皇の段"}],"46":[{"meaning":"高貴だ","text":"いとやむごとなききはにはあらぬが、すぐれて時めき給ふありけり","translation":"それほど高貴な身分ではない方で、格別に帝の寵愛を受けて栄えていらっしゃる方があった。","source":"源氏物語・桐壺"},{"meaning":"並々でない","text":"摂津守も、これらをやむごとなき者にして、後前に立ててぞつかひける","translation":"摂津守も、この者たちを並々でない（格別に頼りになる）者だと考えて、自分の前後に立たせて使っていた。","source":"今昔物語集・巻二十八第二話"}],"47":[{"meaning":"思慮分別がある","text":"年のほどよりはいとおとなしく","translation":"実際の年齢のわりには、とても大人びて思慮分別があって。","source":"紫式部日記"},{"meaning":"主だっている","text":"おとなしく物知りぬべき顔したる神官を呼びて","translation":"年配で物知りらしい顔をした、主だった神官を呼んで。","source":"徒然草・第二百三十六段"}],"48":[{"meaning":"見たい","text":"いみじく心もとなく、ゆかしくおぼゆるままに、この源氏の物語、一の巻よりしてみな見せ給へと、心の内に祈る","translation":"たいそうもどかしく、続きを見たくてたまらないので、この源氏物語を第一巻からすべて見せてくださいと、心の中で祈る。","source":"更級日記（物語・源氏の五十余巻）"},{"meaning":"知りたい","text":"忍びて寄する車どものゆかしきを","translation":"人目を忍んでそっと近づいてくる牛車の、その持ち主が誰なのか知りたいのに。","source":"徒然草・第百三十七段"},{"meaning":"心ひかれる","text":"山路来て何やらゆかしすみれ草","translation":"山道を歩いて来て、なんとなく心ひかれることだ、道端に咲くこのすみれの花よ。","source":"野ざらし紀行（松尾芭蕉）"}],"49":[{"meaning":"親しみ深い","text":"咲く花の色めづらしく百鳥の声なつかしく","translation":"咲いている花の色は目新しく美しく、多くの鳥の声は親しみ深く心ひかれる。","source":"万葉集・一〇五九"}],"50":[{"meaning":"立派だ","text":"はづかしき人の、歌の本末問ひたるに、ふとおぼえたる、我ながらうれし","translation":"こちらが気後れするほど立派な人が和歌の上の句・下の句を尋ねてきたときに、ふと思い出せたのは、我ながらうれしい。","source":"枕草子（うれしきもの）"}],"51":[{"meaning":"奥ゆかしい","text":"こころにくき限りの女房四五人さぶらはせ給ひて","translation":"この上なく奥ゆかしい女房を四、五人だけおそばに仕えさせなさって。","source":"源氏物語・桐壺"}],"52":[{"meaning":"かわいい","text":"うつくしきもの。瓜にかきたるちごの顔","translation":"かわいらしいもの。瓜に描いた幼児の顔（の絵）。","source":"枕草子（うつくしきもの）"}],"53":[{"meaning":"いとしい","text":"限りなくかなしと思ひて、河内へも行かずなりにけり","translation":"このうえなくいとしいと思って、（男は）河内へも通わなくなってしまった。","source":"伊勢物語・第二十三段"}],"54":[{"meaning":"かわいい","text":"をかしげなる児の、あからさまに抱きて遊ばしうつくしむほどに、かい付きて寝たる、いとらうたし","translation":"かわいらしい様子の幼児を、ちょっと抱いてあやしているうちに、しがみついて眠ってしまったのは、実にかわいらしい。","source":"枕草子（うつくしきもの）"}],"55":[{"meaning":"感じがよい","text":"髪ゆるるかに、いと長く、めやすき人なめり","translation":"髪がゆったりと豊かで、とても長く、感じのよい人であるようだ。","source":"源氏物語・若紫"}],"56":[{"meaning":"不思議だ","text":"げに御かたち・有り様、あやしきまでぞ覚え給へる","translation":"なるほど（その子の）顔立ちや様子は、不思議なほど（すぐれて）美しく思われなさる。","source":"源氏物語・桐壺"},{"meaning":"身分が低い","text":"あやしの身には得がたき物にて","translation":"身分の低い者にとっては、なかなか手に入れがたい物であって。","source":"発心集・巻六"},{"meaning":"粗末だ","text":"親の、あやしき衣ひき着せて","translation":"（鬼である）親が、我が子（蓑虫）に粗末な着物を着せて。","source":"枕草子（虫は）"}],"57":[{"meaning":"物足りない","text":"この酒を独りたうべんがさうざうしければ","translation":"この酒を一人でいただくのは物足りないので。","source":"徒然草・第二百十五段"}],"58":[{"meaning":"平然としている","text":"かへすがへす、つれなき命にも侍るかな","translation":"返す返すも、こんなにつらい目にあっても平然と続いている（自分の）命であることよ。","source":"源氏物語・桐壺"},{"meaning":"冷淡だ","text":"昔、男、つれなかりける女にいひやりける","translation":"昔、ある男が、自分に対して冷淡であった女に歌を詠んで送った。","source":"伊勢物語・第五十四段"}],"59":[{"meaning":"無礼だ","text":"文ことばなめき人こそいとにくけれ","translation":"手紙の言葉づかいが無礼な人は、実に憎らしいものだ。","source":"枕草子"}],"60":[{"meaning":"大げさだ","text":"『ここに草の庵やある』とおどろおどろしく言へば","translation":"「ここに草庵はあるか」と大げさな声で言うと。","source":"枕草子"},{"meaning":"気味が悪い","text":"いとおどろおどろしくかきたれ雨の降る夜","translation":"たいそう気味の悪いほど激しく降りしきる雨の夜。","source":"大鏡"}],"61":[{"meaning":"つらい","text":"人の行き通ふべき所にもあらざりければ、なほうしと思ひつつなむありける","translation":"人が行き来できるような（普通の）場所でもなかったので、（男は）やはりつらいと思いながら過ごしていた。","source":"伊勢物語・第四段"},{"meaning":"いやだ","text":"咲く花に移るてふ名は包めども折らで過ぎうきけさの朝顔","translation":"咲く花に心変わりするという浮き名は隠しているけれど、手折らずに通り過ぎるのはいやで気が引ける、今朝の朝顔の花よ。","source":"源氏物語・夕顔"}],"62":[{"meaning":"うっとうしい","text":"あなづりやすき人ならば、『のちに』とてもやりつべけれど、さすがに心恥づかしき人、いとにくくむつかし","translation":"軽んじてよい相手なら「あとで」と言って追い返してもよいが、そうはいってもこちらが気後れするような立派な人（が相手）の場合は、実に憎らしく（応対が）うっとうしい。","source":"枕草子（にくきもの）"},{"meaning":"気味が悪い","text":"手にきり付きて、いとむつかしきものぞかし","translation":"手にべったりとまとわりついて、実に気味の悪いものであるよ。","source":"堤中納言物語・虫めづる姫君"}],"63":[{"meaning":"興ざめだ","text":"梨の花、よにすさまじきものにして、近うもてなさず","translation":"梨の花は、まったく興ざめなものとして、身近には扱わない。","source":"枕草子（木の花は）"},{"meaning":"殺風景だ","text":"すさまじきものにして見る人もなき月の","translation":"殺風景でつまらないものとして、誰も見ようとしない（冬の）月が。","source":"徒然草・第十九段"}],"64":[{"meaning":"不都合だ","text":"左の大臣の一の人といひながら、美麗ことのほかにて参れる、びんなきことなり","translation":"左大臣という最高の地位にありながら、格別に華美な装いで参内するのは、不都合なことである。","source":"大鏡・時平の段"},{"meaning":"気の毒だ","text":"いとびんなければ、許しやりぬ","translation":"たいそう気の毒であったので、（借りを）許してやった。","source":"風俗文選（俳文）"}],"65":[{"meaning":"気の毒だ","text":"翁をいとほしく、かなしと思しつることも失せぬ","translation":"翁のことを気の毒に、いとしいと思っていたお気持ちも消えてしまった。","source":"竹取物語"}],"66":[{"meaning":"子どもっぽい","text":"いはけなくかいやりたる額つき、髪ざし、いみじううつくし","translation":"幼く（子どもっぽく）かき上げた額のようすや髪の生え際が、たいそうかわいらしい。","source":"源氏物語・若紫"}],"67":[{"meaning":"薄情だ","text":"命長さのいとつらう思ひ給へ知らるるに","translation":"長生きしていることが、たいそう（我が身にとって）薄情な（つらい）ものだと思い知らされますにつけても。","source":"源氏物語・桐壺"}],"68":[{"meaning":"窮屈だ","text":"せばき縁に、ところせき御装束の下襲引き散らされたり","translation":"狭い縁側に、窮屈なほど大げさな装束の下襲が引き散らされている。","source":"枕草子"}],"69":[{"meaning":"気がかりだ","text":"いとはかなうものし給ふこそ、あはれにうしろめたけれ","translation":"たいそう頼りなさそうにしていらっしゃるのが、しみじみと気がかりである。","source":"源氏物語・若紫"}],"70":[{"meaning":"きまり悪い","text":"かやうのことこそは、かたはらいたきことのうちに、入れつべけれど","translation":"こういうことは、きまりの悪いことの中に入れるべきなのだけれど。","source":"枕草子（中納言まゐり給ひて）"},{"meaning":"苦々しい","text":"おほかたさし向かひても、なめきは、などかく言ふらむとかたはらいたし","translation":"だいたい面と向かっていても、口のきき方が無礼な人は、どうしてこんな話し方をするのだろうと苦々しく思われる。","source":"枕草子（文ことばなめき人こそ）"},{"meaning":"気の毒だ","text":"このごろの御気色を見奉る上人女房などは、かたはらいたしと聞きけり","translation":"この頃の（帝の）ご様子を拝見する殿上人や女房たちは、気の毒なことだと聞いていた。","source":"源氏物語・桐壺"}],"71":[{"meaning":"ひどい","text":"節分違へなどして夜深く帰る、寒きこと、いとわりなく","translation":"節分の方違えなどをして夜がすっかり更けてから帰る、その寒さといったら実にひどいものだ。","source":"枕草子"},{"meaning":"どうしようもない","text":"わりなくまつはさせ給ふあまりに","translation":"（帝が桐壺更衣を）どうしようもないほど無理にそばに引き寄せ、離さずにいらっしゃるあまりに。","source":"源氏物語・桐壺"},{"meaning":"苦しい","text":"路次の煩ひとなれるこそわりなけれ","translation":"旅の道中で病気（体調不良）になってしまったのは、何とも苦しくつらいことだ。","source":"奥の細道・草加"}],"72":[{"meaning":"残念だ","text":"過ぎ別れぬること、かへすがへすほいなくこそおぼえはべれ。","translation":"（あなたと）行き別れてしまったことが、かえすがえすも残念に思われます。","source":"竹取物語"}],"73":[{"meaning":"驚くほどだ","text":"思はずにあさましくて、『こはいかに、かかるやうやはある』とばかり言ひて","translation":"思いがけないことに驚きあきれて、「これはどうしたことか、こんなことがあってよいものか」とだけ言って。","source":"十訓抄・第三"},{"meaning":"あきれるほどだ","text":"わがもてつけたるをつつみなく言ひたるは、あさましきわざなり","translation":"自分が得意にしていることを、人が遠慮もなく言い立てるのは、あきれるほど嫌なことだ。","source":"枕草子"},{"meaning":"情けない","text":"むく犬の、あさましく老いさらぼひて、毛はげたるを引かせて","translation":"むく毛の犬が、情けないほど年老いてやせ衰え、毛も抜けてしまっているのを引かせて。","source":"徒然草・第152段"}],"74":[{"meaning":"きにくわない","text":"はじめより我はと思ひ上がり給へる御方々、めざましきものにおとしめそねみ給ふ","translation":"初めから自分こそはと自負していらっしゃった女御方々は、（桐壺更衣を）気にくわない者として見下し、嫉妬なさる。","source":"源氏物語・桐壺"},{"meaning":"すばらしい","text":"『げにもすきたるかな』と、めざましう見給ふ","translation":"「なるほど本当に風流なことだ」と、（その様子を）すばらしいとご覧になる。","source":"源氏物語・明石"}],"75":[{"meaning":"すばらしい","text":"世は定めなきこそ、いみじけれ","translation":"この世は無常で定めがないからこそ、すばらしいのだ。","source":"徒然草・第7段"},{"meaning":"ひどい","text":"あないみじ。犬を蔵人二人してうち給ふ。死ぬべし","translation":"ああひどいことだ。犬を蔵人が二人がかりで打っていらっしゃる。死んでしまいそうだ。","source":"枕草子（うへにさぶらふ御猫は）"},{"meaning":"とても","text":"御前なる獅子・狛犬そむきて、後ろさまに立ちたりければ、上人いみじく感じて","translation":"御前にある獅子と狛犬が背を向けて後ろ向きに立っていたので、上人はとても感動して。","source":"徒然草・第236段"}],"76":[{"meaning":"不吉だ","text":"たちいづる天の川辺のゆかしさに常はゆゆしきことも忘れぬ","translation":"天の川のほとりへ出ていく心惹かれる思いに、いつもは不吉として忌み嫌うようなことまで忘れてしまった。","source":"更級日記"},{"meaning":"すばらしい","text":"徒人も、舎人など賜る際はゆゆしと見ゆ","translation":"無位の者でも、舎人などを賜る時にはすばらしく立派に見える。","source":"徒然草・第1段"},{"meaning":"はなはだしく","text":"おのおの拝みて、ゆゆしく信起こしたり","translation":"それぞれが参拝して、はなはだしく信仰心を起こした。","source":"徒然草・第236段"}],"77":[{"meaning":"優美だ","text":"いと若やかに愛敬づき、やさしきところ添ひたり","translation":"とても若々しく愛らしい魅力があって、優美なところが加わっている。","source":"源氏物語・蜻蛉"},{"meaning":"上品だ","text":"あまりやさしきことなりな","translation":"それはあまりにも上品で優雅なことですね。","source":"大鏡・師尹"},{"meaning":"殊勝だ","text":"あなやさし。…ただ一騎残らせ給ひたるこそ優なれ","translation":"ああ殊勝なことよ。…ただ一騎だけ踏みとどまられたのは実に立派だ。","source":"平家物語・巻七「実盛」"}],"78":[{"meaning":"はっきりと分かる","text":"いといたうやつれ給へれど、しるき御さまなれば","translation":"たいそうやつれていらっしゃるけれど、（高貴な）お姿ははっきりとそれと分かるので。","source":"源氏物語・若紫"},{"meaning":"〜のとおりに","text":"世の乱るる瑞相とか聞けるもしるく","translation":"世の中が乱れる前兆だと聞いていたことも、まさにそのとおりで。","source":"方丈記"}],"79":[{"meaning":"早い","text":"春やとき花や遅きと聞き分かむ","translation":"春が来るのが早いのか、花が咲くのが遅いのか、（鶯の声で）聞き分けよう。","source":"古今和歌集"}],"80":[{"meaning":"突然だ","text":"かく言ひて、眺めつつ来る間に、ゆくりなく風吹きて","translation":"こう言いながら、物思いにふけりつつ来るうちに、突然風が吹いて。","source":"土佐日記"}],"81":[{"meaning":"はっきりしない","text":"山吹の清げに、藤のおぼつかなきさましたる","translation":"山吹の花ははっきりと美しく咲いているのに対し、藤の花はぼんやりとはっきりしない様子をしている。","source":"徒然草・第19段"},{"meaning":"気がかりだ","text":"道風書かんこと、時代やたがひ侍らん。おぼつかなくこそ","translation":"（それを）道風が書いたということは、時代が合わないのではないか。どうも気がかりで疑わしいことだ。","source":"徒然草・第88段"},{"meaning":"待ち遠しい","text":"夢の中にも見たてまつらで、恋しうおぼつかなき御さまを","translation":"夢の中でさえお姿を見申し上げることができず、恋しく早くお会いしたい（待ち遠しい）とばかり思われるご様子を。","source":"源氏物語・明石"}],"82":[{"meaning":"かすかだ","text":"花びらの端に、をかしきにほひこそ、こころもとなうつきためれ","translation":"花びらの端に、趣のある色つやが、かすかについているようだ。","source":"枕草子（木の花は）"},{"meaning":"不安だ","text":"こころもとなき日数重なるままに、白河の関にかかりて","translation":"落ち着かず不安な日数が重なるうちに、白河の関にさしかかって。","source":"奥の細道"},{"meaning":"じれったい","text":"わづかに見つつ心も得ずこころもとなく思ふ源氏を","translation":"ほんの少しずつしか読めず、内容もよく理解できないまま、じれったく思っている『源氏物語』を。","source":"更級日記"}],"83":[{"meaning":"しみじみと心に深く感じられる","text":"蜘蛛の巣のこぼれ残りたるに、雨のかかりたるが、白き玉を貫きたるやうなるこそ、いみじうあはれにをかしけれ","translation":"蜘蛛の巣の破れ残ったところに雨がかかっているのが、まるで白い玉を糸に貫いたように見えるのは、たいそうしみじみと心打たれて趣深い。","source":"枕草子"}],"84":[{"meaning":"退屈である","text":"つれづれなるままに、日暮らし、硯に向かひて","translation":"することもなく退屈にまかせて、一日中硯に向かって。","source":"徒然草・序段"},{"meaning":"ものさびしい","text":"年ごろ、つれづれにながめ明かし暮らしつつ","translation":"長年、もの寂しく物思いに沈みながら夜を明かし日を暮らしていて。","source":"紫式部日記"}],"85":[{"meaning":"わけもない","text":"いみじく泣くのを見給ふも、すずろに悲し","translation":"ひどく泣いているのをご覧になるにつけても、わけもなく悲しい。","source":"源氏物語・若紫"},{"meaning":"思いがけない","text":"つた・かへでは茂り、もの心細く、すずろなる目を見ることと思ふに","translation":"蔦や楓は生い茂って何となく心細く、思いがけずつらい目に遭うことだと思っていると。","source":"伊勢物語・第9段"},{"meaning":"むやみやたらだ","text":"大方は知りたりとも、すずろに言ひ散らすは","translation":"たいていのことは知っていたとしても、むやみやたらに言い散らすのは（みっともない）。","source":"徒然草・第168段"}],"86":[{"meaning":"まじめである","text":"まめなる男ども二十人ばかりつかはして","translation":"まじめで誠実な男たちを二十人ほど派遣して。","source":"竹取物語"},{"meaning":"実用的である","text":"心、身の苦しみを知れれば、苦しむ時は休めつ、まめなれば使ふ","translation":"心は体の苦しみを知っているので、苦しい時は休ませ、調子がよく実用に耐える時は使う。","source":"方丈記"}],"87":[{"meaning":"はかない","text":"会はでやみにし憂さを思ひ、あだなる契りをかこち","translation":"逢わないままで終わってしまったつらさを思い、はかない約束をかこつ。","source":"徒然草・第137段"},{"meaning":"浮気だ","text":"そのあだになりぬる人の果て、いかでかはよく侍らむ","translation":"その浮気で誠実さを失ってしまった人の行く末が、どうしてよいはずがありましょうか。","source":"紫式部日記（消息文）"}],"88":[{"meaning":"役に立たない","text":"上人の感涙いたづらになりにけり","translation":"上人の感激の涙は無駄になってしまった。","source":"徒然草・第236段"},{"meaning":"むなしい","text":"花の色は移りにけりないたづらにわが身世にふるながめせし間に","translation":"桜の花の色はすっかり色あせてしまったなあ、むなしく私がこの世で物思いにふけっている間に。","source":"古今和歌集（小野小町、百人一首9番）"}],"89":[{"meaning":"優れている","text":"かぐや姫のかたちいうにおはすなり","translation":"かぐや姫の容姿は優れていらっしゃるということだ。","source":"竹取物語"},{"meaning":"優雅である","text":"なほ事ざまのいうにおぼえて、物の隠れよりしばし見ゐたるに","translation":"それでもやはり様子が優雅に思われて、物陰からしばらく見つめていたところ。","source":"徒然草・第32段"}],"90":[{"meaning":"高貴である","text":"世界の男、あてなるもいやしきも、いかでこのかぐや姫を、得てしがな、見てしがなと","translation":"世間の男は、高貴な者も身分の低い者も、何とかしてこのかぐや姫を手に入れたい、一目見たいと。","source":"竹取物語"},{"meaning":"上品である","text":"ただ文字一つに、あやしう、あてにもいやしうもなるは、いかなるにかあらむ","translation":"ただ文字一つで、不思議に、上品にも下品にもなるのは、どういうわけであろうか。","source":"枕草子"}],"91":[{"meaning":"ほんのちょっと","text":"あからさまにまかでたるほど、二日ばかりありてしも雪は降るものか","translation":"ほんの少しの間だけ里に下がっていたところ、その二日ほどの間に、よりによって雪が降るとは。","source":"紫式部日記"}],"92":[{"meaning":"ひそかに","text":"みそかに花山寺におはしまして","translation":"ひそかに花山寺へお出かけになって。","source":"大鏡・花山院"}],"93":[{"meaning":"いい加減だ","text":"わづかに二つの矢、師の前にて一つをおろかにせんと思はんや","translation":"わずか二本の矢のうち、師匠の前で一本をいい加減にしようと思うだろうか、いや思わない。","source":"徒然草・第92段"},{"meaning":"並ひととおりだ","text":"いづ方につけてもおろかならざらむこそよからめ","translation":"どちらの点から見ても、並一通りでなく（手厚く）扱うのがよいだろう。","source":"源氏物語・葵"},{"meaning":"言い尽くせない","text":"返す返すもすさまじと言ふはおろかなり","translation":"何度繰り返しても「興ざめだ」と言うだけでは言い尽くせない。","source":"枕草子"}],"94":[{"meaning":"愚かだ","text":"行きかかりてむなしう帰らむ後ろ手も、をこなるべし","translation":"行きかけて何もせずに帰るその後ろ姿も、愚かしく見えるに違いない。","source":"源氏物語・須磨"},{"meaning":"ばかばかしい","text":"行きかかりてむなしう帰らむ後ろ手も、をこなるべし","translation":"行きかけて何もせずに帰るその後ろ姿も、ばかばかしく見えるに違いない。","source":"源氏物語・須磨"}],"95":[{"meaning":"ひどい","text":"殊勝のことは御覧じとがめずや。むげなり","translation":"尊く感心なことにお気づきにならないのですか。それはひどいことです。","source":"徒然草・第236段"},{"meaning":"ひどく","text":"むげに仲良くなりて、よろづのこと語る","translation":"すっかりひどく仲良くなって、何もかも話す。","source":"枕草子（職の御曹司におはします頃、西の廂にて）"}],"96":[{"meaning":"中途半端だ","text":"中将も、なかなかなることをうち出でて、いかにおぼすらむと、苦しきままに","translation":"中将も、中途半端な（言わなくてもよい）ことを口にしてしまって、相手はどう思うだろうかと、心苦しいままに。","source":"源氏物語・藤袴"},{"meaning":"かえってないほうがましだ","text":"なかなかなるもの思ひをぞし給ふ","translation":"（帝の寵愛が深いばかりに、桐壺更衣は）かえって何もない方がよかったと思うほどの物思いをなさる。","source":"源氏物語・桐壺"}],"97":[{"meaning":"字","text":"てよく書き、歌よく詠みて","translation":"字を上手に書き、和歌を上手に詠んで。","source":"枕草子（うらやましげなるもの）"},{"meaning":"演奏法","text":"織女のてにも劣るまじく","translation":"織女（たなばたの織姫）の演奏の腕前にも劣らないだろう。","source":"源氏物語・帚木"}],"98":[{"meaning":"手紙","text":"大江山いく野の道の遠ければまだふみもみず天の橋立","translation":"大江山を越えて生野を通る道のりは遠いので、（母からの）手紙もまだ見ておりませんし、天の橋立も踏んで見ておりません。","source":"金葉集（小式部内侍、百人一首60番）"},{"meaning":"漢詩","text":"唐土には限りなきものにて、ふみにも作る","translation":"中国ではこの上なくすばらしいものとされていて、漢詩にも詠まれる。","source":"枕草子（木の花は）"}],"99":[{"meaning":"手紙","text":"日ごろ経るまで、せうそこもつかはさず、あくがれまかりありくに","translation":"何日も経つまで手紙も出さず、心が上の空でさまよい歩いているうちに。","source":"源氏物語・帚木"},{"meaning":"訪問の申し入れ","text":"わざとせうそこし、よびいづべきことにはあらぬや","translation":"わざわざ訪問を申し入れて、呼び出すべきようなことではないではないか。","source":"枕草子（大進生昌が家に）"}],"100":[{"meaning":"管弦の遊び","text":"月のおもしろきに、夜更くるまであそびをぞし給ふなる","translation":"月が美しいので、夜が更けるまで管弦の遊びをなさっているそうだ。","source":"源氏物語・桐壺"}],"101":[{"meaning":"帝","text":"うへも聞こし召し、めでさせ給ふ","translation":"帝もお聞きになって、お褒めになる。","source":"枕草子（清涼殿の丑寅のすみの）"},{"meaning":"奥様","text":"離れ給ひしもとのうへは、腹を切りて笑ひ給ふ","translation":"離縁なさった元の奥様は、腹を抱えてお笑いになる。","source":"竹取物語（龍の頸の玉）"}],"102":[{"meaning":"朝廷","text":"おほやけより使ひ下りて追ふに","translation":"朝廷から使者が地方に下って追いかけたところ。","source":"更級日記（竹芝寺）"},{"meaning":"帝","text":"いみじく静かに、おほやけに御文奉り給ふ","translation":"たいそう静かに、帝にお手紙を差し上げなさる。","source":"竹取物語（かぐや姫の昇天）"}],"103":[{"meaning":"宮中","text":"今はうちにのみさぶらひ給ふ","translation":"今ではもっぱら宮中にばかりお仕えしていらっしゃる。","source":"源氏物語・桐壺"},{"meaning":"帝","text":"うちの上の、源氏の物語、人に読ませ給ひつつ","translation":"帝が、『源氏物語』を人に読ませなさりながら。","source":"紫式部日記（消息文）"}],"104":[{"meaning":"お側","text":"夜に入りてごぜんよりまかで給ふに","translation":"夜になってお側の間から退出なさると。","source":"源氏物語・末摘花"}],"105":[{"meaning":"お出まし","text":"朱雀院の帝、ありしみゆきののち","translation":"朱雀院の帝が、以前のお出ましがあった後。","source":"源氏物語・若菜上"}],"106":[{"meaning":"よりどころ","text":"女、親なく、たよりなくなるままに","translation":"女は、親が亡くなり、頼るところがなくなっていくにつれて","source":"伊勢物語・第23段"},{"meaning":"つて","text":"さるべきたよりをたづねて、七月七日言ひやる","translation":"しかるべき伝手を探し出して、七月七日に手紙を送った。","source":"更級日記（大納言殿の姫君）"},{"meaning":"よい機会","text":"たよりごとに物も絶えず得させたり","translation":"機会があるたびに、品物を絶えず届けさせた。","source":"土佐日記・二・一六"}],"107":[{"meaning":"世間話","text":"炭櫃に火おこして、ものがたりなどして集まりさぶらふに","translation":"火鉢に火をおこして、世間話などをしながら女房たちが集まっておりますときに","source":"枕草子"}],"108":[{"meaning":"先例","text":"よどみに浮かぶうたかたは、かつ消えかつ結びて、久しくとどまりたるためしなし","translation":"淀みに浮かぶ泡は、一方で消えたかと思うと一方で生じて、長い間そのままとどまっている例はない。","source":"方丈記"}],"109":[{"meaning":"準備","text":"あらぬいそぎまづ出できて紛れ暮らし","translation":"予定していなかった準備事がまず出てきて、それにまぎれて一日を過ごし","source":"徒然草・第189段"}],"110":[{"meaning":"気配り","text":"いささかのひまなくよういしたりと思ふが","translation":"少しの油断もなく気を配っていると自分では思っているが","source":"枕草子"}],"111":[{"meaning":"容貌","text":"この児のかたちけうらなること世になく","translation":"この子の容貌が美しく気高いことは世に例がなく","source":"竹取物語"}],"112":[{"meaning":"光","text":"渡る日のかげに競ひて尋ねてな","translation":"空を渡る太陽の光と競うようにして、訪ねて行きたいものだ","source":"万葉集・4469番"},{"meaning":"姿","text":"母御息所は、かげだに覚え給はぬを","translation":"母君である御息所については、そのお姿さえも覚えていらっしゃらないのに","source":"源氏物語・桐壺"}],"113":[{"meaning":"様子","text":"正月一日は、まいて空のけしきもうらうらと","translation":"正月一日は、いつにもましてまして空の様子ものどかで","source":"枕草子"},{"meaning":"機嫌","text":"かぢとり、けしき悪しからず","translation":"船頭は、機嫌が悪くない。","source":"土佐日記・一・一四"},{"meaning":"意向","text":"春宮よりも御けしきあるを","translation":"東宮（皇太子）からも入内させたいというご意向があるのに","source":"源氏物語・桐壺"}],"114":[{"meaning":"愛情","text":"女のもとに、なほこころざし果たさむとや思ひけむ","translation":"女のもとへ、やはり愛情を貫き通そうと思ったのであろうか","source":"伊勢物語・第86段"},{"meaning":"お礼の贈り物","text":"いとはつらく見ゆれど、こころざしはせむとす","translation":"相手の態度はとても薄情に見えるけれども、お礼の贈り物はしようと思う。","source":"土佐日記（帰京）"}],"115":[{"meaning":"かねてからの願い","text":"ゆかしかりしかど、神へ参るこそほいなれと思ひて、山までは見ず","translation":"見たかったけれど、神社にお参りすることこそがかねてからの願いだと思って、山の上までは見なかった。","source":"徒然草・第52段"}],"116":[{"meaning":"言葉","text":"唐土とこの国とはこと異なるものなれど","translation":"中国とこの国とでは言葉が異なるけれども","source":"土佐日記"},{"meaning":"和歌","text":"これに、ただいまおぼえむふるきことを一つづつ書け","translation":"この紙に、今すぐ思い出せる昔の和歌を一首ずつ書きなさい","source":"枕草子"}],"117":[{"meaning":"こと","text":"人を苦しめ、法を犯さしめて、それを罪なはん事、不便のわざなり","translation":"人を苦しめ、法を犯させておいて、それを罪に問うのは、気の毒なことである。","source":"徒然草・第142段"},{"meaning":"葬儀","text":"なき人の来る夜とて魂まつるわざは、このごろ都にはなきを","translation":"亡くなった人の霊が帰って来る夜だとして魂を祭る行事は、近頃の都では行われていないのに","source":"徒然草・第19段"}],"118":[{"meaning":"さまざま","text":"やまと歌は、人の心を種として、よろづの言の葉とぞなれりける","translation":"和歌は、人の心を種として、さまざまな言葉となったものである。","source":"古今和歌集・仮名序"},{"meaning":"何ごとにつけても","text":"万の事は頼むべからず。愚かなる人は、深く物を頼むゆゑに、恨み怒る事あり。","translation":"何ごとにつけても人を頼りにしてはいけない。愚かな人は、深く物事を頼みにするから、恨んだり怒ったりすることがある。","source":"徒然草・第211段"}],"119":[{"meaning":"道理","text":"かほどのことわり、たれかは思ひよらざらんなれども","translation":"これほどの道理には、誰でも思い当たらないことはないだろうが","source":"徒然草・第41段"}],"120":[{"meaning":"間違い","text":"いかでなほ、少しひがこと見つけてをやまむと","translation":"なんとかして、少しでも間違いを見つけて相手をやり込めようと","source":"枕草子"}],"121":[{"meaning":"嘘","text":"とにもかくにもそらごと多き世なり","translation":"とにもかくにも嘘の多い世の中である。","source":"徒然草・第73段"}],"122":[{"meaning":"効き目","text":"しるしなき物を思はずは一坏の濁れる酒を飲むべくあるらし","translation":"効き目のない物思いをするくらいなら、一杯の濁り酒を飲む方がよいらしい。","source":"万葉集・338番"},{"meaning":"ご利益","text":"稲荷より給ふしるしの杉よ","translation":"稲荷の神からいただいたご利益のある杉であるよ。","source":"更級日記（夫の死）"},{"meaning":"きざし","text":"かの鬼の虚言は、このしるしを示すなりけり","translation":"あの鬼が現れたという作り話は、のちの疫病流行のきざしを示していたのであった。","source":"徒然草・第50段"}],"123":[{"meaning":"ため","text":"燕の持たる子安の貝を取らむれうなり","translation":"燕が持っている子安貝を取るためである。","source":"竹取物語"}],"124":[{"meaning":"ほうび","text":"大御酒たまひ、ろくたまはむとて、つかはさざりけり","translation":"お酒をくださり、ほうびを与えようとして、お帰しにならなかった。","source":"伊勢物語・第83段"}],"125":[{"meaning":"長年","text":"としごろよくくらべつる人々なむ、別れがたく思ひて","translation":"長年親しく付き合ってきた人々が、別れがたく思って","source":"土佐日記"}],"126":[{"meaning":"早朝","text":"冬はつとめて","translation":"冬は早朝がよい。","source":"枕草子・「春はあけぼの」"},{"meaning":"翌朝","text":"つとめて、いぶかしけれど、わが人をやるべきにしあらねば、いと心もとなくて待ちをれば","translation":"翌朝、気になったけれども、自分の方から使いの者をやるわけにもいかないので、たいそう気がかりに思いながら待っていると","source":"伊勢物語・第69段（狩の使）"}],"127":[{"meaning":"男女の仲","text":"思ふかひなきよなりけり","translation":"思っても仕方のない男女の仲であったなあ。","source":"伊勢物語・第21段"}],"128":[{"meaning":"どうして","text":"ただ今、おのれ見捨て奉らば、いかで世におはせむとすらむ","translation":"今すぐ私があなたを見捨て申し上げたら、どうしてこの世に生きていらっしゃれようか（生きてはいけまい）。","source":"源氏物語・若紫"},{"meaning":"なんとかして","text":"世界の男、あてなるもいやしきも、いかでこのかぐや姫を得てしがな","translation":"世の中の男は、身分の高い者も低い者も、なんとかしてこのかぐや姫を手に入れたいものだ。","source":"竹取物語"}],"129":[{"meaning":"どうして","text":"この雪いかが見ると、一筆のたまはせぬほどのひがひがしからん人の仰せらるること","translation":"この雪をどう御覧になるかと、一言もおっしゃらないほど風流を解さないような人が物を言うということは","source":"徒然草・第31段"},{"meaning":"どんなにか","text":"竜の頸の玉はいかが取らむ","translation":"竜の首の玉はどうやって取れるだろうか（とても取れそうにない）。","source":"竹取物語"}],"130":[{"meaning":"どうして","text":"親、子に言はく『など久しくは見えざりつるぞ』","translation":"親が子に言うことには、「どうして長い間顔を見せなかったのか」","source":"今昔物語集・巻25・第12話"}],"131":[{"meaning":"いつの間にか","text":"いつしかしたり顔にも聞こえたるに","translation":"いつの間にか得意顔であるように聞こえるが","source":"枕草子・「鳥は」"},{"meaning":"早く","text":"いつしかと待つらむ妹に","translation":"早く帰って来てほしいと待っているであろう妻に","source":"万葉集・445番"}],"132":[{"meaning":"たまたま","text":"一人に向きて言ふを、おのづから人も聞くにこそあれ","translation":"一人に向かって話しているのを、たまたま他の人も聞くことがあるものだ。","source":"徒然草・第56段"},{"meaning":"もしかして","text":"おのづから後まで忘れぬ御事ならば","translation":"もしかして後々まで私のことをお忘れにならないおつもりでしたら","source":"平家物語・巻一「祇王」"}],"133":[{"meaning":"なんとしてもやはり","text":"なほ、同じ所に日を経ることを嘆きて","translation":"それでもやはり、同じ場所で日を過ごすことを嘆いて","source":"土佐日記"}],"134":[{"meaning":"ますます","text":"ところどころ語るを聞くに、いとどゆかしさまされど","translation":"ところどころを語ってくれるのを聞くと、ますます続きが知りたい気持ちがつのるけれど","source":"更級日記"}],"135":[{"meaning":"本当に","text":"この歌よしとにはあらねど、げにと思ひて人々忘れず","translation":"この歌が特に優れているというわけではないが、本当にその通りだと思って人々は忘れずにいる。","source":"土佐日記"}],"136":[{"meaning":"このように","text":"かく危ふき枝の上にて、安き心ありてねぶるらんよ","translation":"このように危ない枝の上で、安心して眠っていられるものだなあ。","source":"徒然草・第41段"}],"137":[{"meaning":"そのように","text":"まことにさにこそ候ひけれ","translation":"本当にそのとおりでございました。","source":"徒然草・第41段"}],"138":[{"meaning":"そのように","text":"それをさへ分かたせ給へば、しかおはしましあへるに","translation":"それまでも分け与えなさるので、そのようにしていらっしゃるときに","source":"大鏡・道長上"}],"139":[{"meaning":"あのように","text":"と言ひかく言ひ、恨み給ふ","translation":"ああ言ったりこう言ったりして、お恨みになる。","source":"源氏物語・東屋"}],"140":[{"meaning":"そのまま","text":"言ひたきままに語りなして、筆にも書きとどめぬれば、やがて定まりぬ","translation":"言いたいように語りなして、それを文章にも書き留めてしまうと、そのままそれが定まった事実になってしまう。","source":"徒然草・第73段"},{"meaning":"すぐに","text":"名を聞くより、やがて面影は推しはからるる心地するを","translation":"名前を聞くとすぐに、その人の顔かたちが自然と想像される気がするのに","source":"徒然草・第71段"}],"141":[{"meaning":"すぐに","text":"一時（いちじ）の懈怠（けだい）、すなはち一生の懈怠となる","translation":"ちょっとの間の怠け心が、そのまま一生涯の怠けとなる。","source":"徒然草・第188段"}],"142":[{"meaning":"しだいに","text":"やうやう白くなりゆく山際、すこしあかりて、紫だちたる雲の細くたなびきたる","translation":"しだいに白んでいく山ぎわの空が少し明るくなって、紫がかった雲が細くたなびいている。","source":"枕草子・第一段「春はあけぼの」"}],"143":[{"meaning":"そっと","text":"谷の底に鳥の居るやうに、やをら落ちにければ","translation":"谷底に鳥がとまるように、そっと(音も立てずに)落ちたので。","source":"宇治拾遺物語・巻七第四話"}],"144":[{"meaning":"かえって","text":"髪の美しげにそがれたる末も、なかなか長きよりもこよなう今めかしきものかな","translation":"美しく切りそろえられた髪の毛先も、かえって長い髪よりずっと今風で素敵に見えるものだなあ。","source":"源氏物語・若紫"}],"145":[{"meaning":"そうはいってもやはり","text":"暁がたより、さすがに音なくなりぬるこそ、年の名残も心ぼそけれ","translation":"明け方近くになると、そうはいってもやはり(追儺の)物音がしなくなってしまうのは、年の暮れの名残惜しさとともに、なんとなく心細く感じられる。","source":"徒然草・第19段"},{"meaning":"なんといってもやはり","text":"暁がたより、さすがに音なくなりぬるこそ、年の名残も心ぼそけれ","translation":"明け方近くになると、なんといってもやはり(追儺の)物音がしなくなってしまうのは、年の暮れの名残惜しさとともに、なんとなく心細く感じられる。","source":"徒然草・第19段"}],"146":[{"meaning":"互いに","text":"かたみにゐかはりて、羽の上の霜払ふらむほどなど","translation":"互いに位置を代わり合って、相手の羽の上の霜を払ってやっているのだろうといった様子など。","source":"枕草子（鳥の段）"}],"147":[{"meaning":"いやな感じに","text":"あなうたて、この人のたをやかならましかば","translation":"ああいやだ、この人がもっとおっとりして優しかったならよかったのに。","source":"源氏物語・帚木"},{"meaning":"異様に怪しく","text":"桐の木の花、紫に咲きたるは、なほをかしきに、葉の広ごりざまぞ、うたてこちたけれど","translation":"桐の木の花が紫色に咲いているのはやはり趣があるけれど、葉が広がっている様子は、異様なほど仰々しく大げさだけれど。","source":"枕草子「木の花は」"}],"148":[{"meaning":"一般に","text":"なべて、心柔らかに、情ある故に","translation":"(都の人は)総じて一般に心が優しく、情け深いために。","source":"徒然草・第141段"},{"meaning":"並ひととおり","text":"いとなべてはあらねど、われ思し合はすることやあらむ","translation":"決してありふれた並一通りの人ではないが、私には思い当たる事情があるのだろうか。","source":"源氏物語・帚木"}],"149":[{"meaning":"わざわざ","text":"わざとならぬ匂ひ、しめやかにうちかをりて","translation":"わざわざ焚いたのでもない(自然な)香りが、ひっそりと控えめに漂ってきて。","source":"徒然草・第32段"},{"meaning":"特に","text":"人のもとにわざと清げに書きてやりつる文の返り事","translation":"誰かのところへ特に美しく整えて書いて送った手紙への返事。","source":"枕草子・すさまじきものの段"},{"meaning":"正式な","text":"わざとの御学問はさるものにて","translation":"正式な学問についてはもちろんのこと。","source":"源氏物語・桐壺"}],"150":[{"meaning":"たくさん","text":"いづれの御時にか、女御・更衣あまたさぶらひ給ひける中に","translation":"どの帝の御代であったか、女御や更衣がたくさんお仕えしていた中に。","source":"源氏物語・桐壺"}],"151":[{"meaning":"たくさん","text":"かの桟敷の前をここら行き交ふ人","translation":"あの桟敷の前をたくさんの人が行き交っている。","source":"徒然草・第137段"},{"meaning":"たいそう","text":"誰をまつ虫ここら鳴くらむ","translation":"いったい誰を待つというので、松虫はこんなにもたいそう鳴いているのだろうか。","source":"古今和歌集・秋上"}],"152":[{"meaning":"ことができない","text":"恐れにて候へば、え申し候はじ","translation":"恐れ多いことでございますので、とても申し上げることはできません。","source":"宇治拾遺物語・巻三第十七話"}],"153":[{"meaning":"〜するな","text":"な疎みたまひそ","translation":"(私のことを)疎んじなさいますな。","source":"源氏物語・桐壺"},{"meaning":"〜してはならない","text":"な疎みたまひそ","translation":"(私のことを)疎んじなさってはいけません。","source":"源氏物語・桐壺"}],"154":[{"meaning":"まったく","text":"おほかた回らざりければ、とかく直しけれども","translation":"まったく回らなかったので、あれこれと直したけれども。","source":"徒然草・第51段"}],"155":[{"meaning":"まったく","text":"さらにまだ見ぬ骨のさまなり","translation":"まったく今まで見たことのない(扇の)骨の様子である。","source":"枕草子（中納言まゐり給ひての段）"}],"156":[{"meaning":"まったく","text":"夜をこめて鳥の空音（そらね）ははかるともよに逢坂の関はゆるさじ","translation":"夜が明けないうちに鶏の鳴きまねをして人をだまそうとしても、逢坂の関は決して(まったく)開けて通しはしないでしょう。","source":"後拾遺和歌集・雑二"},{"meaning":"実に","text":"梨の花、よにすさまじきものにして","translation":"梨の花は、実に(なんとも)興ざめなものとして扱われて。","source":"枕草子"}],"157":[{"meaning":"まったく","text":"世の中にたえて桜のなかりせば春の心はのどけからまし","translation":"この世の中にまったく桜というものがなかったならば、春を過ごす人の心はのどかだっただろうに。","source":"古今和歌集・春上（在原業平）"}],"158":[{"meaning":"少しも","text":"やがて末まではあらねども、すべてつゆたがふことなかりけり","translation":"そのまま最後まで全部というわけではないが、全体として少しも予想と違うことはなかった。","source":"枕草子（清涼殿の丑寅のすみの段）"}],"159":[{"meaning":"決して","text":"かかること、ゆめ人に言ふな","translation":"こういうことは、決して人に言うな。","source":"和泉式部日記"}],"160":[{"meaning":"まったく","text":"つやつや物も見えず","translation":"まったく何も見えない。","source":"徒然草・第54段"}],"161":[{"meaning":"ほとんど","text":"冬枯れの気色こそ、秋にはをさをさおとるまじけれ","translation":"冬枯れの景色こそ、秋の趣にほとんど劣らないだろう。","source":"徒然草・第19段"}],"162":[{"meaning":"まさか","text":"よも起きさせ給はじとて、臥しはべりにき","translation":"まさかお起きになることもあるまいと思って、横になっておりました。","source":"枕草子（かへる年の…の段）"}],"163":[{"meaning":"決して","text":"あなかしこ、人に語りたまふな","translation":"ああ、決してこのことを人にお話しなさいますな。","source":"宇治拾遺物語・巻十三第五話"}],"164":[{"meaning":"気持ちを静める","text":"ややためらひて、仰せ言伝へ聞こゆ","translation":"しばらく気持ちを落ち着けてから、帝の仰せ言をお伝え申し上げる。","source":"源氏物語・桐壺"}],"165":[{"meaning":"ためらう","text":"やすらはで寝なましものを小夜更けて傾くまでの月を見しかな","translation":"ためらわずに(来ないと知っていたら)寝てしまえばよかったものを、夜も更けて月が傾くまで見てしまったことよ。","source":"後拾遺和歌集・恋二"}],"166":[{"meaning":"語り合う","text":"子一つより丑三つまであるに、まだ何ごともかたらはぬにかへりけり","translation":"子の一刻から丑の三刻までいっしょにいたのに、まだ何も語り合わないうちに男は帰ってしまった。","source":"伊勢物語・第六十九段"}],"167":[{"meaning":"通う","text":"男すまずなりにけり","translation":"男は(女のもとに)通わなくなってしまった。","source":"伊勢物語・第二十三段（筒井筒）"}],"168":[{"meaning":"終わる","text":"翁、心地あしく、苦しき時も、この子を見れば、苦しきこともやみぬ","translation":"翁は気分が悪く苦しい時も、この子(かぐや姫)を見ると、苦しみも治まり終わるのだった。","source":"竹取物語"}],"169":[{"meaning":"色あせる","text":"うつろひたる菊にさしたり","translation":"色あせてしまった菊の花に(手紙を)挿してあった。","source":"蜻蛉日記・上巻"}],"170":[{"meaning":"外を見る","text":"男、はた寝られざりければ、外の方をみいだして臥せるに","translation":"男もまた寝つけなかったので、外の方を見やりながら横になっていると。","source":"伊勢物語・第六十九段"}],"171":[{"meaning":"振る舞う","text":"誇りかにもてなして、つれなきさまにし歩く","translation":"得意げに振る舞って、何でもないふうを装いながら歩き回る。","source":"源氏物語・須磨"}],"172":[{"meaning":"面倒を見る","text":"まことに親めきてあつかひ給ふ","translation":"本当の親のように親身になって世話をなさる。","source":"源氏物語・帚木"}],"173":[{"meaning":"さまよいでる","text":"物思ふ人の魂は、げに、あくがるる物になむありける","translation":"もの思いに沈む人の魂は、なるほど本当に、体から抜け出してさまよい出るものであったのだなあ。","source":"源氏物語・葵"}],"174":[{"meaning":"結婚する","text":"この世の人は、男は女にあふことをす","translation":"この世の人は、男は女と結婚するものである。","source":"竹取物語"}],"175":[{"meaning":"涙を流す","text":"しほたるる海人の衣に異なれや浮きたる波に垂るる我が袖","translation":"涙で濡れている海人の衣と何も違わないではないか。浮ついた涙の波にひたすら濡れている私の袖よ。","source":"源氏物語・早蕨（中の君の歌）"}],"176":[{"meaning":"空を暗くする","text":"かきくらし雨降りて","translation":"空一面が急に暗くなって雨が降ってきて。","source":"枕草子・五月の御精進のほど"},{"meaning":"空を暗くする","text":"かきくらす心の闇にまどひにき","translation":"悲しみのあまり心が真っ暗になって、分別を失ってしまった。","source":"古今和歌集・恋三"}],"177":[{"meaning":"迷う","text":"酒宴ことさめて、いかがはせむとまどひけり","translation":"酒宴の興がすっかりさめてしまい、どうしたらよいかと途方に暮れた。","source":"徒然草・第五十三段"},{"meaning":"迷う","text":"あわてまどひて","translation":"ひどく慌てふためいて。","source":"今昔物語集・巻二十八第四十二"}],"178":[{"meaning":"工夫する","text":"子安貝取らむと思しめさば、たばかり申さむ","translation":"子安貝を取ろうとお思いになるのでしたら、私が工夫して手はずを整えて差し上げましょう。","source":"竹取物語・燕の子安貝"}],"179":[{"meaning":"興じる","text":"箏の御琴引き寄せて、かき合はせすさび給ひて","translation":"箏の琴を引き寄せて、（他の楽器と）合奏して楽しんでいらっしゃって。","source":"源氏物語・澪標"}],"180":[{"meaning":"抵抗する","text":"女も卑しければ、すまふ力なし","translation":"女も身分が低かったので、（結婚に反対する親に）抵抗する力がない。","source":"伊勢物語・第四十段"},{"meaning":"抵抗する","text":"すまひ給へるさま、言はむ方なく唐めきたり","translation":"（光源氏が須磨で）お住まいになっている様子は、言いようもなく中国風で趣がある。","source":"源氏物語・須磨"}],"181":[{"meaning":"まねる","text":"人の言ふらむことをまねぶらむよ","translation":"人が言うようなことを、そのまま真似しているのだろうよ。","source":"枕草子（学研全訳古語辞典所引）"},{"meaning":"まねる","text":"かの御車の所争ひ、まねび聞こゆる人ありければ","translation":"あの牛車の場所取り争いのことを、そのまま話して伝え申し上げる人がいたので。","source":"源氏物語・葵"}],"182":[{"meaning":"年をとる","text":"ねび給ふままに、ゆゆしきまでなりまさり給ふ御ありさまかな","translation":"大人びていかれるにつれて、恐ろしいほど美しさが増していかれるご様子であるよ。","source":"源氏物語・紅葉賀"}],"183":[{"meaning":"決めておく","text":"高名の木のぼりといひしをのこ、人をおきてて、高き木にのぼせて","translation":"木登りの名人といわれた男が、人に指図して、高い木に登らせて。","source":"徒然草・第百九段"}],"184":[{"meaning":"訴える","text":"民間のうれふるところを知らざりしかば","translation":"民衆が嘆き悲しんでいることを（治める者たちが）分かっていなかったので。","source":"平家物語・巻一「祇園精舎」"},{"meaning":"訴える","text":"世の人安からずうれへあへる","translation":"世の中の人々は心が安まらず、互いに心配し合っている。","source":"方丈記"}],"185":[{"meaning":"できる","text":"始め興宴よりおこりて、長き恨みをむすぶ類多し","translation":"最初は酒宴の楽しみから始まって、長く続く恨みが生まれる例が多い。","source":"徒然草・第百三十段"},{"meaning":"できる","text":"絶えじい妹とむすびてし言は果たさず","translation":"「愛情は絶えることがない」と妻と約束を交わした言葉は、果たされなかった。","source":"万葉集・四八一番"}],"186":[{"meaning":"弔う","text":"国の司まうでとぶらふにも、え起き上がり給はで","translation":"国司が見舞いに参上しても、（かぐや姫は）起き上がることもおできにならないで。","source":"竹取物語・竜の頸の玉"},{"meaning":"弔う","text":"その後世をとぶらはんために","translation":"その人の死後の冥福を弔うために。","source":"平家物語・巻五「福原院宣」"}],"187":[{"meaning":"質素にする","text":"心恥づかしき人住むなる所にこそあなれ、あやしうもあまりやつしけるかな","translation":"こちらが気後れするほど立派な人が住んでいるという所であるようなのに、不思議なほどひどく質素にしていることだなあ。","source":"源氏物語・若紫"}],"188":[{"meaning":"差し支える","text":"さはることありて、なほ同じところなり","translation":"差し支えることがあって、やはり同じ場所に留まっている。","source":"土佐日記"}],"189":[{"meaning":"恐縮する","text":"忠君のおり給ふ所に、五位六位ひざまづきかしこまる","translation":"忠君がいらっしゃる場所で、五位や六位の役人たちがひざまずいて恐縮している。","source":"宇津保物語・忠こそ"}],"190":[{"meaning":"嘆く","text":"逢はで止みにし憂さを思ひ、あだなる契りをかこち","translation":"会わないままで終わってしまったつらさを思い、はかない約束のことを嘆いて。","source":"徒然草・第百三十七段"},{"meaning":"嘆く","text":"酔ひにかこちて、苦しげにもてなして","translation":"酔ったせいにして、苦しそうな様子を装って。","source":"源氏物語・藤裏葉"}],"191":[{"meaning":"理解する","text":"雪降れば木毎に花ぞ咲きにけるいづれを梅とわきて折らまし","translation":"雪が降ると、どの木にも花が咲いたように見える。どれを梅だと見分けて折ればよいのだろうか。","source":"古今和歌集・冬"},{"meaning":"理解する","text":"めぐり逢ひて見しやそれともわかぬ間まに雲隠れにし夜半の月影","translation":"久しぶりに巡り会って、それがあなただと分かったかどうかも判断できないうちに、雲に隠れてしまった夜半の月の光よ。","source":"新古今和歌集・雑上"}],"192":[{"meaning":"遠慮する","text":"このふるさとの女の前にてだに、つつみ侍るものを","translation":"この昔からの知り合いの女房の前でさえ、遠慮しておりますのに。","source":"紫式部日記・消息文"}],"193":[{"meaning":"望ましい","text":"人はかたち、ありさまの、優れたらんこそあらまほしかるべけれ","translation":"人は容貌や様子が優れているのが望ましいはずだ。","source":"徒然草・第一段"}],"194":[{"meaning":"巧みだ","text":"らうらうじく美しげに書き給へり","translation":"手慣れた様子で巧みに、美しく書いていらっしゃった。","source":"源氏物語・若菜上"},{"meaning":"巧みだ","text":"夜深くうちいでたる声の、らうらうじうあいぎゃうづきたる","translation":"夜が更けてから鳴き出した声が、洗練されていて愛らしい。","source":"枕草子・鳥は"}],"195":[{"meaning":"賢い","text":"然だに心得ては、うるせき奴ぞかし","translation":"そこまで分かっているとは、賢くて気の利くやつだなあ。","source":"今昔物語集・巻二十三第十六"},{"meaning":"賢い","text":"宮の御琴の音は、いとうるせくなりにけりな","translation":"女三の宮のお琴の音色は、たいそう上達して巧みになったなあ。","source":"源氏物語・若菜下"}],"196":[{"meaning":"しっかりしている","text":"『とく参り給へ』など、はかばかしうも、のたまはせやらず","translation":"「早く参内なさい」などと、はきはきと最後までおっしゃることもおできにならない。","source":"源氏物語・桐壺"},{"meaning":"しっかりしている","text":"やうやう入り立つふもとのほどだに空のけしき、はかばかしくも見えず","translation":"だんだんと分け入っていく山のふもとのあたりでさえ、空の様子ははっきりとは見えない。","source":"更級日記・足柄山"}],"197":[{"meaning":"しっかりしている","text":"若ければ、文もをさをさしからず、言葉も言ひ知らず","translation":"その男は若いので、手紙もきちんとしておらず、言葉遣いもよく分かっていない。","source":"伊勢物語・第百七段"}],"198":[{"meaning":"比べるものがない","text":"園の別当入道はさうなき庖丁者なり","translation":"園の別当入道は、比べる者がいないほどの料理の名人である。","source":"徒然草・第二百三十一段"},{"meaning":"比べるものがない","text":"幼き者にさうなく恥辱を与へられけるこそは","translation":"幼い子供に、何のためらいもなく無造作に恥をお与えになったことは。","source":"平家物語・巻一「殿下乗合」"}],"199":[{"meaning":"陰がない","text":"花は盛りに、月はくまなきをのみ見るものかは","translation":"桜は満開の時だけ、月は陰りのない満月だけを見るものだろうか、いやそうではない。","source":"徒然草・第百三十七段"},{"meaning":"陰がない","text":"おのれもくまなき好き心にて","translation":"自分自身も、物事を知り尽くした抜け目のない好色な心の持ち主で。","source":"源氏物語・夕顔"}],"200":[{"meaning":"どうしようもない","text":"『妹のあり所申せ、申せ』と責めらるるに、ずちなし","translation":"「妹の居場所を言え、言え」と責められるが、どうしようもない。","source":"枕草子・里にまかでたるに"}],"201":[{"meaning":"よくない","text":"何をか奉らむ。まめまめしき物はまさなかりなむ","translation":"何を差し上げようか。実用一辺倒の物では、きっと具合が悪いだろう。","source":"更級日記"}],"202":[{"meaning":"つまらない","text":"上達部・上人なども、あいなく目をそばめつつ","translation":"上達部や殿上人なども、（帝の寵愛のあまりの深さを）不快に思って目をそむけながら。","source":"源氏物語・桐壺"},{"meaning":"つまらない","text":"世に語り伝ふること、まことはあいなきにや、多くはみな虚言なり","translation":"世間で語り伝えられていることは、事実のままではつまらないからだろうか、多くはみな作り話である。","source":"徒然草・第七十三段"}],"203":[{"meaning":"頼りない","text":"桜ははかなきものにて、かく程なくうつろひさぶらふなり","translation":"桜ははかないもので、このようにあっという間に散ってしまうのです。","source":"宇治拾遺物語・一ノ一三"},{"meaning":"頼りない","text":"いといたく思ひ嘆きて、はかなくなり侍りにしかば","translation":"たいそうひどく思い悩んで、お亡くなりになってしまったので。","source":"源氏物語・帚木"}],"204":[{"meaning":"きにくわない","text":"それはしも、まことによき人のし給ひしを見しかば、こころづきなしと思ふなり","translation":"それは、本当に立派な人がなさったのを見たからこそ、気に入らないと思うのだ。","source":"枕草子・にくきもの"}],"205":[{"meaning":"落胆している","text":"御使ひも、いとあへなくて、帰り参りぬ","translation":"お使いの者も、まったく張り合いのない思いで、帰参した。","source":"源氏物語・桐壺"}],"206":[{"meaning":"つまらない","text":"我はものへ行かむずる門出なれば、はかなき疵も打ちつけられなばよしなし","translation":"自分はこれからよそへ出かける門出なのだから、ちょっとした傷でも負わされたらまずいことになる。","source":"今昔物語集・二十八ノ四十二"},{"meaning":"つまらない","text":"あらぬよしなき者の名乗りして来たるも","translation":"見当違いの、何の関係もない者が名乗って訪ねて来るのも。","source":"枕草子・すさまじきもの"}],"207":[{"meaning":"身のほど知らずだ","text":"『天下に並びなき婿をとらん』と、おほけなく思ひ企てて","translation":"「天下に並ぶ者のない婿を迎えよう」と、身の程知らずにも思い立って。","source":"沙石集・拾遺"}],"208":[{"meaning":"意地が悪い","text":"春宮の女御のいとさがなくて","translation":"東宮（皇太子）の女御が、たいそう意地が悪くて。","source":"源氏物語・桐壺"},{"meaning":"意地が悪い","text":"さがなき童どものつかまつりける、奇怪に候ふことなり","translation":"いたずら好きな子供たちがしでかしたことで、けしからぬことでございます。","source":"徒然草・第二百三十六段"}],"209":[{"meaning":"きまり悪い","text":"げにいとあはれなりなど聞きながら、涙のつといで来ぬ、いとはしたなし","translation":"本当にしみじみと心打たれる話だと聞いていながら、涙がすっと出てこないのは、とてもきまりが悪い。","source":"枕草子・はしたなきもの"}],"210":[{"meaning":"怠慢だ","text":"しどけなくうち乱れ給へるさまながら","translation":"くつろいで衣装を無造作に着崩していらっしゃる姿のままで。","source":"源氏物語・葵"},{"meaning":"怠慢だ","text":"いみじくしどけなく、かたくなしく、直衣・狩衣などゆがめたりとも","translation":"たいそうだらしなく、みっともなく、直衣や狩衣などを着崩していたとしても。","source":"枕草子・あかつきに帰らむ人は"}],"211":[{"meaning":"寝坊だ","text":"いといぎたなかりける夜かな","translation":"なんともひどく寝坊してしまった夜であることよ。","source":"源氏物語・帚木"},{"meaning":"寝坊だ","text":"夜鳴かぬもいぎたなきここちすれども","translation":"(鶯が)夜に鳴かないのも、寝坊しているような感じがするけれども","source":"枕草子・鳥は"}],"212":[{"meaning":"みっともない","text":"烏帽子のさまなどぞ、すこしひとわろき","translation":"烏帽子のかっこうなどが、少しみっともない。","source":"枕草子・あはれなるもの"}],"213":[{"meaning":"うっとうしい","text":"一、二日たまさかに隔つるをりだに、あやしういぶせき心地するものを","translation":"一日二日、たまに間があくだけでも、妙にうっとうしく気が晴れない気持ちがするのに","source":"源氏物語・須磨"},{"meaning":"うっとうしい","text":"やがてその興尽きて、見にくく、いぶせく覚えければ","translation":"やがてその面白みもなくなって、見苦しく、うっとうしく感じられたので","source":"徒然草・第154段"}],"214":[{"meaning":"残念だ","text":"「雀の子を犬君が逃しつる。伏籠のうちに籠めたりつるものを」とて、いとくちをしと思へり","translation":"「雀の子を犬君が逃がしてしまった。伏籠の中に閉じ込めておいたのに」と言って、たいそう残念に思っている。","source":"源氏物語・若紫"},{"meaning":"残念だ","text":"「夜に入りてものの映えなし」と言ふ人、いとくちをし","translation":"「夜になると何事も映えない」と言う人は、たいそう残念な(情趣を解さない)人だ。","source":"徒然草・第191段"}],"215":[{"meaning":"もったいない","text":"きはことに賢くて、ただ人にはいとあたらしけれど","translation":"際立って賢くて、ただの臣下にしておくにはたいそうもったいないけれど","source":"源氏物語・桐壺"}],"216":[{"meaning":"くやしい","text":"いかでなほ、少しひがこと見つけてをやまむと、ねたきまでにおぼしめしけるに","translation":"何とかしてもう少し(相手の)間違いを見つけてやろうと、くやしいと思うほどにお思いになっていたところ","source":"枕草子・清涼殿の丑寅のすみの"}],"217":[{"meaning":"うるさい","text":"人言はまことこちたくなりぬともそこに障らむ我にあらなくに","translation":"人の噂は本当にうるさく(仰々しく)なってしまったとしても、それに邪魔されるような私ではないのに","source":"万葉集・2886番"},{"meaning":"うるさい","text":"鶴は、いとこちたきさまなれど、鳴く声雲居まで聞こゆる、いとめでたし","translation":"鶴は、たいそう仰々しい(大げさな)姿をしているが、鳴く声が雲の上まで聞こえるのは、たいそうすばらしい。","source":"枕草子・鳥は"}],"218":[{"meaning":"異様だ","text":"しかれどもけしき心を我が思はなくに","translation":"そうであっても、私は異様な(浮ついた)心を持っているわけではないのに","source":"万葉集・3588番"}],"219":[{"meaning":"苦しい","text":"やうやう暑くさへなりて、まことにわびしくて","translation":"だんだん暑くまでなってきて、本当につらくて","source":"枕草子・うらやましげなるもの"},{"meaning":"苦しい","text":"前栽の草木まで心のままならず作りなせるは、見る目も苦しく、いとわびし","translation":"庭先の草木までも自然のままにならないように作り上げているのは、見た目も苦しく(痛々しく)、たいそう心苦しい(興ざめな)感じがする。","source":"徒然草・第10段"}],"220":[{"meaning":"気の毒だ","text":"谷隔てたるほどなど、こころぐるし","translation":"谷を隔てているほどの(離れた)距離であることなども、気の毒に思われる。","source":"枕草子・鳥は"},{"meaning":"気の毒だ","text":"易かるべきことはいとこころぐるし","translation":"たやすいはずのことが実現しないのは、かえってたいそう気の毒(心苦しい)ことだ。","source":"徒然草・第189段"}],"221":[{"meaning":"まだ早い","text":"五月来ば鳴きもふりなむほととぎすまだしきほどの声を聞かばや","translation":"五月になればホトトギスは鳴き古してしまうだろう。それより前の、まだ早い時期の声を聞きたいものだ。","source":"古今和歌集・夏"},{"meaning":"まだ早い","text":"琴・笛など習ふ、またさこそは、まだしきほどは","translation":"琴や笛などを習うのも、同じように、まだ未熟な(上達していない)うちはそういうものだ。","source":"枕草子"}],"222":[{"meaning":"優れている","text":"落ちかかりぬとおぼゆるに、あるかぎりさかしき人なし","translation":"(雷が)今にも落ちてくるかと思われるのに、その場にいる者の中に、しっかりして冷静な(優れた)人は一人もいない。","source":"源氏物語・明石"},{"meaning":"優れている","text":"せめて申させ給へば、さかしう、やがて末まではあらねども","translation":"無理に(帝が)お尋ねになると、利発に答えるが、そのまま最後まで筋が通っているわけではないけれども","source":"枕草子・清涼殿の丑寅のすみの"}],"223":[{"meaning":"まぶしい","text":"いとまばゆきまでねびゆく、人のかたちかな","translation":"まぶしいほどに大人びていく、その人の容姿であることよ。","source":"源氏物語・葵"},{"meaning":"まぶしい","text":"上達部・上人などもあいなく目をそばめつつ、いとまばゆき人の御おぼえ","translation":"上達部や殿上人たちもわけもなく目をそむけながら、たいそうまぶしいほどの(帝の)御寵愛ぶりである。","source":"源氏物語・桐壺"}],"224":[{"meaning":"おそれ多い","text":"かたじけなく、きたなげなる所に、年月をへて物し給ふこと","translation":"おそれ多くも、むさ苦しいような所に、長年にわたっていらっしゃること","source":"竹取物語・貴公子たちの求婚"},{"meaning":"おそれ多い","text":"かたじけなき御心ばへのたぐひなきをたのみにて交じらひ給ふ","translation":"もったいない(帝の)並ぶものない御配慮を頼りにして、宮仕えをしていらっしゃる。","source":"源氏物語・桐壺"}],"225":[{"meaning":"おそれ多い","text":"かしこくおそろしと思ひけれど、さるべきにやありけむ","translation":"たいそう恐れ多く恐ろしいと思ったけれど、そうなるはずの運命だったのだろうか","source":"更級日記・竹芝寺"}],"226":[{"meaning":"多い","text":"春草のしげく生ひたる","translation":"春の草がたくさん生い茂っている。","source":"万葉集・29番"},{"meaning":"多い","text":"されど、人目しげければ、え逢はず","translation":"けれども、人目が多い(頻繁である)ので、逢うことができない。","source":"伊勢物語・第69段"}],"227":[{"meaning":"気味が悪い","text":"霰降り荒れてすごき夜のさまなり","translation":"あられが激しく降って、ぞっとするほど気味悪い夜の様子である。","source":"源氏物語・若紫"},{"meaning":"気味が悪い","text":"日の入りぎはの、いとすごくきりわたりたるに","translation":"日が沈むころに、たいそう気味悪いほど霧が一面に立ちこめているときに","source":"更級日記"}],"228":[{"meaning":"すばらしい","text":"女かしづきたる家、いといたしかし","translation":"女性を大切に育てている家は、たいそうすばらしいものだよ。","source":"源氏物語・若紫"}],"229":[{"meaning":"並ひととおりだ","text":"「梨花一枝、春、雨を帯びたり」など言ひたるはおぼろけならじと思ふに","translation":"「梨の花の一枝が春の雨に濡れている」などと詠んだのは、並々のことではないだろうと思うのに","source":"枕草子・木の花"},{"meaning":"並ひととおりだ","text":"おぼろけに思ひ忍びたる御後見とは思し知らせ給ふらむや","translation":"並ひと通りの気持ちで人知れずお世話してきた後見人だとお分かりくださっているだろうか。","source":"源氏物語・薄雲"}],"230":[{"meaning":"並ひととおりだ","text":"世をなのめに書き流したることばのにくきこそ","translation":"世間のことを通り一遍に(いい加減に)書き流した言葉が憎らしいことよ。","source":"枕草子・文ことばなめき人こそ"},{"meaning":"並ひととおりだ","text":"つらき事ありとも、念じて、なのめに思ひなりて","translation":"つらいことがあったとしても、我慢して、並一通りのこと(たいしたことではない)と思うようになって","source":"源氏物語・帚木"}],"231":[{"meaning":"清らかで美しい","text":"世になくきよらなる玉の男御子さへ生まれ給ひぬ","translation":"この世にまたとないほど清らかで美しい、玉のような男の御子までもお生まれになった。","source":"源氏物語・桐壺"},{"meaning":"清らかで美しい","text":"立てる人どもは、装束のきよらなること、物にも似ず","translation":"立っている人々は、その装束の清らかで美しいことといったら、何にも比べようがないほどだ。","source":"竹取物語・かぐや姫の昇天"}],"232":[{"meaning":"完全である","text":"かうやうなる折の、まほならぬ事、数々書きつくる","translation":"このような折の、完全ではない(不十分な)ことを、数多く書き記す","source":"源氏物語・賢木"},{"meaning":"完全である","text":"いとほしと思せば、まほにも向かひ給はず","translation":"気の毒だとお思いになるので、まともに(正面から)は向き合いなさらない。","source":"源氏物語・初音"}],"233":[{"meaning":"まる見えである","text":"高き所にて、ここかしこ、僧坊どもあらはに見下ろさるる","translation":"高い所なので、あちらこちらの僧坊が丸見えに見下ろされる。","source":"源氏物語・若紫"},{"meaning":"まる見えである","text":"運命の末になることあらはなりしかば","translation":"運命が尽きようとしていることがはっきりと見えていたので","source":"平家物語・巻六"}],"234":[{"meaning":"強引だ","text":"桜の散らむは、あながちにいかがはせむ","translation":"桜が散ってしまうようなことは、無理にどうすることができようか、いや、できはしない。","source":"宇治拾遺物語・1-13"},{"meaning":"強引だ","text":"二条院よりぞ、あながちに怪しき姿にてそぼち参れる","translation":"二条院の方から、強引に見苦しい姿で(雨に)濡れながら参上した。","source":"源氏物語・明石"}],"235":[{"meaning":"切実である","text":"いとせちに聞こえさすべきことありて","translation":"たいそう切実に申し上げなければならないことがあって","source":"大和物語・第171段"},{"meaning":"切実である","text":"嘆きせちなるときも、声をあげて泣くことなし","translation":"嘆きが切実であるときも、声をあげて泣くことはない。","source":"方丈記"}],"236":[{"meaning":"急だ","text":"とみなる召使ひの、来合ひたりつればなむ","translation":"急な用事の使いの者が、ちょうど来合わせたものですから","source":"蜻蛉日記・上巻"}],"237":[{"meaning":"にわかだ","text":"うちつけに、海は鏡の面のごとなりぬれば","translation":"急に、海が鏡の面のように(静かに)なったので","source":"土佐日記・2月5日"},{"meaning":"にわかだ","text":"うちつけにやとおぼさむと、心恥づかしくてやすらひ給ふ","translation":"(相手が)急な(軽率な)ことだとお思いになるだろうかと、気恥ずかしくてためらっていらっしゃる。","source":"源氏物語・末摘花"}],"238":[{"meaning":"言うまでもない","text":"面つき・まみの薫れるほどなど、言へばさらなり","translation":"顔つきや目もとの匂うように美しい様子などは、言うまでもないことだ。","source":"源氏物語・薄雲"},{"meaning":"言うまでもない","text":"夏は夜。月のころはさらなり","translation":"夏は夜(が良い)。月が出ているころは言うまでもなく(すばらしい)。","source":"枕草子・春はあけぼの"}],"239":[{"meaning":"心を込めている","text":"朝には夕あらんことを思ひて、重ねてねんごろに修せんことを期す","translation":"朝には夕方まで生きているかも分からないことを思って、重ねて心を込めて修行しようと心に決める。","source":"徒然草・第92段"},{"meaning":"心を込めている","text":"思ひわびて、ねんごろに相語らひける友だちのもとに","translation":"困り果てて、親密に付き合っていた友人のもとに","source":"伊勢物語・第16段"}],"240":[{"meaning":"おっとりしている","text":"見返り給へる面持ち・もてなしなど、おいらかにて","translation":"振り返りなさった表情や振る舞いなどが、おっとりしていて","source":"源氏物語・若菜上"},{"meaning":"おっとりしている","text":"おいらかに、「あたりよりだにな歩きそ」とやはのたまはぬ","translation":"おっとりと、「せめてこの辺りをうろつくな」とでもどうしておっしゃらないのか。","source":"竹取物語・貴公子たちの求婚"}],"241":[{"meaning":"意地が悪い","text":"あやにくに殿の御使ひのあらむ時","translation":"折悪しく(意地悪く)殿からの使者が来るような時","source":"源氏物語・浮舟"},{"meaning":"意地が悪い","text":"帝の御おきて、きはめてあやにくにおはしませば","translation":"帝のご性格は、極めて意地悪くいらっしゃったので","source":"大鏡・藤原時平"}],"242":[{"meaning":"評判","text":"人をも、人げなう、世のおぼえあなづらはしうなりそめにたるを","translation":"その人のことも人並みでなく、世間の評判が軽んじられるようになり始めているのに","source":"枕草子・鳥は"},{"meaning":"評判","text":"いとまばゆき、人の御おぼえなり","translation":"たいそうまぶしいほどの、(帝からの)御寵愛(評判)ぶりである。","source":"源氏物語・桐壺"}],"243":[{"meaning":"すき間","text":"谷風に解くる氷のひまごとにうち出づる波や春の初花","translation":"谷を吹く風に解ける氷のすき間ごとに湧き出る波こそ、春の初花なのだろう。","source":"古今和歌集・春上"}],"244":[{"meaning":"ひま","text":"ももしきの大宮人はいとまあれや梅をかざしてここに集へる","translation":"宮中に仕える人々は暇があるのだろうか、梅を髪に挿してここに集まっている。","source":"万葉集・1883番"},{"meaning":"ひま","text":"まかでなむとし給ふを、いとまさらに許させ給はず","translation":"(更衣が実家に)退出しようとなさるのを、(帝は)暇を全くお許しにならない。","source":"源氏物語・桐壺"}],"245":[{"meaning":"才能","text":"ざえ深き師に預け聞こえ給ひてぞ、学問せさせたてまつり給ひける","translation":"学識の深い師にお預け申し上げなさって、学問をおさせ申し上げなさった。","source":"源氏物語・少女"},{"meaning":"才能","text":"琴弾かせ給ふことなむ、一のざえにて","translation":"琴をお弾かせになることが、第一の才能であって","source":"源氏物語・絵合"}],"246":[{"meaning":"お礼","text":"よろこび奏するこそをかしけれ","translation":"お礼を申し上げるのは、趣があってよいものだ。","source":"枕草子（学研全訳古語辞典引用）"}],"247":[{"meaning":"気だて","text":"この御子のおよすけもておはする御かたち、こころばへありがたく珍しきまで見え給ふを","translation":"この御子が成長していかれるお姿や気立てが、めったにないほどすばらしく見えなさるので","source":"源氏物語・桐壺"}],"248":[{"meaning":"物思いをすること","text":"木の間より漏りくる月の影見ればこころづくしの秋は来にけり","translation":"木々の間から漏れてくる月の光を見ると、もの思いにふけらせる秋がやって来たのだなあ。","source":"古今和歌集・秋上"}],"249":[{"meaning":"あなた","text":"そこの上には障子の倒れかかりたるぞ","translation":"あなたのいる場所の上には、建具(障子)が倒れかかってきていますよ。","source":"今昔物語集・巻二八第四二"}],"250":[{"meaning":"このわたし","text":"ここにも心にもあらでかくまかるに、昇らむをだに見送り給へ","translation":"この私も、本意ではないままこのように月へ帰っていくのですから、せめて昇っていくのを見送ってください。","source":"竹取物語・かぐや姫の昇天"}],"251":[{"meaning":"あの人","text":"かれは…御志あやにくなりしぞかし","translation":"あの方(桐壺更衣)は……(帝の)ご寵愛が、はたから見て気の毒なほど並外れて深いものであったよ。","source":"源氏物語・桐壺"}],"252":[{"meaning":"その人","text":"それを取りて奉りならむ人には","translation":"その品(玉の枝)を取って献上するような人には(妻としてお仕えしよう)。","source":"竹取物語・くらもちの皇子（貴公子たちの求婚）"}],"253":[{"meaning":"このわたし","text":"これは大明神の御使ひなり","translation":"この私は、大明神のお使いである。","source":"平家物語・巻三「大塔建立」"}],"254":[{"meaning":"向こう","text":"山崎のあなたに、水無瀬といふ所に宮ありけり","translation":"山崎の向こうに、水無瀬という所に離宮があった。","source":"伊勢物語・第八十二段"}],"255":[{"meaning":"あなた","text":"そなたの虎落、今時は古し","translation":"あなたの(家の)竹垣は、今どきでは時代遅れだ。","source":"世間胸算用（井原西鶴）"}],"256":[{"meaning":"このわたし","text":"こなたの念仏をば留め候ふべし","translation":"この私が唱える念仏は、そろそろ終わりにいたしましょう。","source":"謡曲「隅田川」"}],"257":[{"meaning":"その当時","text":"さて今、そのかみを思ひやりて、ある人の詠める歌","translation":"さて今、あの当時のことを思いやって、ある人が詠んだ歌。","source":"土佐日記"}],"258":[{"meaning":"兄","text":"公世の二位のせうとに、良覚僧正と聞こえしは、きはめて腹あしき人なりけり","translation":"公世の二位の兄で、良覚僧正と申し上げた方は、たいそう短気な人であった。","source":"徒然草・第四十五段"}],"259":[{"meaning":"妹","text":"あねおとと年ごろ住み侍りしを","translation":"姉と妹が長年一緒に暮らしておりましたが","source":"宇津保物語・楼上下"}],"260":[{"meaning":"いとしいあなた","text":"紫草の匂へるいもを憎くあらば","translation":"紫草のように美しく輝くあなたを、もし憎いと思うのであれば","source":"万葉集・巻一"}],"261":[{"meaning":"夫","text":"ただ独りい渡らす児は若草のつまかあるらむ","translation":"たった一人で道を渡っていくあの娘には、初々しい夫がいるのだろうか。","source":"万葉集・一七四二"}],"262":[{"meaning":"兄弟","text":"はらからなる人は言ひ腹立てど、ちごどもの親なるひとは","translation":"兄弟である人は文句を言って腹を立てるけれど、幼い子らの親である人は","source":"更級日記・初瀬の段"}],"263":[{"meaning":"半分","text":"五年六年のうちに、千年や過ぎにけむ、かたへはなくなりにけり","translation":"五年六年のうちに、まるで千年も過ぎたかのように、(松の)半分はなくなってしまった。","source":"土佐日記・二・一六"},{"meaning":"傍ら","text":"これを聞きて、かたへなる者のいはく","translation":"これを聞いて、そばにいた者が言うことには","source":"徒然草・第九十三段"},{"meaning":"仲間","text":"ある荒夷の恐ろしげなるが、かたへにあひて、「御子はおはすや」と問ひしに","translation":"ある恐ろしげな荒々しい武士が、仲間に出会って、「お子様はいらっしゃいますか」と尋ねたところ","source":"徒然草・第百四十二段"}],"264":[{"meaning":"ころ","text":"日暮るるほど、例の集まりぬ","translation":"日が暮れるころ、いつものように求婚者たちが集まった。","source":"竹取物語・貴公子たちの求婚"},{"meaning":"広さ","text":"ほど狭しといへども、夜臥す床あり","translation":"広さは狭いけれども、夜に寝る床はある。","source":"方丈記"},{"meaning":"身分","text":"同じほど、それより下﨟の更衣たちは","translation":"同じ身分の、またそれより低い身分の更衣たちは","source":"源氏物語・桐壺"},{"meaning":"様子","text":"髪は風に吹き迷はされて、少しうちふくだみたるが、肩にかかれるほど、まことにめでたし","translation":"髪が風に吹き乱されて少しふくらんでいるが、肩にかかっているようすは、本当にすばらしい。","source":"枕草子・野分のまたの日こそ"}],"265":[{"meaning":"限界","text":"かぎりあれば、さのみもえとどめさせ給はず","translation":"限界があるので、そういつまでも(桐壺更衣を)お引き止めになることはできない。","source":"源氏物語・桐壺"},{"meaning":"極致","text":"わが恋は行方も知らず果てもなし逢をかぎりと思ふばかりぞ","translation":"私の恋は行く末も分からず、終わりもない。ただ、逢うことをこの上ない望みと思うばかりだ。","source":"古今和歌集・恋二"},{"meaning":"臨終","text":"今はかぎりにておはしまししほどに","translation":"もはや臨終というときでいらっしゃったので","source":"大鏡・兼通伝"},{"meaning":"すべて","text":"むつまじき限りは宵よりつどひて、舟に乗りて送る","translation":"親しい者は皆、前夜から集まって、舟に乗って見送ってくれる。","source":"奥の細道・旅立"}],"266":[{"meaning":"身分","text":"いとやむごとなききはにはあらぬが","translation":"たいそう高貴な身分ではないが","source":"源氏物語・桐壺"}],"267":[{"meaning":"序列","text":"四季はなほ定まれるついであり","translation":"四季にはやはり決まった順序がある。","source":"徒然草・第百五十五段"},{"meaning":"機会","text":"客人の饗応なども、ついでをかしきやうにとりなしたるも","translation":"客のもてなしなども、機会をとらえて趣深く取りはからうのも","source":"徒然草・第二百三十一段"}],"268":[{"meaning":"評議","text":"雨降りてのち、いまだ庭の乾かざりければ、いかがせんとさたありけるに","translation":"雨が降ったあと、まだ庭が乾いていなかったので、どうしたものかと話し合いがあったときに","source":"徒然草・第百七十七段"},{"meaning":"命令","text":"かへって叡感にあづかっしうへは、あへて罪科のさたもなかりけり","translation":"かえって(天皇の)お褒めにあずかった以上は、まったく処罰の命令もなかった。","source":"平家物語・巻一「殿上闇討」"},{"meaning":"噂","text":"二間口の棚借りにて千貫目持ち、都のさたになりしに","translation":"間口二間の借家住まいでありながら千貫目もの財産を持つと、都でうわさになっていたが","source":"日本永代蔵（井原西鶴）"}],"269":[{"meaning":"欠点","text":"たとひことばに出でてこそ言はねども、内心にそこばくのとがあり","translation":"たとえ言葉には出して言わないとしても、心の中には多くの欠点がある。","source":"徒然草・第百六十七段"},{"meaning":"罪","text":"世治まらずして、凍餒の苦しみあらば、とがの者絶ゆべからず","translation":"世の中が治まらず、凍えや飢えの苦しみがあれば、罪を犯す者はなくならないだろう。","source":"徒然草・第百四十二段"}],"270":[{"meaning":"ため","text":"御手もわななくけにや、的のあたりにだに近く寄らず","translation":"手も震えるためであろうか、矢は的の近くにさえ寄らない。","source":"大鏡・道隆伝"}],"271":[{"meaning":"風情","text":"木立いとよしあるは、何人の住むにか","translation":"木立がたいそう趣きがあるのは、どんな人が住んでいるのだろうか。","source":"源氏物語・若紫"},{"meaning":"由緒","text":"奈良の京春日の里に、しるよしして、狩にいにけり","translation":"奈良の都、春日の里に、縁があって、狩りに出かけた。","source":"伊勢物語・第一段"},{"meaning":"手立て","text":"つれづれのながめにまさる涙川袖のみひぢてあふよしもなし","translation":"手持ちぶさたに物思いにふけるよりもまさって涙の川があふれ、袖ばかりが濡れて、あなたに逢う手立てもない。","source":"伊勢物語・第百七段"},{"meaning":"こと","text":"心づきなき事あらん折は、なかなかそのよしをも言ひてん","translation":"気に入らないことがあるようなときには、かえってその事情を言ってしまおう。","source":"徒然草・第百七十段"}],"272":[{"meaning":"様子","text":"所につけたる御住まひ、やう変はりて","translation":"その土地にふさわしいお住まいは、(都とは)ようすが変わっていて","source":"源氏物語・須磨"},{"meaning":"理由","text":"さるべきやうありて、秋ごろ和泉に下るに","translation":"しかるべき事情・理由があって、秋ごろ和泉の国へ下ったところ","source":"更級日記・初瀬"},{"meaning":"方法","text":"その山、見るに、さらに登るべきやうなし","translation":"その山を見ると、まったく登れそうな方法がない。","source":"竹取物語・蓬莱の玉の枝"},{"meaning":"〜ことには","text":"翁、言ふやう、「われ、朝ごと夕ごとに見る竹の中におはするにて、知りぬ」","translation":"翁が言うことには、「私が毎朝毎夕見る竹の中にいらっしゃるので、(あなたが私の子になるべき人だと)分かった」","source":"竹取物語・かぐや姫の生ひ立ち"}],"273":[{"meaning":"約束","text":"あだなるちぎりをかこち、長き夜を独り明かし","translation":"はかない約束を嘆いて、長い夜を一人で明かし","source":"徒然草・第百三十七段"},{"meaning":"宿縁","text":"前の世にも御ちぎりや深かりけむ、世になく清らなる玉の男御子さへ生まれ給ひぬ","translation":"前世からの宿縁が深かったのだろうか、この世にまたとないほど美しい玉のような皇子までもお生まれになった。","source":"源氏物語・桐壺"}],"274":[{"meaning":"障害となるもの","text":"なべて、ほだし多かる人の、よろづにへつらひ、望み深きを見て、むげに思ひくたすは、ひがことなり","translation":"総じて、(俗世の)しがらみが多い人が、何かにつけて人にへつらい、欲望が深いのを見て、むやみに見下すのは、間違ったことである。","source":"徒然草・第百四十二段"}],"275":[{"meaning":"道理","text":"何のあやめも思ひしづめられぬに","translation":"何の道理も分別することができないのに","source":"源氏物語・帚木"}],"276":[{"meaning":"現実","text":"駿河なる宇津の山べのうつつにも夢にも人に逢はぬなりけり","translation":"駿河にある宇津の山のあたりでは、現実でも夢でも、あの人に逢うことができないのだなあ。","source":"伊勢物語・第九段"},{"meaning":"正気","text":"うつつにも似ず、たけく厳きひたぶる心出で来て","translation":"ふだんの正気の姿とも思えないほど、荒々しく激しいひたむきな心が出てきて","source":"源氏物語・葵"}],"277":[{"meaning":"もてなし","text":"この人の家、喜べるやうにて、あるじしたり","translation":"この人の家では、喜んでいるようすで、もてなしをした。","source":"土佐日記・二・十五"}],"278":[{"meaning":"なじみの土地","text":"人はいさ心も知らずふるさとは花ぞ昔の香ににほひける","translation":"あなたの心は変わってしまったかどうか分からないが、このなじみの土地では、花だけは昔のままの香りで咲いていることだ。","source":"古今和歌集・春上"},{"meaning":"わが家","text":"ふるさとの人来たりて物語りすとて","translation":"生まれ故郷の人がやって来て話をするということで","source":"徒然草・第百四十一段"}],"279":[{"meaning":"そのまま","text":"し残したるを、さてうち置きたるは、おもしろく、生き延ぶるわざなり","translation":"やりかけて残しておいたのを、そのままにしておくのは、趣があり、(命を)長らえさせるやり方である。","source":"徒然草・第八十二段"},{"meaning":"そのほか","text":"極楽寺・高良などを拝みて、かばかりと心得て帰りにけり。さて、かたへの人に会ひて","translation":"極楽寺・高良などを拝んで、これだけのものと思い込んで帰ってしまった。そしてそのほか、連れの人に会って","source":"徒然草・第五十二段"}],"280":[{"meaning":"そのまま","text":"帰り入りて探りたまへば、女君はさながら臥して","translation":"戻って手探りでお探しになると、女君はそのままの姿で横になっていて","source":"源氏物語・夕顔"},{"meaning":"すべて","text":"七珍万宝さながら灰燼となりにき","translation":"多くの宝物はすべて灰と化してしまった。","source":"方丈記"}],"281":[{"meaning":"すぐに","text":"立ち別れいなばの山の峰に生ふるまつとし聞かばいま帰り来む","translation":"あなたと別れて因幡の国へ行きますが、その因幡山の峰に生える松の名のように、あなたが「待つ」と聞いたなら、すぐに帰って来ましょう。","source":"古今和歌集・離別"},{"meaning":"もう","text":"いま一度起こせかし","translation":"もう一度起こしておくれよ。","source":"宇治拾遺物語・巻一・一二"}],"282":[{"meaning":"強いて","text":"透きて見え給ふを、せめて絶え間に見奉れば","translation":"透けて見えなさるので、無理に(几帳の)隙間から見申し上げると","source":"更級日記"},{"meaning":"ひどく","text":"いとせめて恋しきときはむばたまの夜の衣を返してぞ着る","translation":"あまりにひどく恋しいときは、真っ黒な夜の衣を裏返して着る。","source":"古今和歌集・恋歌二"}],"283":[{"meaning":"なるほど","text":"吹くからに秋の草木のしをるればむべ山風を嵐といふらむ","translation":"吹くとすぐに秋の草木がしおれてしまうので、なるほど山から吹く風を「嵐」と言うのだろう。","source":"古今和歌集・秋歌下(文屋康秀)"}],"284":[{"meaning":"一方では","text":"よどみに浮かぶうたかたは、かつ消えかつ結びて、久しくとどまりたる例なし","translation":"淀みに浮かぶ泡は、一方では消え、一方ではまた生じて、長くそのままでいる例はない。","source":"方丈記"},{"meaning":"すぐに","text":"かつあらはるるをもかへりみず、口にまかせて言ひ散らすは","translation":"すぐにばれてしまうことも気にせず、口任せにでたらめを言い散らすのは","source":"徒然草・第七十三段"}],"285":[{"meaning":"一日中","text":"しかれども、ひねもすに波風立たず","translation":"けれども、一日中、波も風も立たなかった。","source":"土佐日記"}],"286":[{"meaning":"決して","text":"かやうのものをば、かまへて調ずまじきものなり","translation":"このようなものは、決して調伏してはならないものだ。","source":"宇治拾遺物語・巻三・二〇"},{"meaning":"なんとかして","text":"『かまへて盗まむ』と思ひて","translation":"「なんとかして盗んでやろう」と思って","source":"今昔物語集・巻二十五・第十二"}],"287":[{"meaning":"まったく","text":"白神の磯の浦廻をあへて漕ぐなり","translation":"白神の磯の入り江のあたりを、構わずそのまま漕いで行くのだ。","source":"万葉集・一六七一番"}],"288":[{"meaning":"まったく","text":"あるまじき心のかけても侍らばこそ","translation":"あってはならない(よこしまな)気持ちが少しでもございますなら、それは別だが","source":"源氏物語・宿木"},{"meaning":"決して","text":"かけても人の思ひ寄り聞こゆべき事ならねば","translation":"決して人が思いつき申し上げるはずのないことなので","source":"源氏物語・蛍"}],"289":[{"meaning":"きっと","text":"この児、さだめておどろかさんずらんと、待ち居たるに","translation":"この稚児は、きっと(僧が)起こしてくれるだろうと思って、待っていたところ","source":"宇治拾遺物語・巻一・一二"}],"290":[{"meaning":"おっしゃる","text":"さのたまはば、今日は立たじ","translation":"そうおっしゃるのなら、今日は出発しないつもりだ。","source":"枕草子"}],"291":[{"meaning":"おっしゃる","text":"大将おほせて、『おり』とのたまふ","translation":"大将が命じられて、「降りろ」とおっしゃる。","source":"枕草子"}],"292":[{"meaning":"申し上げる","text":"御いらへもえきこえ給はず","translation":"お返事も申し上げなさることができない。","source":"源氏物語・桐壺"},{"meaning":"（お）〜申し上げる","text":"見つけきこえたりしかど","translation":"見つけ申し上げたけれども","source":"竹取物語"}],"293":[{"meaning":"申し上げる","text":"「物もなし」とまうすに","translation":"「何もございません」と申し上げると","source":"竹取物語・燕の子安貝"},{"meaning":"（お）〜申し上げる","text":"辞しまうすべきにもあらねば","translation":"お断り申し上げるわけにもいかないので","source":"更級日記"}],"294":[{"meaning":"申し上げる","text":"上りて、帝に、かくなむありつるとそうしければ","translation":"都に上って、帝に「これこれのことがございました」と申し上げたところ","source":"更級日記"}],"295":[{"meaning":"申し上げる","text":"まいて、五つ六つなどは、ただおぼえぬよしをぞけいすべけれど","translation":"まして五つ六つほどの幼い子は、ただ何も覚えていない旨を(中宮様に)申し上げるべきなのだが","source":"枕草子"}],"296":[{"meaning":"お受けする","text":"かしこき仰せ言を、たびたびうけたまはりながら","translation":"畏れ多い仰せを、何度もお受けしながら","source":"源氏物語・桐壺"},{"meaning":"お聞きする","text":"『ちとうけたまはらばや』と言はれければ","translation":"「少しお聞きしたいものだ」とおっしゃったところ","source":"徒然草・第二百三十六段"}],"297":[{"meaning":"お与えになる","text":"君王臣が忠諫を忿って吾に死を賜ふ事","translation":"君主が臣下の忠義ある諫めに怒って、私に死をお与えになること。","source":"太平記"},{"meaning":"下さる","text":"君王臣が忠諫を忿って吾に死を賜ふ事","translation":"君主が臣下の忠義ある諫めに怒って、私に死をお与えになること。","source":"太平記"},{"meaning":"〜なさる","text":"『この戸開けたまへ』とたたきけれど","translation":"「この戸を開けてください」と言って戸をたたいたけれど","source":"伊勢物語・第二十四段"},{"meaning":"お〜になる","text":"『この戸開けたまへ』とたたきけれど","translation":"「この戸をお開けください」と言って戸をたたいたけれど","source":"伊勢物語・第二十四段"},{"meaning":"〜（ており）ます","text":"この世のことを思ひたまへねば","translation":"この世の俗事をあれこれ考えておりませんので","source":"源氏物語"}],"298":[{"meaning":"お与えになる","text":"上局にたまはす","translation":"(帝が更衣に)上局(うえつぼね)をお与えになる。","source":"源氏物語・桐壺"}],"299":[{"meaning":"いただく","text":"禄ども、しなじなにたまはり給ふ","translation":"禄(褒美の品々)を、身分に応じてそれぞれいただきなさる。","source":"源氏物語・桐壺"}],"300":[{"meaning":"お呼びになる","text":"大臣・上達部をめして","translation":"大臣や上達部たちをお呼びになって","source":"竹取物語"},{"meaning":"お取り寄せになる","text":"人召し、『篝火の台一つ、こなたに』とめす","translation":"人をお呼びになり、「篝火の台を一つ、こちらへ」とお取り寄せになる。","source":"源氏物語・常夏"},{"meaning":"お召しになる","text":"御直衣めして","translation":"御直衣(のうし)をお召しになって","source":"源氏物語"},{"meaning":"お乗りになる","text":"人びと皆、御舟にめす","translation":"人々は皆、御舟にお乗りになる。","source":"平家物語"}],"301":[{"meaning":"お思いになる","text":"いかにこころもとなくおぼすらん","translation":"どんなに待ち遠しく(気がかりに)お思いになっているだろうか。","source":"十訓抄・第七"}],"302":[{"meaning":"おやすみになる","text":"親王、おほとのごもらで明かし給うてけり","translation":"親王は、おやすみにならないで夜を明かしなさった。","source":"伊勢物語・第八十三段"}],"303":[{"meaning":"お仕え申し上げる","text":"物語などして集まりさぶらふに","translation":"世間話などをして(女房たちが)集まり控えているときに","source":"枕草子"},{"meaning":"あります","text":"御前にさぶらふ物は、御琴も御笛もみなめづらしき名つきてぞある","translation":"御前にございます物は、御琴も御笛もみな珍しい名前がついている。","source":"枕草子"},{"meaning":"〜（でござい）ます","text":"かしこく参りさぶらひにけり","translation":"うまい具合に参上いたしました。","source":"宇治拾遺物語"}],"304":[{"meaning":"お仕え申し上げる","text":"夕さりまではべりてまかり出でける折に","translation":"夕方までお仕えして、退出した折に","source":"古今和歌集・離別"},{"meaning":"あります","text":"ここにはべりながら、御とぶらひにもまうでざりけるに","translation":"ここにおりながら、お見舞いにも参りませんでしたのに","source":"源氏物語・若紫"},{"meaning":"〜（でござい）ます","text":"今までとまりはべるがいと憂きを","translation":"今までこの世にとどまっておりますのが、たいそうつらいのに","source":"源氏物語・桐壺"}],"305":[{"meaning":"差し上げる","text":"言ふにしたがひて、幣たいまつる","translation":"言われるままに、幣(ぬさ)を差し上げる。","source":"土佐日記"},{"meaning":"（お）〜申し上げる","text":"誘はれたてまつりて","translation":"お誘い申し上げられて","source":"徒然草・第三十二段"},{"meaning":"お召しになる","text":"御袴着のこと、一の宮の奉りしに劣らず","translation":"御袴着(はかまぎ)の儀式のことは、一の宮がお召しになった時に劣らないほど(盛大であった)。","source":"源氏物語・桐壺"},{"meaning":"召し上がる","text":"『壺なる御薬たてまつれ』","translation":"「壺の中のお薬をお飲みください。」","source":"竹取物語"},{"meaning":"お乗りになる","text":"女御殿、対の上は一つに奉りたり","translation":"女御殿と対の上は、一台の車に一緒にお乗りになった。","source":"源氏物語・若菜下"}],"306":[{"meaning":"差し上げる","text":"薬の壺に御文そへてまゐらす","translation":"薬の壺に手紙を添えて差し上げる。","source":"竹取物語・富士の煙"},{"meaning":"（お）〜申し上げる","text":"たすけまゐらせんとは存じ候へども","translation":"お助け申し上げようとは存じますが","source":"平家物語・敦盛の最期"}],"307":[{"meaning":"参上する","text":"宮に初めてまゐりたるころ","translation":"中宮様のもとに初めて参上したころ","source":"枕草子"},{"meaning":"差し上げる","text":"親王にうまの頭、大御酒まいる","translation":"親王に、右馬頭が御酒を差し上げる。","source":"伊勢物語・第八十二段"},{"meaning":"召し上がる","text":"泉の大将〈略〉ほかにて酒などまいり、酔ひて","translation":"泉の大将が、よそでお酒などを召し上がって、酔って","source":"大和物語・第百二十五段"}],"308":[{"meaning":"退出する","text":"憶良らは今はまからむ","translation":"私、憶良めはもうそろそろ(この宴から)失礼いたしましょう。","source":"万葉集・三三七番(山上憶良)"}],"309":[{"meaning":"なさる","text":"みかど、箏の御琴をぞいみじうあそばしける","translation":"帝は、箏の琴をたいそう見事にお弾きになった。","source":"栄花物語・月の宴"}],"310":[{"meaning":"お仕え申し上げる","text":"堀河の左大臣殿は、御社までつかまつらせ給ひて","translation":"堀河の左大臣殿は、御社までお供申し上げなさって","source":"大鏡・道隆伝"},{"meaning":"し申し上げる","text":"さらば今宵は御宿直つかまつりて、朝見給へむ","translation":"それでは今夜は宿直をお務め申し上げて、朝にお目にかかりましょう。","source":"今昔物語集・巻二十五・第十二"}],"311":[{"meaning":"お聞きになる","text":"…など語りいでさせ給ふを、上もきこしめし、めでさせ給ふ","translation":"…などとお話しになるのを、帝もお聞きになり、感心なさる。","source":"枕草子"},{"meaning":"召し上がる","text":"いとあはれがらせ給ひて、物もきこしめさず","translation":"たいそう気の毒がりなさって、何も召し上がらない。","source":"竹取物語"}],"312":[{"meaning":"お治めになる","text":"天皇の、天の下しろしめすこと","translation":"天皇が、天下をお治めになること","source":"古今和歌集・仮名序"},{"meaning":"知っていらっしゃる","text":"さる者ありとは、鎌倉殿までもしろしめされたるらんぞ","translation":"そのような者がいるとは、鎌倉殿までもがご存知でいらっしゃるだろうよ。","source":"平家物語・巻九「木曾の最期」"}],"313":[{"meaning":"いらっしゃる","text":"竹の中におはするにて知りぬ","translation":"竹の中にいらっしゃることで(普通の子ではないと)分かった。","source":"竹取物語"},{"meaning":"〜（て）いらっしゃる","text":"世に知らず、聡うかしこくおはすれば","translation":"世に類がないほど、聡明で賢くていらっしゃるので","source":"源氏物語・桐壺"}],"314":[{"meaning":"いらっしゃる","text":"いませぬ後なれど、この世の光はいと面目ありかし","translation":"(その方が)お亡くなりになった後ではあるが、この世に残された(その)栄光は実に立派なものだよ。","source":"大鏡"},{"meaning":"〜（て）いらっしゃる","text":"かく笑ひいまするが、恥づかし","translation":"こんなふうにお笑いになっていらっしゃるのが、恥ずかしい。","source":"枕草子"}],"315":[{"meaning":"御覧になる","text":"これを、帝ごらんじて","translation":"これを、帝が御覧になって","source":"竹取物語"}]};
+
+let currentScreen = 'setup';
+let currentRanges = [];
+let quizQueue = [];
+let currentIndex = 0;
+let correctCount = 0;
+let wrongCount = 0;
+let mistakes = {};
+let scheduledRepeat = new Set();
+let positionCounts = new Array(NUM_CHOICES).fill(0);
+let answered = false;
+let currentOptions = null;
+let selectedRangeInfo = null;
+let requestedCount = 20;
+let answerMode = 'normal'; // 'normal' | 'timed7' | 'timed5' | 'timed3'
+let timedMode = false;
+let timeLimitMs = 3000;
+let timerInterval = null;
+let timeRemaining = 0;
+let isWeakTraining = false;
+
+/* ---------- audio (synthesized, no external assets) ---------- */
+function getAudioCtx(){
+  try{
+    if(!window._audioCtx){
+      window._audioCtx = new (window.AudioContext||window.webkitAudioContext)();
+    }
+    if(window._audioCtx.state === 'suspended'){ window._audioCtx.resume(); }
+    return window._audioCtx;
+  }catch(e){ return null; }
+}
+function playCorrectSound(){
+  const ctx = getAudioCtx();
+  if(!ctx) return;
+  try{
+    const now = ctx.currentTime;
+    [ [880,0], [1320,0.09] ].forEach(([freq,offset])=>{
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(freq, now+offset);
+      gain.gain.setValueAtTime(0.0001, now+offset);
+      gain.gain.exponentialRampToValueAtTime(0.28, now+offset+0.02);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now+offset+0.2);
+      osc.connect(gain).connect(ctx.destination);
+      osc.start(now+offset);
+      osc.stop(now+offset+0.22);
+    });
+  }catch(e){}
+}
+function playWrongSound(){
+  const ctx = getAudioCtx();
+  if(!ctx) return;
+  try{
+    const now = ctx.currentTime;
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = 'sawtooth';
+    osc.frequency.setValueAtTime(150, now);
+    osc.frequency.exponentialRampToValueAtTime(42, now+0.38);
+    const lfo = ctx.createOscillator();
+    const lfoGain = ctx.createGain();
+    lfo.frequency.setValueAtTime(30, now);
+    lfoGain.gain.setValueAtTime(16, now);
+    lfo.connect(lfoGain).connect(osc.frequency);
+    gain.gain.setValueAtTime(0.001, now);
+    gain.gain.linearRampToValueAtTime(0.22, now+0.03);
+    gain.gain.exponentialRampToValueAtTime(0.0001, now+0.42);
+    osc.connect(gain).connect(ctx.destination);
+    osc.start(now); lfo.start(now);
+    osc.stop(now+0.44); lfo.stop(now+0.44);
+  }catch(e){}
+}
+function playPerfectFanfare(){
+  const ctx = getAudioCtx();
+  if(!ctx) return;
+  try{
+    const now = ctx.currentTime;
+    const notes = [523.25, 659.25, 784.00, 1046.50];
+    notes.forEach((freq,i)=>{
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(freq, now+i*0.15);
+      gain.gain.setValueAtTime(0.0001, now+i*0.15);
+      gain.gain.exponentialRampToValueAtTime(0.24, now+i*0.15+0.03);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now+i*0.15+0.32);
+      osc.connect(gain).connect(ctx.destination);
+      osc.start(now+i*0.15);
+      osc.stop(now+i*0.15+0.34);
+    });
+  }catch(e){}
+}
+
+/* ---------- confetti ---------- */
+function prefersReducedMotion(){
+  return window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+}
+function launchConfetti(){
+  if(prefersReducedMotion()) return;
+  const colors = ['#E8622C','#3FA66E','#1E2A44','#F3ECDC','#C94A1E','#FFFFFF'];
+  const layer = document.createElement('div');
+  layer.className = 'confetti-layer';
+  document.body.appendChild(layer);
+  for(let i=0;i<50;i++){
+    const el = document.createElement('span');
+    el.className = 'confetti-piece';
+    el.style.left = (Math.random()*100)+'%';
+    el.style.background = colors[Math.floor(Math.random()*colors.length)];
+    el.style.animationDelay = (Math.random()*0.35)+'s';
+    el.style.transform = `rotate(${Math.floor(Math.random()*360)}deg)`;
+    layer.appendChild(el);
+  }
+  setTimeout(()=>layer.remove(), 2700);
+}
+
+function shuffle(arr){
+  for(let i=arr.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]]=[arr[j],arr[i]];
+  }
+  return arr;
+}
+
+function showScreen(name){
+  currentScreen = name;
+  $('screen-setup').hidden = name!=='setup';
+  $('screen-quiz').hidden = name!=='quiz';
+  $('screen-result').hidden = name!=='result';
+  $('screen-report').hidden = name!=='report';
+  $('screen-weak').hidden = name!=='weak';
+  window.scrollTo(0,0);
+}
+
+/* ---------- today's report (per-device, stored only in this browser) ---------- */
+function pad2(n){ return n<10 ? '0'+n : ''+n; }
+function dateStrOf(d){ return d.getFullYear()+'-'+pad2(d.getMonth()+1)+'-'+pad2(d.getDate()); }
+function timeStrOf(d){ return pad2(d.getHours())+':'+pad2(d.getMinutes()); }
+function formatDateLabel(dateStr){
+  const parts = dateStr.split('-').map(Number);
+  const d = new Date(parts[0], parts[1]-1, parts[2]);
+  const days = ['日','月','火','水','木','金','土'];
+  return `${d.getFullYear()}年${d.getMonth()+1}月${d.getDate()}日（${days[d.getDay()]}）`;
+}
+function loadHistory(){
+  try{
+    const raw = localStorage.getItem('kobunDrillHistory');
+    return raw ? JSON.parse(raw) : [];
+  }catch(e){ return []; }
+}
+function saveHistoryRecord(rec){
+  try{
+    const arr = loadHistory();
+    arr.push(rec);
+    localStorage.setItem('kobunDrillHistory', JSON.stringify(arr.slice(-200)));
+  }catch(e){}
+}
+
+/* ---------- weak-word tracking (per-device, stored only in this browser) ---------- */
+const WEAK_MASTERY_SETS = 5;
+function loadWeakStats(){
+  try{
+    const raw = localStorage.getItem('kobunDrillWeakStats');
+    return raw ? JSON.parse(raw) : {};
+  }catch(e){ return {}; }
+}
+function saveWeakStats(stats){
+  try{ localStorage.setItem('kobunDrillWeakStats', JSON.stringify(stats)); }catch(e){}
+}
+// called on every wrong answer, in any mode (normal / timed / weak-training):
+// records the miss and resets any progress toward mastery
+function recordMistakeStat(no){
+  const stats = loadWeakStats();
+  const key = String(no);
+  const cur = stats[key] || {wrongTotal:0, trainCorrect:0, mastered:false};
+  cur.wrongTotal = (cur.wrongTotal||0) + 1;
+  cur.trainCorrect = 0;
+  cur.mastered = false;
+  stats[key] = cur;
+  saveWeakStats(stats);
+}
+function getWeakList(){
+  const stats = loadWeakStats();
+  return Object.entries(stats)
+    .filter(([no,s]) => s && !s.mastered && (s.wrongTotal||0) > 0)
+    .map(([no,s]) => ({
+      no: parseInt(no,10),
+      word: WORDS.find(w=>w.no===parseInt(no,10)),
+      wrongTotal: s.wrongTotal||0,
+      trainCorrect: s.trainCorrect||0
+    }))
+    .filter(item => item.word)
+    .sort((a,b)=> b.wrongTotal - a.wrongTotal || a.no - b.no);
+}
+// called once per weak-training set for every word in that set: words never
+// missed during the set gain one toward the cumulative 5-set mastery goal
+function applyWeakTrainingSetResult(){
+  const stats = loadWeakStats();
+  const uniqueNos = Array.from(new Set(quizQueue.map(w=>w.no)));
+  uniqueNos.forEach(no=>{
+    const key = String(no);
+    const cur = stats[key];
+    if(!cur || cur.mastered) return;
+    if(!mistakes[no]){
+      cur.trainCorrect = (cur.trainCorrect||0) + 1;
+      if(cur.trainCorrect >= WEAK_MASTERY_SETS){ cur.mastered = true; }
+      stats[key] = cur;
+    }
+  });
+  saveWeakStats(stats);
+}
+function renderWeakScreen(){
+  const list = getWeakList();
+  const area = $('weakArea');
+  area.innerHTML = '';
+
+  if(list.length === 0){
+    const p = document.createElement('p');
+    p.className = 'report-empty';
+    p.textContent = 'まだ苦手な単語はありません。テストで間違えると、ここにリストされます。';
+    area.appendChild(p);
+    $('weakSetSizeRow').hidden = true;
+    $('weakStartBtn').hidden = true;
+    return;
+  }
+  $('weakSetSizeRow').hidden = false;
+  $('weakStartBtn').hidden = false;
+
+  const summary = document.createElement('p');
+  summary.className = 'summary-line';
+  summary.innerHTML = `現在 <strong>${list.length}語</strong> が苦手リストに入っています。`;
+  area.appendChild(summary);
+
+  const wrap = document.createElement('div');
+  wrap.className = 'mistake-table-wrap';
+  const table = document.createElement('table');
+  table.className = 'mistake-table';
+  table.innerHTML = '<thead><tr><th>番号</th><th>古語</th><th>現代語訳</th><th>間違い回数</th><th>習得まで</th></tr></thead>';
+  const tbody = document.createElement('tbody');
+  list.forEach(item=>{
+    const tr = document.createElement('tr');
+    tr.innerHTML =
+      `<td class="num">${item.no}</td>` +
+      `<td class="word"></td>` +
+      `<td></td>` +
+      `<td class="count">${item.wrongTotal}回</td>` +
+      `<td class="count">${item.trainCorrect}/${WEAK_MASTERY_SETS}</td>`;
+    tr.children[1].textContent = item.word.w;
+    tr.children[2].textContent = item.word.m;
+    tbody.appendChild(tr);
+  });
+  table.appendChild(tbody);
+  wrap.appendChild(table);
+  area.appendChild(wrap);
+}
+function startWeakTraining(){
+  const list = getWeakList();
+  if(list.length === 0) return;
+  getAudioCtx();
+  const sizeSel = document.querySelector('input[name="weakSetSize"]:checked');
+  const sizeVal = sizeSel ? sizeSel.value : '30';
+  const pool = list.map(item=>item.word);
+  const effective = sizeVal === 'all' ? pool.length : Math.min(30, pool.length);
+
+  quizQueue = shuffle(pool.slice()).slice(0, effective);
+  currentIndex = 0;
+  correctCount = 0;
+  wrongCount = 0;
+  mistakes = {};
+  scheduledRepeat = new Set();
+  positionCounts = new Array(NUM_CHOICES).fill(0);
+  selectedRangeInfo = {label:`苦手トレーニング（${effective}語）`};
+  requestedCount = effective;
+  isWeakTraining = true;
+  answerMode = 'normal';
+  timedMode = false;
+  timeLimitMs = 3000;
+  showScreen('quiz');
+  renderQuestion();
+}
+function renderReport(){
+  const today = dateStrOf(new Date());
+  $('reportDateLabel').textContent = formatDateLabel(today);
+
+  const todays = loadHistory().filter(r=>r.dateStr===today).sort((a,b)=>a.id-b.id);
+  const summaryEl = $('reportSummary');
+  const listEl = $('reportList');
+  summaryEl.innerHTML = '';
+  listEl.innerHTML = '';
+
+  if(todays.length===0){
+    const p = document.createElement('p');
+    p.className = 'report-empty';
+    p.textContent = '本日はまだドリルを行っていません。';
+    listEl.appendChild(p);
+    return;
+  }
+
+  const totalQ = todays.reduce((s,r)=>s+r.total,0);
+  const totalCorrect = todays.reduce((s,r)=>s+r.correct,0);
+  const avgScore = Math.round(todays.reduce((s,r)=>s+r.score,0)/todays.length);
+
+  const grid = document.createElement('div');
+  grid.className = 'report-summary-grid';
+  grid.innerHTML =
+    `<div class="report-stat"><span class="report-stat-num">${todays.length}</span><span class="report-stat-label">回実施</span></div>` +
+    `<div class="report-stat"><span class="report-stat-num">${avgScore}</span><span class="report-stat-label">平均点(100点満点)</span></div>` +
+    `<div class="report-stat"><span class="report-stat-num">${totalCorrect}/${totalQ}</span><span class="report-stat-label">正解/出題(のべ)</span></div>`;
+  summaryEl.appendChild(grid);
+
+  const table = document.createElement('table');
+  table.className = 'report-table';
+  table.innerHTML = '<thead><tr><th>時刻</th><th>範囲</th><th>モード</th><th>点数</th></tr></thead>';
+  const tbody = document.createElement('tbody');
+  todays.forEach(r=>{
+    const tr = document.createElement('tr');
+    tr.innerHTML =
+      `<td>${r.timeStr}</td><td></td><td>${modeLabel(r.answerMode || (r.timedMode ? 'timed3' : 'normal'))}</td>` +
+      `<td class="report-score">${r.score}点</td>`;
+    tr.children[1].textContent = r.rangeLabel;
+    tbody.appendChild(tr);
+  });
+  table.appendChild(tbody);
+  listEl.appendChild(table);
+}
+
+function buildRangesForChunk(chunk){
+  if(chunk==='all'){
+    return [{start:1,end:315,label:'1〜315番（315語・すべて）',count:315}];
+  }
+  const size = parseInt(chunk,10);
+  const ranges = [];
+  for(let start=1; start<=315; start+=size){
+    const end = Math.min(start+size-1, 315);
+    ranges.push({start,end,label:`${start}〜${end}番（${end-start+1}語）`,count:end-start+1});
+  }
+  return ranges;
+}
+
+function populateCustomSelects(){
+  const startSel = $('customStart');
+  const endSel = $('customEnd');
+  if(startSel.options.length === 0){
+    for(let i=1;i<=315;i++){
+      const opt1 = document.createElement('option');
+      opt1.value = i; opt1.textContent = `${i}番`;
+      startSel.appendChild(opt1);
+      const opt2 = document.createElement('option');
+      opt2.value = i; opt2.textContent = `${i}番`;
+      endSel.appendChild(opt2);
+    }
+    startSel.value = 1;
+    endSel.value = 315;
+  }
+}
+
+function populateRangeSelect(chunk){
+  const sel = $('rangeSelect');
+  const customRow = $('customRangeRow');
+  if(chunk === 'custom'){
+    sel.hidden = true;
+    customRow.hidden = false;
+    populateCustomSelects();
+    currentRanges = [];
+    return;
+  }
+  sel.hidden = false;
+  customRow.hidden = true;
+  currentRanges = buildRangesForChunk(chunk);
+  sel.innerHTML = '';
+  currentRanges.forEach((r,i)=>{
+    const opt = document.createElement('option');
+    opt.value = i;
+    opt.textContent = r.label;
+    sel.appendChild(opt);
+  });
+  sel.disabled = (chunk === 'all');
+}
+
+function getSelectedPool(){
+  const chunkEl = document.querySelector('input[name="chunk"]:checked');
+  if(chunkEl && chunkEl.value === 'custom'){
+    const rawStart = parseInt($('customStart').value || 1, 10);
+    const rawEnd = parseInt($('customEnd').value || 315, 10);
+    const start = Math.min(rawStart, rawEnd);
+    const end = Math.max(rawStart, rawEnd);
+    const range = {start, end, label:`${start}〜${end}番（${end-start+1}語・カスタム）`, count:end-start+1};
+    const pool = WORDS.filter(w => w.no>=start && w.no<=end);
+    return {pool, range};
+  }
+  const idx = parseInt($('rangeSelect').value || 0, 10);
+  const range = currentRanges[idx] || currentRanges[0];
+  const pool = WORDS.filter(w => w.no>=range.start && w.no<=range.end);
+  return {pool, range};
+}
+
+function updateSelectionSummary(){
+  const {pool, range} = getSelectedPool();
+  const reqCount = parseInt(document.querySelector('input[name="count"]:checked').value, 10);
+  const effective = Math.min(reqCount, pool.length);
+  $('summaryText').innerHTML = `選択中: <strong>${range.label}</strong>`;
+  const cap = $('capNote');
+  if(effective < reqCount){
+    cap.hidden = false;
+    cap.textContent = `※選択範囲の単語数（${pool.length}語）が出題数（${reqCount}問）より少ないため、${effective}問になります。`;
+  } else {
+    cap.hidden = true;
+  }
+}
+
+function pickBalancedPosition(){
+  const min = Math.min(...positionCounts);
+  const candidates = positionCounts.map((v,i)=>i).filter(i=>positionCounts[i]===min);
+  const choice = candidates[Math.floor(Math.random()*candidates.length)];
+  positionCounts[choice]++;
+  return choice;
+}
+
+function getDistractors(word, count){
+  const cat = getCategory(word.no);
+  const sameCat = (WORDS_BY_CATEGORY[cat] || []).filter(w => w.no!==word.no && w.m!==word.m);
+  const otherCat = WORDS.filter(w => w.no!==word.no && w.m!==word.m && getCategory(w.no)!==cat);
+
+  // Rank same-category words by how confusable their meaning text is
+  // (shared kanji/kana substrings), so verbs get verb-like distractors,
+  // adjectives get adjective-like ones, etc. A touch of randomness keeps
+  // repeated attempts from always showing the identical four options.
+  const scored = sameCat.map(w => ({ w, s: meaningSimilarity(word.m, w.m) + Math.random()*0.75 }));
+  scored.sort((a,b) => b.s - a.s);
+
+  const out = [];
+  const seen = new Set([word.m]);
+  const topPool = shuffle(scored.slice(0, Math.max(count*3, 12)).map(x=>x.w));
+  for(const w of topPool){
+    if(out.length>=count) break;
+    if(seen.has(w.m)) continue;
+    seen.add(w.m);
+    out.push(w.m);
+  }
+  // fall back to any remaining same-category word, then other categories,
+  // in case a category pool is too small to fill every slot
+  if(out.length<count){
+    for(const w of shuffle(sameCat.slice())){
+      if(out.length>=count) break;
+      if(seen.has(w.m)) continue;
+      seen.add(w.m); out.push(w.m);
+    }
+  }
+  if(out.length<count){
+    for(const w of shuffle(otherCat)){
+      if(out.length>=count) break;
+      if(seen.has(w.m)) continue;
+      seen.add(w.m); out.push(w.m);
+    }
+  }
+  return out;
+}
+
+function buildOptions(word){
+  const distractors = getDistractors(word, NUM_CHOICES-1);
+  const correctPos = pickBalancedPosition();
+  const options = new Array(NUM_CHOICES);
+  options[correctPos] = word.m;
+  let di = 0;
+  for(let i=0;i<NUM_CHOICES;i++){
+    if(i!==correctPos){ options[i] = distractors[di++]; }
+  }
+  return {options, correctPos};
+}
+
+function startQuiz(){
+  getAudioCtx(); // warm up audio on a user gesture so later auto sounds can play
+  const {pool, range} = getSelectedPool();
+  const reqCount = parseInt(document.querySelector('input[name="count"]:checked').value, 10);
+  const effective = Math.min(reqCount, pool.length);
+  quizQueue = shuffle(pool.slice()).slice(0, effective);
+  currentIndex = 0;
+  correctCount = 0;
+  wrongCount = 0;
+  mistakes = {};
+  scheduledRepeat = new Set();
+  positionCounts = new Array(NUM_CHOICES).fill(0);
+  selectedRangeInfo = range;
+  requestedCount = reqCount;
+  answerMode = document.querySelector('input[name="mode"]:checked').value;
+  timedMode = answerMode !== 'normal';
+  timeLimitMs = TIME_LIMITS[answerMode] || 3000;
+  isWeakTraining = false;
+  showScreen('quiz');
+  renderQuestion();
+}
+
+function updateStatsDisplay(){
+  $('okCount').textContent = `正解 ${correctCount}`;
+  $('ngCount').textContent = `不正解 ${wrongCount}`;
+}
+
+function stopTimer(){
+  if(timerInterval){ clearInterval(timerInterval); timerInterval = null; }
+}
+function updateTimerUI(){
+  const pct = Math.max(0, (timeRemaining/timeLimitMs)*100);
+  $('timerFill').style.width = pct+'%';
+  $('timerNum').textContent = Math.max(0, Math.ceil(timeRemaining/1000));
+}
+function startTimer(){
+  stopTimer();
+  timeRemaining = timeLimitMs;
+  updateTimerUI();
+  timerInterval = setInterval(()=>{
+    timeRemaining -= 100;
+    if(timeRemaining<=0){
+      timeRemaining = 0;
+      updateTimerUI();
+      stopTimer();
+      handleTimeout();
+    } else {
+      updateTimerUI();
+    }
+  }, 100);
+}
+
+function renderQuestion(){
+  answered = false;
+  const word = quizQueue[currentIndex];
+  currentOptions = buildOptions(word);
+
+  $('qNumber').textContent = `第${currentIndex+1}問`;
+  updateStatsDisplay();
+  $('wordNo').textContent = `No.${word.no}`;
+  $('wordText').textContent = word.w;
+
+  const pct = Math.round((currentIndex/quizQueue.length)*100);
+  $('progressBar').style.width = pct+'%';
+
+  const container = $('optionsContainer');
+  container.innerHTML = '';
+  currentOptions.options.forEach((text, i)=>{
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'choice-btn';
+    btn.dataset.index = i;
+    const numSpan = document.createElement('span');
+    numSpan.className = 'choice-num';
+    numSpan.textContent = CIRCLED[i];
+    const textSpan = document.createElement('span');
+    textSpan.className = 'choice-text';
+    textSpan.textContent = text;
+    btn.appendChild(numSpan);
+    btn.appendChild(textSpan);
+    btn.addEventListener('click', ()=> selectAnswer(i));
+    container.appendChild(btn);
+  });
+
+  $('nextBtn').hidden = true;
+  $('answerCallout').hidden = true;
+
+  if(timedMode){
+    $('timerWrap').hidden = false;
+    startTimer();
+  } else {
+    $('timerWrap').hidden = true;
+    stopTimer();
+  }
+}
+
+function injectRepeats(word){
+  for(let k=0;k<2;k++){
+    const lo = currentIndex+1;
+    const hi = quizQueue.length;
+    const insertAt = lo + Math.floor(Math.random()*(hi-lo+1));
+    quizQueue.splice(insertAt, 0, word);
+  }
+}
+
+function showCorrectAnswerCallout(){
+  const idx = currentOptions.correctPos;
+  $('calloutNum').textContent = CIRCLED[idx];
+  $('calloutText').textContent = currentOptions.options[idx];
+  $('answerCallout').hidden = false;
+}
+
+function finalizeAnswer(word, isCorrect){
+  if(isCorrect){
+    correctCount++;
+    playCorrectSound();
+    updateStatsDisplay();
+    // correct answers always move on automatically, in every mode
+    setTimeout(nextQuestion, 550);
+    return;
+  }
+
+  wrongCount++;
+  playWrongSound();
+  if(!mistakes[word.no]) mistakes[word.no] = {word, count:0};
+  mistakes[word.no].count++;
+  recordMistakeStat(word.no);
+  if(!scheduledRepeat.has(word.no)){
+    scheduledRepeat.add(word.no);
+    injectRepeats(word);
+  }
+  updateStatsDisplay();
+  showCorrectAnswerCallout();
+
+  if(timedMode){
+    // timed mode keeps its brisk, no-lingering pace even on a miss
+    setTimeout(nextQuestion, 900);
+  } else {
+    // jikkuri (untimed) mode waits so the correct answer can be studied
+    $('nextBtn').hidden = false;
+  }
+}
+
+function selectAnswer(idx){
+  if(answered) return;
+  answered = true;
+  stopTimer();
+  const word = quizQueue[currentIndex];
+  const correct = idx===currentOptions.correctPos;
+
+  document.querySelectorAll('.choice-btn').forEach(btn=>{
+    btn.disabled = true;
+    const bi = parseInt(btn.dataset.index, 10);
+    if(bi===currentOptions.correctPos) btn.classList.add('is-correct');
+    if(bi===idx && !correct) btn.classList.add('is-wrong');
+  });
+
+  finalizeAnswer(word, correct);
+}
+
+function handleTimeout(){
+  if(answered) return;
+  answered = true;
+  const word = quizQueue[currentIndex];
+
+  document.querySelectorAll('.choice-btn').forEach(btn=>{
+    btn.disabled = true;
+    const bi = parseInt(btn.dataset.index, 10);
+    if(bi===currentOptions.correctPos) btn.classList.add('is-correct');
+  });
+
+  finalizeAnswer(word, false);
+}
+
+function nextQuestion(){
+  currentIndex++;
+  const pct = Math.round((currentIndex/quizQueue.length)*100);
+  $('progressBar').style.width = pct+'%';
+  if(currentIndex >= quizQueue.length){
+    finishQuiz();
+  } else {
+    renderQuestion();
+  }
+}
+
+function finishQuiz(){
+  stopTimer();
+  $('timerWrap').hidden = true;
+  if(isWeakTraining){ applyWeakTrainingSetResult(); }
+  showScreen('result');
+  renderResult();
+}
+
+function renderResult(){
+  const totalAsked = correctCount + wrongCount;
+  const score = totalAsked ? Math.round((correctCount/totalAsked)*100) : 0;
+  $('scorePct').textContent = score;
+  $('resultDetail').innerHTML =
+    `範囲: <strong>${selectedRangeInfo ? selectedRangeInfo.label : ''}</strong><br>` +
+    `解答モード: <strong>${modeLabel(answerMode)}</strong><br>` +
+    `正解 <strong>${correctCount}</strong> ／ 出題 <strong>${totalAsked}</strong>（のべ・復習分を含む）` +
+    (isWeakTraining ? `<br><span style="color:var(--gold);">苦手トレーニングの結果です。このセットで間違えなかった単語は、習得まで+1セット分カウントされました（累計${WEAK_MASTERY_SETS}セットで苦手リストから外れます）。</span>` : '');
+
+  const mistakeList = Object.values(mistakes).sort((a,b)=>a.word.no-b.word.no);
+
+  const now = new Date();
+  saveHistoryRecord({
+    id: now.getTime(),
+    dateStr: dateStrOf(now),
+    timeStr: timeStrOf(now),
+    rangeLabel: selectedRangeInfo ? selectedRangeInfo.label : '',
+    timedMode: timedMode,
+    answerMode: answerMode,
+    correct: correctCount,
+    total: totalAsked,
+    score: score,
+    mistakeCount: mistakeList.length
+  });
+
+  const area = $('mistakeArea');
+  area.innerHTML = '';
+
+  if(mistakeList.length===0){
+    const p = document.createElement('p');
+    p.className = 'all-clear';
+    p.textContent = '全問正解！100点満点です。お見事です。';
+    area.appendChild(p);
+    launchConfetti();
+    playPerfectFanfare();
+    return;
+  }
+
+  const heading = document.createElement('p');
+  heading.className = 'mistake-heading';
+  heading.textContent = `間違えた単語（${mistakeList.length}語）`;
+  area.appendChild(heading);
+
+  const wrap = document.createElement('div');
+  wrap.className = 'mistake-table-wrap';
+  const table = document.createElement('table');
+  table.className = 'mistake-table';
+  table.innerHTML =
+    '<thead><tr><th>番号</th><th>古語</th><th>現代語訳</th><th>回数</th></tr></thead>';
+  const tbody = document.createElement('tbody');
+  mistakeList.forEach(m=>{
+    const tr = document.createElement('tr');
+    tr.innerHTML =
+      `<td class="num">${m.word.no}</td>` +
+      `<td class="word"></td>` +
+      `<td></td>` +
+      `<td class="count">${m.count}回</td>`;
+    tr.children[1].textContent = m.word.w;
+    tr.children[2].textContent = m.word.m;
+    tbody.appendChild(tr);
+  });
+  table.appendChild(tbody);
+  wrap.appendChild(table);
+  area.appendChild(wrap);
+
+  const withExamples = mistakeList.filter(m => EXAMPLES[m.word.no] && EXAMPLES[m.word.no].length);
+  if(withExamples.length){
+    const exHeading = document.createElement('p');
+    exHeading.className = 'mistake-heading';
+    exHeading.textContent = '間違えた単語の例文';
+    area.appendChild(exHeading);
+
+    const exList = document.createElement('div');
+    exList.className = 'example-list';
+    withExamples.forEach(m=>{
+      const item = document.createElement('div');
+      item.className = 'example-item';
+      const title = document.createElement('p');
+      title.className = 'example-word';
+      title.textContent = `${m.word.no}　${m.word.w}`;
+      item.appendChild(title);
+
+      const entries = EXAMPLES[m.word.no];
+      const uniqueMeanings = new Set(entries.map(ex => ex.meaning));
+      const showMeaningLabel = uniqueMeanings.size > 1;
+
+      entries.forEach(ex=>{
+        const entryEl = document.createElement('div');
+        entryEl.className = 'example-entry';
+
+        if(showMeaningLabel && ex.meaning){
+          const badge = document.createElement('span');
+          badge.className = 'example-meaning';
+          badge.textContent = ex.meaning;
+          entryEl.appendChild(badge);
+        }
+        const sentenceEl = document.createElement('p');
+        sentenceEl.className = 'example-sentence';
+        sentenceEl.textContent = ex.text || '';
+        entryEl.appendChild(sentenceEl);
+
+        if(ex.translation){
+          const transEl = document.createElement('p');
+          transEl.className = 'example-translation';
+          transEl.textContent = ex.translation;
+          entryEl.appendChild(transEl);
+        }
+        if(ex.source){
+          const src = document.createElement('span');
+          src.className = 'example-source';
+          src.textContent = `（${ex.source}）`;
+          entryEl.appendChild(src);
+        }
+        item.appendChild(entryEl);
+      });
+      exList.appendChild(item);
+    });
+    area.appendChild(exList);
+  }
+}
+
+function wireEvents(){
+  document.querySelectorAll('input[name="chunk"]').forEach(el=>{
+    el.addEventListener('change', ()=>{
+      populateRangeSelect(el.value);
+      updateSelectionSummary();
+    });
+  });
+  $('rangeSelect').addEventListener('change', updateSelectionSummary);
+  $('customStart').addEventListener('change', updateSelectionSummary);
+  $('customEnd').addEventListener('change', updateSelectionSummary);
+  document.querySelectorAll('input[name="count"]').forEach(el=>{
+    el.addEventListener('change', updateSelectionSummary);
+  });
+  $('startBtn').addEventListener('click', startQuiz);
+  $('nextBtn').addEventListener('click', nextQuestion);
+  $('retryBtn').addEventListener('click', ()=>{ if(isWeakTraining){ startWeakTraining(); } else { startQuiz(); } });
+  $('backBtn').addEventListener('click', ()=>{
+    if(isWeakTraining){ showScreen('weak'); renderWeakScreen(); }
+    else { showScreen('setup'); updateSelectionSummary(); }
+  });
+  $('reportBtn').addEventListener('click', ()=>{ showScreen('report'); renderReport(); });
+  $('reportBackBtn').addEventListener('click', ()=>{ showScreen('setup'); updateSelectionSummary(); });
+  $('weakTrainBtn').addEventListener('click', ()=>{ showScreen('weak'); renderWeakScreen(); });
+  $('weakBackBtn').addEventListener('click', ()=>{ showScreen('setup'); updateSelectionSummary(); });
+  $('weakStartBtn').addEventListener('click', startWeakTraining);
+}
+
+function getSnapshotData(){
+  return {
+    screen: currentScreen,
+    setup: {
+      chunk: document.querySelector('input[name="chunk"]:checked') ? document.querySelector('input[name="chunk"]:checked').value : '20',
+      rangeIdx: $('rangeSelect').value,
+      customStart: $('customStart').value,
+      customEnd: $('customEnd').value,
+      count: document.querySelector('input[name="count"]:checked') ? document.querySelector('input[name="count"]:checked').value : '20',
+      mode: document.querySelector('input[name="mode"]:checked') ? document.querySelector('input[name="mode"]:checked').value : 'normal',
+    },
+    quiz: (currentScreen==='quiz' || currentScreen==='result') ? {
+      queueNos: quizQueue.map(w=>w.no),
+      currentIndex, correctCount, wrongCount,
+      mistakes: Object.fromEntries(Object.entries(mistakes).map(([k,v])=>[k, v.count])),
+      scheduledRepeat: Array.from(scheduledRepeat),
+      positionCounts: positionCounts.slice(),
+      requestedCount,
+      timedMode,
+      answerMode,
+      isWeakTraining,
+      rangeLabel: selectedRangeInfo ? selectedRangeInfo.label : null,
+    } : null
+  };
+}
+
+function restoreFromSnapshot(data){
+  if(!data || !data.setup){
+    showScreen('setup');
+    updateSelectionSummary();
+    return;
+  }
+  const chunkEl = document.querySelector(`input[name="chunk"][value="${data.setup.chunk}"]`);
+  if(chunkEl) chunkEl.checked = true;
+  populateRangeSelect(chunkEl ? chunkEl.value : '20');
+  if(chunkEl && chunkEl.value === 'custom'){
+    if(data.setup.customStart) $('customStart').value = data.setup.customStart;
+    if(data.setup.customEnd) $('customEnd').value = data.setup.customEnd;
+  } else if(data.setup.rangeIdx!==undefined && currentRanges[parseInt(data.setup.rangeIdx,10)]){
+    $('rangeSelect').value = data.setup.rangeIdx;
+  }
+  const countEl = document.querySelector(`input[name="count"][value="${data.setup.count}"]`);
+  if(countEl) countEl.checked = true;
+  const modeEl = document.querySelector(`input[name="mode"][value="${data.setup.mode}"]`);
+  if(modeEl) modeEl.checked = true;
+  updateSelectionSummary();
+
+  if((data.screen==='quiz' || data.screen==='result') && data.quiz && data.quiz.queueNos && data.quiz.queueNos.length){
+    quizQueue = data.quiz.queueNos.map(no => WORDS.find(w=>w.no===no)).filter(Boolean);
+    currentIndex = data.quiz.currentIndex || 0;
+    correctCount = data.quiz.correctCount || 0;
+    wrongCount = data.quiz.wrongCount || 0;
+    mistakes = {};
+    Object.entries(data.quiz.mistakes || {}).forEach(([no,count])=>{
+      const word = WORDS.find(w=>w.no===parseInt(no,10));
+      if(word) mistakes[no] = {word, count};
+    });
+    scheduledRepeat = new Set(data.quiz.scheduledRepeat || []);
+    positionCounts = data.quiz.positionCounts || new Array(NUM_CHOICES).fill(0);
+    requestedCount = data.quiz.requestedCount || 20;
+    answerMode = data.quiz.answerMode || (data.quiz.timedMode ? 'timed3' : 'normal');
+    timedMode = answerMode !== 'normal';
+    timeLimitMs = TIME_LIMITS[answerMode] || 3000;
+    isWeakTraining = !!data.quiz.isWeakTraining;
+    selectedRangeInfo = data.quiz.rangeLabel ? {label:data.quiz.rangeLabel} : selectedRangeInfo;
+
+    if(data.screen==='quiz' && currentIndex < quizQueue.length){
+      showScreen('quiz');
+      renderQuestion();
+    } else {
+      showScreen('result');
+      renderResult();
+    }
+  } else if(data.screen==='weak'){
+    isWeakTraining = false;
+    showScreen('weak');
+    renderWeakScreen();
+  } else {
+    isWeakTraining = false;
+    showScreen('setup');
+  }
+}
+
+function start(initialData){
+  populateRangeSelect(document.querySelector('input[name="chunk"]:checked').value);
+  wireEvents();
+  try{
+    if(initialData && Object.keys(initialData).length){
+      restoreFromSnapshot(initialData);
+    } else {
+      showScreen('setup');
+      updateSelectionSummary();
+    }
+  } catch(e){
+    showScreen('setup');
+    updateSelectionSummary();
+  }
+  try{ window.claude?.hot?.snapshot?.(getSnapshotData); }catch(e){}
+}
+
+try{
+  if(window.claude?.hot?.ready){
+    window.claude.hot.ready(start);
+  } else {
+    start(window.claude?.hot?.data ?? {});
+  }
+}catch(e){
+  start({});
+}
+</script>
+
+</body></html>
